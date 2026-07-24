@@ -149,18 +149,15 @@
     position:absolute;bottom:6%;left:-6%;
     background:var(--cream);border-radius:50%;
     width:110px;height:110px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
     box-shadow:0 18px 40px -14px rgba(58,43,46,.28);
-    border:1px solid var(--blush-deep);text-align:center;
+    border:3px solid var(--gold);overflow:hidden;
   }
-  .hero-badge strong{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--rose-deep);}
-  .hero-badge span{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
 
   /* CATEGORY STRIP - echoes logo icons */
   .categories{padding:70px 28px 20px;}
   .cat-grid{
     max-width:1180px;margin:0 auto;
-    display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:26px;
   }
   .cat-card{
     background:var(--cream);border-radius:22px;
@@ -241,25 +238,7 @@
   }
   .editorial-visual img{width:100%;height:100%;object-fit:cover;}
 
-  /* NEWSLETTER */
-  .newsletter{padding:20px 28px 100px;text-align:center;}
-  .newsletter-inner{max-width:520px;margin:0 auto;}
-  .newsletter h2{font-size:clamp(26px,3.4vw,36px);margin-top:16px;}
-  .newsletter p{margin-top:12px;font-size:14px;color:var(--ink-soft);}
-  .newsletter form{
-    margin-top:30px;display:flex;gap:10px;
-    background:var(--cream);border:1px solid var(--blush-deep);
-    border-radius:40px;padding:6px;
-  }
-  .newsletter input{
-    flex:1;border:0;background:transparent;padding:12px 18px;
-    font-family:'Poppins',sans-serif;font-size:13px;color:var(--ink);outline:none;
-  }
-  .newsletter button{
-    background:var(--rose-deep);color:var(--cream);border:0;
-    padding:12px 28px;border-radius:40px;font-size:12px;
-    letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
-  }
+  /* NEWSLETTER — removed */
 
   /* PRODUCT DETAIL VIEW */
   .breadcrumb{padding:24px 28px 0;font-size:12px;color:var(--ink-soft);letter-spacing:.04em;}
@@ -281,33 +260,7 @@
   .not-found p{margin-top:14px;color:var(--ink-soft);font-size:14px;}
   .not-found a{display:inline-block;margin-top:26px;}
 
-  /* CUPONS VIEW */
-  .page-head{padding:70px 28px 20px;text-align:center;}
-  .page-head h1{font-size:clamp(32px,4.4vw,48px);}
-  .page-head p{margin-top:14px;color:var(--ink-soft);font-size:14px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.75;}
-  .coupons{padding:50px 28px 100px;}
-  .coupon-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .coupon-card{
-    background:var(--cream);border:1px dashed var(--gold);border-radius:20px;
-    padding:28px 24px;text-align:center;position:relative;
-    display:flex;flex-direction:column;align-items:center;gap:12px;
-  }
-  .coupon-store{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);}
-  .coupon-desc{font-size:15px;color:var(--ink);min-height:44px;}
-  .coupon-code{
-    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;
-    letter-spacing:.06em;color:var(--rose-deep);
-    border:1px solid var(--blush-deep);border-radius:12px;
-    padding:8px 18px;background:var(--blush);width:100%;
-  }
-  .copy-btn{
-    margin-top:6px;border:1px solid var(--gold);border-radius:30px;
-    padding:10px 22px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-    cursor:pointer;background:transparent;color:var(--ink);
-    transition:background .25s,color .25s;
-  }
-  .copy-btn:hover{background:var(--gold);color:var(--cream);}
-  .coupon-expiry{font-size:11px;color:var(--ink-soft);}
+  /* CUPONS — removed */
 
   /* PRIVACIDADE VIEW */
   .legal{max-width:760px;margin:0 auto;padding:50px 28px 100px;line-height:1.8;}
@@ -350,7 +303,7 @@
   @media(max-width:900px){
     .hero-grid{grid-template-columns:1fr;}
     .hero-visual{order:-1;}
-    .cat-grid{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
     .product-grid{grid-template-columns:repeat(2,1fr);}
     .editorial-inner{grid-template-columns:1fr;text-align:center;padding:50px 30px;}
     .editorial p{margin:16px auto 0;}
@@ -360,14 +313,11 @@
     .nav-cta{display:none;}
     .footer-grid{grid-template-columns:1fr 1fr;}
     .detail-grid{grid-template-columns:1fr;gap:32px;}
-    .coupon-grid{grid-template-columns:1fr 1fr;}
   }
   @media(max-width:520px){
     .product-grid{grid-template-columns:1fr 1fr;gap:14px;}
     .hero{padding:60px 20px 80px;}
-    .newsletter form{flex-direction:column;border-radius:20px;}
-    .newsletter button{border-radius:20px;}
-    .coupon-grid{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:1fr 1fr;}
   }
 </style>
 </head>
@@ -376,19 +326,17 @@
 <header>
   <div class="nav">
     <a data-link="#/" class="brand">
-      <span class="brand-mark">M</span>
+      <img src="logo_moda_feminina.jpg" alt="MIXDM" style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);">
       <span class="brand-name">MIX<span>DM</span></span>
     </a>
     <nav>
       <ul>
         <li><a data-link="#/categorias">Categorias</a></li>
-        <li><a data-link="#/novidades">Novidades</a></li>
-        <li><a data-link="#/cupons">Cupons</a></li>
+        <li><a data-link="#/destaques">Destaques</a></li>
         <li><a data-link="#/sobre">Sobre</a></li>
-        <li><a data-link="#/newsletter">Contato</a></li>
       </ul>
     </nav>
-    <a data-link="#/novidades" class="nav-cta">Ver Ofertas</a>
+    <a data-link="#/destaques" class="nav-cta">Ver Ofertas</a>
     <button class="nav-toggle" aria-label="menu">☰</button>
   </div>
 </header>
@@ -405,7 +353,7 @@
           <h1>Elegância que <em>combina</em><br>com o seu dia a dia</h1>
           <p class="lead">Vestidos, calçados e bolsas escolhidos a dedo, com ofertas reunidas em um só lugar para facilitar a sua escolha.</p>
           <div class="hero-actions">
-            <a data-link="#/novidades" class="btn-primary">Explorar coleção</a>
+            <a data-link="#/destaques" class="btn-primary">Explorar coleção</a>
             <a data-link="#/sobre" class="btn-ghost">Conhecer a MIXDM</a>
           </div>
         </div>
@@ -415,9 +363,8 @@
               <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop" alt="Moda feminina">
             </div>
           </div>
-          <div class="hero-badge">
-            <strong>+300</strong>
-            <span>Peças Selecionadas</span>
+          <div class="hero-badge" id="hero-slideshow">
+            <img src="" alt="" id="slide-img" style="width:100%;height:100%;object-fit:cover;border-radius:50%;position:absolute;inset:0;">
           </div>
         </div>
       </div>
@@ -452,16 +399,37 @@
             <h3>Bolsas</h3>
             <p>Acessórios que fecham qualquer look.</p>
           </div>
+          <div class="cat-card">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10l1 10H6L7 7z"/><path d="M10 7V5a2 2 0 0 1 4 0v2"/></svg>
+            </div>
+            <h3>Conjuntos</h3>
+            <p>Looks completos e coordenados.</p>
+          </div>
+          <div class="cat-card">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21V7a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v14"/><path d="M12 3v2"/><path d="M9 11h6"/><path d="M9 15h6"/></svg>
+            </div>
+            <h3>Calças</h3>
+            <p>Jeans, alfaiataria e leggings.</p>
+          </div>
+          <div class="cat-card">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="M12 4v16"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3>Fitness</h3>
+            <p>Moda esportiva e conforto.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="products" id="novidades">
+    <section class="products" id="destaques">
       <div class="wrap">
         <div class="ring-divider"></div>
         <div class="section-head">
-          <h2>Novidades da semana</h2>
-          <p>Uma seleção renovada com frequência, pensada para facilitar a sua escolha.</p>
+          <h2>Destaques</h2>
+          <p>Os produtos mais buscados e com as melhores ofertas selecionadas para você.</p>
         </div>
         <div class="product-grid" id="home-product-grid"></div>
       </div>
@@ -473,7 +441,7 @@
           <span class="eyebrow" style="color:var(--cream);">Sobre a MIXDM</span>
           <h2>Curadoria de moda feminina, com carinho em cada detalhe</h2>
           <p>Reunimos ofertas de vestidos, calçados e bolsas em um só lugar, para você economizar tempo e ter sempre um look pronto para qualquer ocasião.</p>
-          <a data-link="#/novidades" class="btn-ghost">Ver todas as ofertas</a>
+          <a data-link="#/destaques" class="btn-ghost">Ver todas as ofertas</a>
         </div>
         <div class="editorial-visual">
           <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=600&auto=format&fit=crop" alt="Editorial de moda">
@@ -481,39 +449,19 @@
       </div>
     </section>
 
-    <section class="newsletter" id="newsletter">
-      <div class="wrap newsletter-inner">
-        <div class="ring-divider"></div>
-        <h2>Receba as ofertas em primeira mão</h2>
-        <p>Cadastre seu e-mail e fique por dentro das novidades e promoções da semana.</p>
-        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Cadastrado ✓';">
-          <input type="email" placeholder="Seu melhor e-mail" required>
-          <button type="submit">Cadastrar</button>
-        </form>
-      </div>
-    </section>
+    
 
   </div>
 
   <!-- PRODUTO -->
   <div data-view="produto">
     <div class="breadcrumb wrap">
-      <a data-link="#/">Início</a> / <a data-link="#/novidades">Novidades</a> / <span id="crumb-name">Produto</span>
+      <a data-link="#/">Início</a> / <a data-link="#/destaques">Destaques</a> / <span id="crumb-name">Produto</span>
     </div>
     <div id="produto-content"></div>
   </div>
 
-  <!-- CUPONS -->
-  <div data-view="cupons">
-    <section class="page-head">
-      <span class="eyebrow">Economize mais</span>
-      <h1>Cupons de desconto</h1>
-      <p>Códigos e cupons selecionados para você aproveitar ainda mais nas suas compras.</p>
-    </section>
-    <section class="coupons">
-      <div class="coupon-grid" id="coupon-grid"></div>
-    </section>
-  </div>
+  
 
   <!-- PRIVACIDADE -->
   <div data-view="privacidade">
@@ -574,14 +522,15 @@
         <li><a data-link="#/categorias">Vestidos</a></li>
         <li><a data-link="#/categorias">Calçados</a></li>
         <li><a data-link="#/categorias">Bolsas</a></li>
+        <li><a data-link="#/categorias">Conjuntos</a></li>
+        <li><a data-link="#/categorias">Calças</a></li>
+        <li><a data-link="#/categorias">Fitness</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Institucional</h5>
       <ul>
         <li><a data-link="#/sobre">Sobre nós</a></li>
-        <li><a data-link="#/cupons">Cupons</a></li>
-        <li><a data-link="#/newsletter">Contato</a></li>
         <li><a data-link="#/privacidade">Política de privacidade</a></li>
       </ul>
     </div>
@@ -616,7 +565,8 @@
       priceOld: "R$ 129,90",
       image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=900&auto=format&fit=crop",
       description: "Vestido midi em tecido leve, estampa floral e manga longa. Um curinga para o dia a dia que também funciona em ocasiões mais especiais.",
-      link: "#"
+      link: "#",
+      commission: 30
     },
     {
       id: "2",
@@ -627,7 +577,8 @@
       priceOld: "",
       image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=900&auto=format&fit=crop",
       description: "Sandália de salto fino na cor nude, fácil de combinar com looks casuais e de festa. Solado confortável para uso prolongado.",
-      link: "#"
+      link: "#",
+      commission: 25
     },
     {
       id: "3",
@@ -638,7 +589,8 @@
       priceOld: "R$ 99,90",
       image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=900&auto=format&fit=crop",
       description: "Bolsa transversal em couro ecológico, compacta e com compartimentos internos para organizar o essencial.",
-      link: "#"
+      link: "#",
+      commission: 20
     },
     {
       id: "4",
@@ -649,22 +601,81 @@
       priceOld: "R$ 179,90",
       image: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?q=80&w=900&auto=format&fit=crop",
       description: "Blazer de alfaiataria com caimento reto, ideal para compor looks de trabalho ou eventos mais formais.",
-      link: "#"
+      link: "#",
+      commission: 35
+    },
+    {
+      id: "5",
+      name: "Conjunto Tricot Cropped + Saia",
+      category: "Conjuntos",
+      tag: "Novo",
+      priceNow: "R$ 139,90",
+      priceOld: "",
+      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=900&auto=format&fit=crop",
+      description: "Conjunto em tricot com cropped e saia midi, perfeito para um look moderno e confortável.",
+      link: "#",
+      commission: 28
+    },
+    {
+      id: "6",
+      name: "Calça Jeans Skinny Cintura Alta",
+      category: "Calças",
+      tag: "-25%",
+      priceNow: "R$ 69,90",
+      priceOld: "R$ 89,90",
+      image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=900&auto=format&fit=crop",
+      description: "Calça jeans skinny com cintura alta, modelagem que valoriza a silhueta e conforto no dia a dia.",
+      link: "#",
+      commission: 32
+    },
+    {
+      id: "7",
+      name: "Top Fitness com Bojo",
+      category: "Fitness",
+      tag: "Novo",
+      priceNow: "R$ 49,90",
+      priceOld: "",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=900&auto=format&fit=crop",
+      description: "Top fitness com bojo removível, alças ajustáveis e tecido que proporciona conforto durante os treinos.",
+      link: "#",
+      commission: 22
+    },
+    {
+      id: "8",
+      name: "Calça Legging Cós Alto",
+      category: "Fitness",
+      tag: "-10%",
+      priceNow: "R$ 59,90",
+      priceOld: "R$ 79,90",
+      image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=900&auto=format&fit=crop",
+      description: "Legging de cós alto com compressão suave, ideal para academia e uso casual.",
+      link: "#",
+      commission: 40
     }
   ];
 
-  const MIXDM_COUPONS = [
-    { store: "Loja Parceira A", desc: "10% off na primeira compra", code: "MIXDM10", expiry: "Válido até 31/08/2026" },
-    { store: "Loja Parceira B", desc: "Frete grátis acima de R$ 99", code: "FRETEMDM", expiry: "Válido até 15/08/2026" },
-    { store: "Loja Parceira C", desc: "15% off em vestidos", code: "VESTIDO15", expiry: "Válido até 10/08/2026" }
-  ];
+  // ---------------------------------------------------------------
+  // Slideshow do hero badge (moldura giratória)
+  // ---------------------------------------------------------------
+  function initSlideshow(){
+    const img = document.getElementById('slide-img');
+    let idx = 0;
+    function next(){
+      img.src = MIXDM_PRODUCTS[idx].image;
+      img.alt = MIXDM_PRODUCTS[idx].name;
+      idx = (idx + 1) % MIXDM_PRODUCTS.length;
+    }
+    next();
+    setInterval(next, 3000);
+  }
 
   // ---------------------------------------------------------------
-  // Render: grid de produtos na home
+  // Render: grid de produtos destaques (maiores comissões)
   // ---------------------------------------------------------------
   function renderHomeGrid(){
     const grid = document.getElementById('home-product-grid');
-    grid.innerHTML = MIXDM_PRODUCTS.map(p => `
+    const sorted = [...MIXDM_PRODUCTS].sort((a,b) => b.commission - a.commission);
+    grid.innerHTML = sorted.map(p => `
       <a data-link="#/produto/${p.id}" class="product-card">
         <div class="product-media">
           ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ""}
@@ -711,7 +722,7 @@
               <p class="detail-desc">${product.description}</p>
               <div class="detail-actions">
                 <a href="${product.link}" class="btn-primary" target="_blank" rel="noopener sponsored">Comprar agora</a>
-                <a data-link="#/novidades" class="btn-ghost">Voltar às novidades</a>
+                <a data-link="#/destaques" class="btn-ghost">Voltar aos destaques</a>
               </div>
               <p class="detail-note">Preço e disponibilidade sujeitos a alteração pela loja parceira.</p>
             </div>
@@ -725,7 +736,7 @@
         <div class="not-found">
           <h1>Produto não encontrado</h1>
           <p>O produto que você procura não existe ou não está mais disponível.</p>
-          <a data-link="#/novidades" class="btn-primary">Ver novidades</a>
+          <a data-link="#/destaques" class="btn-primary">Ver destaques</a>
         </div>
       `;
     }
@@ -733,34 +744,11 @@
   }
 
   // ---------------------------------------------------------------
-  // Render: cupons
-  // ---------------------------------------------------------------
-  function renderCupons(){
-    const grid = document.getElementById('coupon-grid');
-    grid.innerHTML = MIXDM_COUPONS.map(c => `
-      <div class="coupon-card">
-        <span class="coupon-store">${c.store}</span>
-        <span class="coupon-desc">${c.desc}</span>
-        <span class="coupon-code">${c.code}</span>
-        <button class="copy-btn" data-code="${c.code}">Copiar cupom</button>
-        <span class="coupon-expiry">${c.expiry}</span>
-      </div>
-    `).join('');
-    grid.querySelectorAll('.copy-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        navigator.clipboard.writeText(btn.dataset.code);
-        btn.textContent = 'Copiado ✓';
-        setTimeout(() => btn.textContent = 'Copiar cupom', 1800);
-      });
-    });
-  }
-
-  // ---------------------------------------------------------------
   // Router: mostra a view certa com base no hash da URL
-  // Rotas: #/  #/categorias  #/novidades  #/sobre  #/newsletter
-  //        #/cupons  #/privacidade  #/produto/:id
+  // Rotas: #/  #/categorias  #/destaques  #/sobre
+  //        #/privacidade  #/produto/:id
   // ---------------------------------------------------------------
-  const HOME_ANCHORS = ['categorias','novidades','sobre','newsletter'];
+  const HOME_ANCHORS = ['categorias','destaques','sobre'];
 
   function router(){
     const hash = window.location.hash || '#/';
@@ -768,8 +756,7 @@
     const route = parts[0] || '';
 
     let view = 'home';
-    if (route === 'cupons') view = 'cupons';
-    else if (route === 'privacidade') view = 'privacidade';
+    if (route === 'privacidade') view = 'privacidade';
     else if (route === 'produto') view = 'produto';
     else view = 'home';
 
@@ -784,9 +771,6 @@
 
     if (view === 'produto') {
       renderProduto(parts[1] || '');
-    } else if (view === 'cupons') {
-      document.title = "Cupons — MIXDM Moda Feminina";
-      renderCupons();
     } else if (view === 'privacidade') {
       document.title = "Política de Privacidade — MIXDM Moda Feminina";
     } else {
@@ -817,6 +801,7 @@
   }
 
   renderHomeGrid();
+  initSlideshow();
   bindLinks();
   window.addEventListener('hashchange', router);
   router();
