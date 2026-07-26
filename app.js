@@ -71,11 +71,11 @@ function fmtPrice(value) {
 }
 
 function discountPercent(p) {
-  const current = priceNumber(p.price_current)
-  const original = priceNumber(p.price_original)
-  return current !== null && original !== null && original > current
-    ? Math.round((1 - current / original) * 100)
-    : null
+  if (p.tag && p.tag.startsWith('-')) {
+    const m = p.tag.match(/-?(\d+)/)
+    return m ? parseInt(m[1], 10) : null
+  }
+  return null
 }
 
 function hoursSince(iso) {
@@ -239,14 +239,13 @@ function ensureAffiliateTag(url) {
 }
 
 function productCard(p) {
-  const hasDiscount = p.price_original && p.price_original !== p.price_current
   const safeUrl = ensureAffiliateTag(p.affiliate_url)
   return `
     <article class="card" onclick="navigate('produto','${p.id}')" role="link" tabindex="0" aria-label="Ver oferta: ${p.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('produto','${p.id}');}">
       <div class="card-link">
         <div class="card-img">
           ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
-          ${hasDiscount && discountPercent(p) ? discountBadge(discountPercent(p), 'sm') : ''}
+          ${discountPercent(p) ? discountBadge(discountPercent(p), 'sm') : ''}
           <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.alt='Imagem indisponível';this.style.display='none'">
         </div>
         <div class="card-body">
@@ -258,7 +257,6 @@ function productCard(p) {
             <span class="reviews-count">(${p.reviews_count || 0})</span>
           </div>
           <div class="price-row" style="flex-direction:column; align-items:flex-start; gap:2px;">
-            ${hasDiscount ? `<span class="price-original">R$ ${fmtPrice(p.price_original)}</span>` : ''}
             <span class="price-current">R$ ${fmtPrice(p.price_current)}</span>
           </div>
           <div class="card-footer">
@@ -272,7 +270,6 @@ function productCard(p) {
 }
 
 function spotlightMarkup(p) {
-  const hasDiscount = p.price_original && p.price_original !== p.price_current
   return `
     <div class="spotlight-card" onclick="navigate('produto','${p.id}')" style="cursor:pointer;">
       <div class="spotlight-img"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--ink-muted)\'>Imagem indisponível</div>'"></div>
@@ -280,13 +277,12 @@ function spotlightMarkup(p) {
         <h2 class="spotlight-title">${p.name}</h2>
         <div class="spotlight-desc">${generateSummary(p)}</div>
         <div class="price-row" style="margin-bottom:6px;gap:6px;">
-          ${hasDiscount && discountPercent(p) ? discountBadge(discountPercent(p), 'lg') : ''}
+          ${discountPercent(p) ? discountBadge(discountPercent(p), 'lg') : ''}
           <div>
-            <div class="price-row" style="margin-bottom:0;gap:4px;"><span class="price-current" style="font-size:20px;color:var(--rose-deep);">R$ ${fmtPrice(p.price_current)}</span></div>
-            ${hasDiscount ? `<span class="price-original" style="font-size:12px;">R$ ${fmtPrice(p.price_original)}</span>` : ''}
+            <div class="price-row" style="margin-bottom:0;gap:4px;"><span class="price-current" style="font-size:24px;color:var(--rose-deep);">R$ ${fmtPrice(p.price_current)}</span></div>
           </div>
         </div>
-        <span class="btn-primary" style="display:inline-block;padding:8px 18px;font-size:11px;">Ver oferta</span>
+        <span class="btn-primary" style="display:inline-block;padding:8px 18px;font-size:13px;">Ver oferta</span>
       </div>
     </div>`
 }
@@ -542,7 +538,6 @@ function renderProduto(id) {
     return
   }
 
-  const hasDiscount = p.price_original && p.price_original !== p.price_current
   const safeUrl = ensureAffiliateTag(p.affiliate_url)
 
   document.title = `${p.name} — MIXDM Moda Feminina`
@@ -571,9 +566,7 @@ function renderProduto(id) {
           <div class="detail-price-block">
             <div class="price-row" style="gap:14px;">
               <span class="detail-price-now">R$ ${fmtPrice(p.price_current)}</span>
-              ${hasDiscount ? `<span class="detail-price-old">De R$ ${fmtPrice(p.price_original)}</span>` : ''}
             </div>
-            ${hasDiscount && discountPercent(p) ? `<span class="detail-save">Você economiza ${discountPercent(p)}%</span>` : ''}
           </div>
           <div class="detail-summary">${generateSummary(p)}</div>
           <div class="detail-actions">
@@ -606,7 +599,7 @@ function shareWhatsApp(id) {
   const productUrl = `${window.location.origin}${window.location.pathname}?produto=${p.id}`
   const pct = discountPercent(p)
   const discountTxt = pct ? ` (-${pct}%)` : ''
-  const text = `*${p.name}*\n\nDe R$ ${fmtPrice(p.price_original)} por *R$ ${fmtPrice(p.price_current)}*${discountTxt}\n\n${productUrl}`
+  const text = `*${p.name}*\n\n*R$ ${fmtPrice(p.price_current)}*${discountTxt}\n\n${productUrl}`
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
 }
 

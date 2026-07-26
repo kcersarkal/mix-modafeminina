@@ -1444,7 +1444,7 @@ footer::before {
   box-shadow: var(--shadow-card);
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  min-height: 150px;
+  min-height: 180px;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 28px;
@@ -1481,7 +1481,7 @@ footer::before {
 }
 .spotlight-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1.2;
   margin: 0 0 6px;
@@ -1493,7 +1493,7 @@ footer::before {
 }
 .spotlight-desc {
   color: var(--ink-soft);
-  font-size: 11.5px;
+  font-size: 14px;
   line-height: 1.5;
   margin-bottom: 8px;
   display: -webkit-box;

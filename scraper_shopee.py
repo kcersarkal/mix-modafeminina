@@ -124,7 +124,8 @@ EXCLUIR_PALAVRAS = [
     "ouro macico", "ouro 18k", "ouro puro", "ouro 24k",
     "adulto", "jovem", "teen", "teenager",
     "cachorro", "pet", "gato", "bazar", "brecho",
-    "defeitos", "pequenos defeitos", "molde",
+    "defeitos", "pequenos defeitos",     "molde",
+    "broche", "acessorios", "adesivos",
 ]
 
 TERMOS_FEMININOS = [
@@ -188,9 +189,10 @@ def mapear_produto(item, categoria):
         return None
 
     desconto_rate = float(item.get("priceDiscountRate", 0))
+    preco_max = item.get("priceMax")
 
     if desconto_rate > 0:
-        preco_original = round(preco_atual / (1 - desconto_rate / 100), 2)
+        preco_original = float(preco_max) if preco_max else None
         tag = f"-{int(desconto_rate)}%"
     else:
         preco_original = None
