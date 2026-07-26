@@ -43,6 +43,32 @@ KEYWORDS_POR_CATEGORIA = {
     ],
 }
 
+# Palavras para re-categorizar produtos pelo nome
+RECATEGORIZAR_POR_NOME = {
+    "conjunto": "Conjuntos",
+    "vestido": "Vestidos",
+    "calça": "Calcas",
+    "calca": "Calcas",
+    "short": "Calcas",
+    "bermuda": "Calcas",
+    "saia": "Vestidos",
+    "blazer": "Conjuntos",
+    "cropped": "Conjuntos",
+    "body": "Conjuntos",
+    "macacao": "Conjuntos",
+    "macaquinho": "Fitness",
+    "legging": "Fitness",
+    "top": "Fitness",
+    "sandalia": "Calcados",
+    "sandália": "Calcados",
+    "sapatilha": "Calcados",
+    "rasteira": "Calcados",
+    "salto": "Calcados",
+    "bolsa": "Bolsas",
+    "mochila": "Bolsas",
+    "pijama": "Conjuntos",
+}
+
 MAX_QUERIES = 8
 LIMIT = 50
 SORT_TYPES = [1, 2, 4]
@@ -206,6 +232,12 @@ def mapear_produto(item, categoria):
     is_international = any(p in nome or p in shop_name for p in TERMOS_INTERNACIONAIS)
     flag = "🌎 " if is_international else ""
 
+    # Re-categorizar pelo nome do produto (sobrescreve categoria da keyword)
+    for palavra, cat in RECATEGORIZAR_POR_NOME.items():
+        if palavra in nome:
+            categoria = cat
+            break
+
     if desconto_rate > 0:
         preco_original = float(preco_max) if preco_max else None
         tag = f"{flag}-{int(desconto_rate)}%"
@@ -255,12 +287,23 @@ def limpar_produtos_antigos():
     total_removidos = 0
     atualizados = 0
 
-    resp = supabase.table("produtos").select("id,name,tag,rating,reviews_count").execute()
+    resp = supabase.table("produtos").select("id,name,category,tag,rating,reviews_count").execute()
     produtos = resp.data or []
 
     for p in produtos:
         nome = (p.get("name", "") or "").lower()
         tag_atual = p.get("tag", "") or ""
+        cat_atual = p.get("category", "") or ""
+
+        # Re-categorizar pelo nome do produto
+        nova_cat = None
+        for palavra, cat in RECATEGORIZAR_POR_NOME.items():
+            if palavra in nome:
+                nova_cat = cat
+                break
+        if nova_cat and nova_cat != cat_atual:
+            supabase.table("produtos").update({"category": nova_cat}).eq("id", p["id"]).execute()
+            atualizados += 1
 
         # Atualizar tag com flag internacional se necessário
         if any(term in nome for term in TERMOS_INTERNACIONAIS):
@@ -284,7 +327,7 @@ def limpar_produtos_antigos():
     else:
         print("Nenhum produto antigo precisa ser removido.")
     if atualizados:
-        print(f"Produtos marcados como internacional: {atualizados}")
+        print(f"Produtos atualizados (tag/categoria): {atualizados}")
 
     return total_removidos
 
