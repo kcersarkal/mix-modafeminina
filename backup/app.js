@@ -21,10 +21,6 @@ const DOM = {
   produtoContent: $('#produto-content'),
   crumbName: $('#crumb-name'),
   filterBar: $('#filter-bar'),
-  sortBar: $('#sort-bar'),
-  priceRangeWrap: $('#price-range-wrap'),
-  heroCarouselTrack: $('#hero-carousel-track'),
-  heroDots: $('#hero-dots'),
   searchInput: $('#search-input'),
   productCount: $('#product-count'),
   emptyState: $('#empty-state'),
@@ -44,12 +40,8 @@ const state = {
   carouselProducts: [],
   carouselIndex: 0,
   carouselTimer: null,
-  heroCarouselIndex: 0,
-  heroCarouselTimer: null,
   activeCategory: 'Todas',
   searchQuery: '',
-  sortBy: 'relevancia',
-  priceRange: 'todas',
   currentView: 'home',
   previousView: 'home',
   useSupabase: USE_SUPABASE,
@@ -80,28 +72,6 @@ function discountPercent(p) {
 
 function hoursSince(iso) {
   return (Date.now() - new Date(iso).getTime()) / 36e5
-}
-
-function sortProducts(products, sortBy) {
-  const sorted = [...products]
-  switch (sortBy) {
-    case 'menor_preco':
-      sorted.sort((a, b) => (a.price_current || Infinity) - (b.price_current || Infinity))
-      break
-    case 'maior_desconto':
-      sorted.sort((a, b) => {
-        const da = discountPercent(a) || 0
-        const db = discountPercent(b) || 0
-        return db - da
-      })
-      break
-    case 'melhor_avaliacao':
-      sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0))
-      break
-    default:
-      break
-  }
-  return sorted
 }
 
 function starRow(r) {
@@ -355,85 +325,16 @@ function stopCarousel() {
   }
 }
 
-function startHeroTimer() {
-  clearInterval(state.heroCarouselTimer)
-  state.heroCarouselTimer = setInterval(heroNext, 4500)
-}
-
-function stopHeroTimer() {
-  if (state.heroCarouselTimer) {
-    clearInterval(state.heroCarouselTimer)
-    state.heroCarouselTimer = null
-  }
-}
-
-function initHeroCarousel() {
-  const products = getActiveProducts()
-  const cats = [...new Set(products.map(p => p.category).filter(Boolean))]
-  const slides = cats.map(cat => {
-    const daCategoria = products.filter(p => p.category === cat && p.price_current != null && p.image)
-    if (!daCategoria.length) return null
-    const best = daCategoria.reduce((a, b) => Math.max(discountPercent(a) || 0, 0) >= Math.max(discountPercent(b) || 0, 0) ? a : b)
-    return best
-  }).filter(Boolean)
-
-  if (!slides.length) return
-
-  state.heroCarouselIndex = 0
-  const track = DOM.heroCarouselTrack
-  if (!track) return
-  track.innerHTML = slides.map(p => `
-    <div class="hero-carousel-slide">
-      <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--cream);color:var(--ink-muted);font-size:12px\'>Sem imagem</div>'">
-      <div class="slide-label">${p.category} • R$ ${fmtPrice(p.price_current)}</div>
-    </div>
-  `).join('')
-  track.style.transform = 'translateX(0)'
-
-  const dots = DOM.heroDots
-  if (dots) {
-    dots.innerHTML = slides.map((_, i) =>
-      `<span class="${i === 0 ? 'is-active' : ''}" onclick="heroGoTo(${i})"></span>`
-    ).join('')
-  }
-
-  startHeroTimer()
-}
-
-function heroNext() {
-  const slides = DOM.heroCarouselTrack?.children.length || 0
-  if (slides < 2) return
-  const next = (state.heroCarouselIndex + 1) % slides
-  heroGoTo(next)
-}
-
-window.heroGoTo = function (i) {
-  const track = DOM.heroCarouselTrack
-  if (!track || !track.children.length) return
-  state.heroCarouselIndex = i
-  track.style.transform = `translateX(-${i * 100}%)`
-
-  const dots = DOM.heroDots
-  if (dots) {
-    Array.from(dots.children).forEach((dot, idx) => {
-      dot.classList.toggle('is-active', idx === i)
-    })
-  }
-}
-
 function renderHome() {
   const grid = DOM.homeGrid
   const countEl = DOM.productCount
   const filterBar = DOM.filterBar
-  const sortBar = DOM.sortBar
   const emptyState = DOM.emptyState
   const products = getActiveProducts()
 
   if (!products.length) {
     grid.innerHTML = ''
     filterBar.innerHTML = ''
-    sortBar.innerHTML = ''
-    DOM.priceRangeWrap.innerHTML = ''
     if (emptyState) emptyState.style.display = 'block'
     if (countEl) countEl.textContent = '0 ofertas'
     return
@@ -444,44 +345,12 @@ function renderHome() {
     `<button class="filter-chip ${cat === state.activeCategory ? 'active' : ''}" onclick="setCategory('${cat}')">${cat}</button>`
   ).join('')
 
-  const PRICE_RANGES = [
-    { value: 'todas', label: 'Todos os Preços' },
-    { value: 'ate_50', label: 'Até R$50' },
-    { value: '50_100', label: 'R$50 a R$100' },
-    { value: '100_200', label: 'R$100 a R$200' },
-    { value: '200_mais', label: 'Acima de R$200' },
-  ]
-  DOM.priceRangeWrap.innerHTML = PRICE_RANGES.map(r =>
-    `<button class="price-range-chip ${r.value === state.priceRange ? 'active' : ''}" onclick="setPriceRange('${r.value}')">${r.label}</button>`
-  ).join('')
-
-  const SORT_OPTIONS = [
-    { value: 'relevancia', label: 'Relevância' },
-    { value: 'menor_preco', label: 'Menor Preço' },
-    { value: 'maior_desconto', label: 'Maior Desconto' },
-    { value: 'melhor_avaliacao', label: 'Melhor Avaliação' },
-  ]
-  sortBar.innerHTML = SORT_OPTIONS.map(opt =>
-    `<button class="sort-chip ${opt.value === state.sortBy ? 'active' : ''}" onclick="setSort('${opt.value}')">${opt.label}</button>`
-  ).join('')
-
   renderCarousel()
 
   let searched = state.searchQuery
     ? products.filter(p => p.name.toLowerCase().includes(state.searchQuery.toLowerCase()))
     : products
   let filtered = state.activeCategory === 'Todas' ? searched : searched.filter(p => p.category === state.activeCategory)
-
-  if (state.priceRange === 'ate_50')
-    filtered = filtered.filter(p => (p.price_current || 0) <= 50)
-  else if (state.priceRange === '50_100')
-    filtered = filtered.filter(p => (p.price_current || 0) > 50 && (p.price_current || 0) <= 100)
-  else if (state.priceRange === '100_200')
-    filtered = filtered.filter(p => (p.price_current || 0) > 100 && (p.price_current || 0) <= 200)
-  else if (state.priceRange === '200_mais')
-    filtered = filtered.filter(p => (p.price_current || 0) > 200)
-
-  filtered = sortProducts(filtered, state.sortBy)
 
   const lastUpdate = products.reduce((latest, p) =>
     new Date(p.last_checked_at) > new Date(latest) ? p.last_checked_at : latest, products[0].last_checked_at
@@ -499,20 +368,6 @@ function renderHome() {
 
 window.setCategory = function (cat) {
   state.activeCategory = cat
-  renderHome()
-  setTimeout(() => {
-    const grid = DOM.homeGrid
-    if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, 100)
-}
-
-window.setSort = function (sortBy) {
-  state.sortBy = sortBy
-  renderHome()
-}
-
-window.setPriceRange = function (range) {
-  state.priceRange = range
   renderHome()
 }
 
@@ -784,7 +639,6 @@ function router() {
 
   if (state.currentView === 'home' && view !== 'home') {
     stopCarousel()
-    stopHeroTimer()
   }
   state.currentView = view
 
@@ -829,7 +683,6 @@ function router() {
     }
     if (view === 'home') {
       renderHome()
-      startHeroTimer()
     }
   }
 
@@ -922,7 +775,6 @@ function injectWebsiteJSONLD() {
 async function init() {
   await loadData()
   renderHome()
-  initHeroCarousel()
   initMobileMenu()
   bindLinks()
   injectWebsiteJSONLD()

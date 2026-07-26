@@ -65,26 +65,25 @@
   <div class="nav">
     <a data-link="#/" class="brand">
       <img src="logo_moda_feminina.jpg" alt="MIXDM" class="brand-logo">
-      <div class="brand-text">
-        <span class="brand-name">MIX<span>DM</span></span>
-        <span class="brand-sub">Moda Feminina</span>
-      </div>
+      <span class="brand-name">MIX<span>DM</span></span>
     </a>
-    <div class="search-wrap">
-      <input class="search-input" id="search-input" type="text" placeholder="Buscar produtos..." oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();onSearchInput(this.value)}" autocomplete="off">
-      <button class="search-btn" onclick="onSearchInput(document.getElementById('search-input').value)">Buscar</button>
-    </div>
     <nav>
       <ul>
         <li><a data-link="#/">Início</a></li>
+        <li><a data-link="#/pedidos">Pedidos</a></li>
         <li><a data-link="#/sobre">Sobre</a></li>
         <li><a data-link="#/contato">Contato</a></li>
       </ul>
     </nav>
     <button class="nav-toggle" aria-label="Menu">☰</button>
   </div>
+  <div class="search-wrap">
+    <input class="search-input" id="search-input" type="text" placeholder="Buscar produtos..." oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();onSearchInput(this.value)}" autocomplete="off">
+    <button class="search-btn" onclick="onSearchInput(document.getElementById('search-input').value)">Buscar</button>
+  </div>
   <div class="mobile-menu" id="mobile-menu">
     <a data-link="#/">Início</a>
+    <a data-link="#/pedidos">Pedidos</a>
     <a data-link="#/sobre">Sobre</a>
     <a data-link="#/contato">Contato</a>
     <button class="mobile-close" aria-label="Fechar menu">✕</button>
@@ -102,16 +101,17 @@
           <span class="eyebrow">Moda Feminina Selecionada</span>
           <h1>Elegância que <em>combina</em><br>com o seu dia a dia</h1>
           <p class="lead">Vestidos, calçados e bolsas escolhidos a dedo, com ofertas reunidas em um só lugar para facilitar a sua escolha.</p>
+          <div class="hero-actions">
+            <a data-link="#/destaques" class="btn-primary">Explorar coleção</a>
+            <a data-link="#/sobre" class="btn-ghost">Conhecer a MIXDM</a>
+          </div>
         </div>
         <div class="hero-visual">
           <div class="hero-ring">
             <div class="inner">
-              <div class="hero-carousel" id="hero-carousel">
-                <div class="hero-carousel-track" id="hero-carousel-track"></div>
-              </div>
+              <img id="hero-carousel" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop" alt="Moda feminina">
             </div>
           </div>
-          <div class="hero-dots" id="hero-dots"></div>
         </div>
       </div>
     </section>
@@ -121,30 +121,48 @@
         <div class="ring-divider"></div>
         <div class="section-head">
           <h2>Compre por categoria</h2>
-          <p>Tudo o que você precisa para montar looks completos, você encontra em MIXDM.</p>
+          <p>Tudo o que você precisa para montar looks completos, sem sair da curadoria MIXDM.</p>
         </div>
         <div class="cat-grid">
-            <div class="cat-card" onclick="setCategory('Vestidos')">
+          <div class="cat-card" onclick="setCategory('Vestidos')">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4l-2 3v13h10V7l-2-3"/><path d="M9 4c0 1.5 1.2 2.5 3 2.5S15 5.5 15 4"/></svg>
+            </div>
             <h3>Vestidos</h3>
             <p>Do casual ao festa, para toda ocasião.</p>
           </div>
           <div class="cat-card" onclick="setCategory('Calçados')">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c4-1 5-3 5-6V9l7-4"/><path d="M19 15c1.5 0 3 .8 3 2.5S20 21 17 21H7"/></svg>
+            </div>
             <h3>Calçados</h3>
             <p>Saltos, sapatilhas e tênis com estilo.</p>
           </div>
           <div class="cat-card" onclick="setCategory('Bolsas')">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="12" rx="2"/><path d="M8 9V7a4 4 0 0 1 8 0v2"/></svg>
+            </div>
             <h3>Bolsas</h3>
             <p>Acessórios que fecham qualquer look.</p>
           </div>
           <div class="cat-card" onclick="setCategory('Conjuntos')">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10l1 10H6L7 7z"/><path d="M10 7V5a2 2 0 0 1 4 0v2"/></svg>
+            </div>
             <h3>Conjuntos</h3>
             <p>Looks completos e coordenados.</p>
           </div>
           <div class="cat-card" onclick="setCategory('Calças')">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21V7a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v14"/><path d="M12 3v2"/><path d="M9 11h6"/><path d="M9 15h6"/></svg>
+            </div>
             <h3>Calças</h3>
             <p>Jeans, alfaiataria e leggings.</p>
           </div>
           <div class="cat-card" onclick="setCategory('Fitness')">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="M12 4v16"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
             <h3>Fitness</h3>
             <p>Moda esportiva e conforto.</p>
           </div>
@@ -160,8 +178,6 @@
     </div>
 
     <div class="filter-bar" id="filter-bar"></div>
-    <div class="price-range-wrap" id="price-range-wrap"></div>
-    <div class="sort-bar" id="sort-bar"></div>
 
     <div class="product-grid" id="home-product-grid"></div>
 
