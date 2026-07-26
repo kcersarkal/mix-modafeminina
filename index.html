@@ -3,334 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MIXDM Moda Feminina</title>
+<title>MIXDM Moda Feminina — Curadoria de Moda</title>
+<meta name="description" content="Curadoria de moda feminina com vestidos, calçados, bolsas e acessórios. Ofertas selecionadas em um só lugar.">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MIXDM Moda Feminina">
+<meta property="og:title" content="MIXDM Moda Feminina — Curadoria de Moda">
+<meta property="og:description" content="Curadoria de moda feminina com vestidos, calçados, bolsas e acessórios. Ofertas selecionadas em um só lugar.">
+<meta property="og:locale" content="pt_BR">
+
+<meta name="theme-color" content="#fdeef0">
+<link rel="icon" href="logo_moda_feminina.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
   :root{
     --blush:#fdeef0;
     --blush-deep:#f8e0e3;
     --rose:#e8899a;
     --rose-deep:#d9697e;
+    --rose-dark:#c94d64;
     --gold:#c9a05a;
     --gold-light:#e4c690;
+    --gold-dark:#a8843a;
     --ink:#3a2b2e;
     --ink-soft:#6e5a5d;
+    --ink-muted:#9a8689;
     --cream:#fffaf8;
+    --dark:#1a1314;
+    --shadow-card:0 20px 40px -18px rgba(58,43,46,.18);
+    --shadow-hover:0 28px 56px -22px rgba(58,43,46,.28);
+    --radius-sm:12px;
+    --radius-md:20px;
+    --radius-lg:28px;
+    --transition:.35s cubic-bezier(.22,.61,.36,1);
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--blush);
-    color:var(--ink);
-    font-family:'Poppins',sans-serif;
-    font-weight:300;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,.serif{
-    font-family:'Cormorant Garamond',serif;
-    font-weight:600;
-    letter-spacing:.01em;
-  }
-  a{text-decoration:none;color:inherit;}
-  img{max-width:100%;display:block;}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
-  [data-view]{display:none;}
-  [data-view].is-active{display:block;}
-
-  /* thin gold divider ring motif, echoes logo */
-  .ring-divider{
-    width:52px;height:52px;margin:0 auto;
-    border-radius:50%;
-    border:1.5px solid var(--gold);
-    position:relative;
-  }
-  .ring-divider::before{
-    content:"";
-    position:absolute;inset:5px;
-    border-radius:50%;
-    border:1px solid var(--gold-light);
-  }
-
-  /* HEADER */
-  header{
-    position:sticky;top:0;z-index:50;
-    background:rgba(253,238,240,.88);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--blush-deep);
-  }
-  .nav{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:18px 28px;max-width:1180px;margin:0 auto;
-  }
-  .brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
-  .brand-mark{
-    width:38px;height:38px;border-radius:50%;
-    border:1.5px solid var(--gold);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Cormorant Garamond',serif;font-weight:600;
-    font-size:15px;color:var(--rose-deep);
-  }
-  .brand-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:.04em;}
-  .brand-name span{color:var(--rose-deep);}
-  nav ul{display:flex;gap:34px;list-style:none;}
-  nav ul a{
-    font-size:13px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--ink-soft);transition:color .25s;cursor:pointer;
-  }
-  nav ul a:hover, nav ul a.is-current{color:var(--rose-deep);}
-  .nav-cta{
-    font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-    border:1px solid var(--gold);color:var(--ink);
-    padding:9px 20px;border-radius:30px;
-    transition:background .25s,color .25s;cursor:pointer;
-  }
-  .nav-cta:hover{background:var(--gold);color:var(--cream);}
-  .nav-toggle{display:none;background:none;border:0;font-size:26px;color:var(--ink);cursor:pointer;}
-
-  /* HERO */
-  .hero{
-    position:relative;
-    padding:90px 28px 110px;
-    overflow:hidden;
-  }
-  .hero-grid{
-    max-width:1180px;margin:0 auto;
-    display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;
-  }
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:10px;
-    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--rose-deep);margin-bottom:22px;
-  }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);}
-  .hero h1{
-    font-size:clamp(44px,6vw,72px);
-    line-height:1.05;color:var(--ink);
-  }
-  .hero h1 em{font-style:italic;color:var(--rose-deep);}
-  .hero p.lead{
-    margin-top:24px;max-width:440px;
-    font-size:16px;line-height:1.75;color:var(--ink-soft);
-  }
-  .hero-actions{display:flex;gap:18px;margin-top:38px;flex-wrap:wrap;}
-  .btn-primary{
-    background:var(--rose-deep);color:var(--cream);
-    padding:15px 34px;border-radius:30px;
-    font-size:13px;letter-spacing:.1em;text-transform:uppercase;
-    transition:transform .25s,box-shadow .25s;
-    box-shadow:0 10px 24px -10px rgba(217,105,126,.55);
-    display:inline-block;cursor:pointer;border:none;
-  }
-  .btn-primary:hover{transform:translateY(-2px);}
-  .btn-ghost{
-    border:1px solid var(--ink);color:var(--ink);
-    padding:15px 30px;border-radius:30px;
-    font-size:13px;letter-spacing:.1em;text-transform:uppercase;
-    transition:background .25s,color .25s;
-    display:inline-block;cursor:pointer;background:transparent;
-  }
-  .btn-ghost:hover{background:var(--ink);color:var(--cream);}
-
-  .hero-visual{position:relative;display:flex;align-items:center;justify-content:center;}
-  .hero-ring{
-    position:relative;width:min(420px,90%);aspect-ratio:1/1;
-    border-radius:50%;
-    background:linear-gradient(180deg,var(--gold-light),var(--gold));
-    padding:10px;
-  }
-  .hero-ring .inner{
-    width:100%;height:100%;border-radius:50%;overflow:hidden;
-    background:var(--cream);border:5px solid var(--blush);
-  }
-  .hero-ring .inner img{width:100%;height:100%;object-fit:cover;transition:opacity .8s ease;}
-
-  /* CATEGORY STRIP - echoes logo icons */
-  .categories{padding:70px 28px 20px;}
-  .cat-grid{
-    max-width:1180px;margin:0 auto;
-    display:grid;grid-template-columns:repeat(4,1fr);gap:26px;
-  }
-  .cat-card{
-    background:var(--cream);border-radius:22px;
-    padding:38px 26px;text-align:center;
-    border:1px solid var(--blush-deep);
-    transition:transform .3s,box-shadow .3s;
-  }
-  .cat-card:hover{transform:translateY(-6px);box-shadow:0 22px 40px -20px rgba(201,160,90,.4);}
-  .cat-icon{
-    width:64px;height:64px;margin:0 auto 18px;
-    display:flex;align-items:center;justify-content:center;
-    border-radius:50%;background:var(--blush);
-  }
-  .cat-icon svg{width:28px;height:28px;stroke:var(--rose-deep);}
-  .cat-card h3{font-size:22px;color:var(--ink);}
-  .cat-card p{margin-top:8px;font-size:13px;color:var(--ink-soft);}
-
-  /* SECTION HEADS */
-  .section-head{text-align:center;max-width:560px;margin:0 auto 50px;}
-  .section-head h2{font-size:clamp(30px,4vw,42px);margin-top:16px;}
-  .section-head p{margin-top:14px;font-size:14px;color:var(--ink-soft);line-height:1.7;}
-
-  /* PRODUCTS */
-  .products{padding:90px 28px;}
-  .product-grid{
-    max-width:1180px;margin:0 auto;
-    display:grid;grid-template-columns:repeat(4,1fr);gap:26px;
-  }
-  .product-card{
-    background:var(--cream);border-radius:20px;overflow:hidden;
-    border:1px solid var(--blush-deep);
-    transition:transform .3s,box-shadow .3s;
-    display:flex;flex-direction:column;cursor:pointer;
-  }
-  .product-card:hover{transform:translateY(-5px);box-shadow:0 24px 44px -22px rgba(58,43,46,.25);}
-  .product-media{
-    position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--blush);
-  }
-  .product-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
-  .product-card:hover .product-media img{transform:scale(1.06);}
-  .product-tag{
-    position:absolute;top:12px;left:12px;
-    background:var(--rose-deep);color:var(--cream);
-    font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-    padding:6px 12px;border-radius:20px;
-  }
-  .product-body{padding:18px 18px 20px;flex:1;display:flex;flex-direction:column;}
-  .product-body h4{font-size:14px;font-weight:400;color:var(--ink);line-height:1.4;min-height:38px;}
-  .price-row{display:flex;align-items:baseline;gap:8px;margin-top:10px;}
-  .price-now{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--rose-deep);}
-  .price-old{font-size:12px;color:var(--ink-soft);text-decoration:line-through;}
-  .product-cta{
-    margin-top:14px;text-align:center;
-    border:1px solid var(--gold);border-radius:30px;
-    padding:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-    transition:background .25s,color .25s;
-  }
-  .product-card:hover .product-cta{background:var(--gold);color:var(--cream);}
-
-  /* EDITORIAL BANNER */
-  .editorial{
-    padding:0 28px 90px;
-  }
-  .editorial-inner{
-    max-width:1180px;margin:0 auto;
-    background:linear-gradient(120deg,var(--rose-deep),var(--gold));
-    border-radius:30px;padding:70px 60px;
-    display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;
-    color:var(--cream);
-  }
-  .editorial h2{font-size:clamp(28px,3.6vw,40px);color:var(--cream);}
-  .editorial p{margin-top:16px;font-size:14px;line-height:1.75;color:rgba(255,250,248,.88);max-width:420px;}
-  .editorial .btn-ghost{border-color:var(--cream);color:var(--cream);}
-  .editorial .btn-ghost:hover{background:var(--cream);color:var(--rose-deep);}
-  .editorial-visual{
-    aspect-ratio:1/1;border-radius:50%;overflow:hidden;
-    border:6px solid rgba(255,255,255,.35);justify-self:center;width:min(280px,100%);
-  }
-  .editorial-visual img{width:100%;height:100%;object-fit:cover;}
-
-  /* NEWSLETTER — removed */
-
-  /* PRODUCT DETAIL VIEW */
-  .breadcrumb{padding:24px 28px 0;font-size:12px;color:var(--ink-soft);letter-spacing:.04em;}
-  .breadcrumb a:hover{color:var(--rose-deep);cursor:pointer;}
-  .product-detail{padding:36px 28px 100px;}
-  .detail-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:flex-start;}
-  .detail-media{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:4/5;background:var(--cream);border:1px solid var(--blush-deep);}
-  .detail-media img{width:100%;height:100%;object-fit:cover;}
-  .detail-tag{position:absolute;top:18px;left:18px;background:var(--rose-deep);color:var(--cream);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:20px;}
-  .detail-info .sku{margin-top:10px;font-size:12px;color:var(--ink-soft);letter-spacing:.04em;}
-  .detail-price{display:flex;align-items:baseline;gap:12px;margin-top:26px;}
-  .detail-price .now{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:600;color:var(--rose-deep);}
-  .detail-price .old{font-size:15px;color:var(--ink-soft);text-decoration:line-through;}
-  .detail-desc{margin-top:22px;font-size:14px;line-height:1.85;color:var(--ink-soft);max-width:440px;}
-  .detail-actions{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap;}
-  .detail-note{margin-top:20px;font-size:11px;color:var(--ink-soft);}
-  .not-found{max-width:600px;margin:80px auto;text-align:center;padding:0 28px;}
-  .not-found h1{font-size:34px;}
-  .not-found p{margin-top:14px;color:var(--ink-soft);font-size:14px;}
-  .not-found a{display:inline-block;margin-top:26px;}
-
-  /* CUPONS — removed */
-
-  /* PRIVACIDADE VIEW */
-  .legal{max-width:760px;margin:0 auto;padding:50px 28px 100px;line-height:1.8;}
-  .legal h1{font-size:38px;margin-bottom:8px;}
-  .legal .updated{font-size:12px;color:var(--ink-soft);margin-bottom:40px;}
-  .legal h2{font-size:22px;margin:36px 0 12px;color:var(--rose-deep);font-family:'Cormorant Garamond',serif;font-weight:600;}
-  .legal p, .legal li{font-size:14.5px;color:var(--ink-soft);}
-  .legal ul{margin:10px 0 10px 20px;}
-  .legal li{margin-bottom:6px;}
-  .legal a{color:var(--rose-deep);cursor:pointer;}
-
-  /* FOOTER */
-  footer{
-    background:var(--ink);color:rgba(255,250,248,.75);
-    padding:60px 28px 30px;
-  }
-  .footer-grid{
-    max-width:1180px;margin:0 auto;
-    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;
-  }
-  .footer-brand{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--cream);}
-  .footer-brand span{color:var(--gold-light);}
-  .footer-grid p{margin-top:14px;font-size:13px;line-height:1.7;max-width:280px;}
-  .footer-col h5{
-    font-size:12px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--gold-light);margin-bottom:16px;
-  }
-  .footer-col ul{list-style:none;}
-  .footer-col li{margin-bottom:10px;font-size:13px;}
-  .footer-col a{cursor:pointer;}
-  .footer-col a:hover{color:var(--cream);}
-  .footer-bottom{
-    max-width:1180px;margin:50px auto 0;
-    border-top:1px solid rgba(255,255,255,.1);
-    padding-top:22px;font-size:11px;
-    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
-    color:rgba(255,250,248,.5);
-  }
-
-  @media(max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
-    .hero-visual{order:-1;}
-    .cat-grid{grid-template-columns:repeat(2,1fr);}
-    .product-grid{grid-template-columns:repeat(2,1fr);}
-    .editorial-inner{grid-template-columns:1fr;text-align:center;padding:50px 30px;}
-    .editorial p{margin:16px auto 0;}
-    .editorial-visual{order:-1;}
-    nav ul{display:none;}
-    .nav-toggle{display:block;}
-    .nav-cta{display:none;}
-    .footer-grid{grid-template-columns:1fr 1fr;}
-    .detail-grid{grid-template-columns:1fr;gap:32px;}
-  }
-  @media(max-width:520px){
-    .product-grid{grid-template-columns:1fr 1fr;gap:14px;}
-    .hero{padding:60px 20px 80px;}
-    .cat-grid{grid-template-columns:1fr 1fr;}
-  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--blush);color:var(--ink);font-family:'Poppins',sans-serif;font-weight:300;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:.015em;line-height:1.1}
+  a{text-decoration:none;color:inherit}
+  img{max-width:100%;display:block;height:auto}
+  ::selection{background:var(--rose-deep);color:var(--cream)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  [data-view]{display:none}
+  [data-view].is-active{display:block;animation:fadeIn .5s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#app">Pular para o conteúdo</a>
+
 <header>
   <div class="nav">
     <a data-link="#/" class="brand">
-      <img src="logo_moda_feminina.jpg" alt="MIXDM" style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);">
+      <img src="logo_moda_feminina.jpg" alt="MIXDM" class="brand-logo">
       <span class="brand-name">MIX<span>DM</span></span>
     </a>
     <nav>
       <ul>
-        <li><a data-link="#/categorias">Categorias</a></li>
-        <li><a data-link="#/destaques">Destaques</a></li>
+        <li><a data-link="#/">Início</a></li>
+        <li><a data-link="#/pedidos">Pedidos</a></li>
         <li><a data-link="#/sobre">Sobre</a></li>
+        <li><a data-link="#/contato">Contato</a></li>
       </ul>
     </nav>
-    <a data-link="#/destaques" class="nav-cta">Ver Ofertas</a>
-    <button class="nav-toggle" aria-label="menu">☰</button>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+  <div class="search-wrap">
+    <input class="search-input" id="search-input" type="text" placeholder="Buscar produtos..." oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();onSearchInput(this.value)}" autocomplete="off">
+    <button class="search-btn" onclick="onSearchInput(document.getElementById('search-input').value)">Buscar</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a data-link="#/">Início</a>
+    <a data-link="#/pedidos">Pedidos</a>
+    <a data-link="#/sobre">Sobre</a>
+    <a data-link="#/contato">Contato</a>
+    <button class="mobile-close" aria-label="Fechar menu">✕</button>
   </div>
 </header>
 
@@ -368,42 +124,42 @@
           <p>Tudo o que você precisa para montar looks completos, sem sair da curadoria MIXDM.</p>
         </div>
         <div class="cat-grid">
-          <div class="cat-card">
+          <div class="cat-card" onclick="setCategory('Vestidos')">
             <div class="cat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4l-2 3v13h10V7l-2-3"/><path d="M9 4c0 1.5 1.2 2.5 3 2.5S15 5.5 15 4"/></svg>
             </div>
             <h3>Vestidos</h3>
             <p>Do casual ao festa, para toda ocasião.</p>
           </div>
-          <div class="cat-card">
+          <div class="cat-card" onclick="setCategory('Calçados')">
             <div class="cat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c4-1 5-3 5-6V9l7-4"/><path d="M19 15c1.5 0 3 .8 3 2.5S20 21 17 21H7"/></svg>
             </div>
             <h3>Calçados</h3>
             <p>Saltos, sapatilhas e tênis com estilo.</p>
           </div>
-          <div class="cat-card">
+          <div class="cat-card" onclick="setCategory('Bolsas')">
             <div class="cat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="12" rx="2"/><path d="M8 9V7a4 4 0 0 1 8 0v2"/></svg>
             </div>
             <h3>Bolsas</h3>
             <p>Acessórios que fecham qualquer look.</p>
           </div>
-          <div class="cat-card">
+          <div class="cat-card" onclick="setCategory('Conjuntos')">
             <div class="cat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10l1 10H6L7 7z"/><path d="M10 7V5a2 2 0 0 1 4 0v2"/></svg>
             </div>
             <h3>Conjuntos</h3>
             <p>Looks completos e coordenados.</p>
           </div>
-          <div class="cat-card">
+          <div class="cat-card" onclick="setCategory('Calças')">
             <div class="cat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21V7a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v14"/><path d="M12 3v2"/><path d="M9 11h6"/><path d="M9 15h6"/></svg>
             </div>
             <h3>Calças</h3>
             <p>Jeans, alfaiataria e leggings.</p>
           </div>
-          <div class="cat-card">
+          <div class="cat-card" onclick="setCategory('Fitness')">
             <div class="cat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="M12 4v16"/><circle cx="12" cy="12" r="9"/></svg>
             </div>
@@ -414,16 +170,21 @@
       </div>
     </section>
 
-    <section class="products" id="destaques">
-      <div class="wrap">
-        <div class="ring-divider"></div>
-        <div class="section-head">
-          <h2>Destaques</h2>
-          <p>Os produtos mais buscados e com as melhores ofertas selecionadas para você.</p>
-        </div>
-        <div class="product-grid" id="home-product-grid"></div>
-      </div>
-    </section>
+    <div class="spotlight" id="spotlight-slot"></div>
+
+    <div class="section-heading">
+      <h2>Todas as ofertas</h2>
+      <span class="count" id="product-count"></span>
+    </div>
+
+    <div class="filter-bar" id="filter-bar"></div>
+
+    <div class="product-grid" id="home-product-grid"></div>
+
+    <div class="empty-state" id="empty-state" style="display:none;">
+      <h2>Nenhuma oferta ativa no momento</h2>
+      <p>Estamos atualizando nossas ofertas. Volte em breve!</p>
+    </div>
 
     <section class="editorial" id="sobre">
       <div class="editorial-inner">
@@ -438,20 +199,56 @@
         </div>
       </div>
     </section>
-
-    
-
   </div>
 
   <!-- PRODUTO -->
   <div data-view="produto">
-    <div class="breadcrumb wrap">
-      <a data-link="#/">Início</a> / <a data-link="#/destaques">Destaques</a> / <span id="crumb-name">Produto</span>
-    </div>
     <div id="produto-content"></div>
   </div>
 
-  
+  <!-- PEDIDOS -->
+  <div data-view="pedidos">
+    <div class="wrap" style="padding-top:40px;padding-bottom:60px;">
+      <div class="section-heading">
+        <h2>Pedidos</h2>
+        <span class="count" id="pedidos-count"></span>
+      </div>
+      <p style="color:var(--ink-soft);font-size:14px;margin-bottom:24px;">Produtos solicitados pelos nossos visitantes. Clique para ver detalhes.</p>
+      <div class="product-grid" id="pedidos-grid"></div>
+      <div id="pedidos-empty" class="empty-state" style="display:none;">
+        <h2>Nenhum pedido ainda</h2>
+        <p>Em breve você poderá solicitar produtos aqui.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEDIDO DETALHE -->
+  <div data-view="pedido">
+    <div id="pedido-container"></div>
+  </div>
+
+  <!-- SOBRE -->
+  <div data-view="sobre">
+    <div class="legal">
+      <h1>Sobre a MIXDM Moda Feminina</h1>
+      <p>A MIXDM Moda Feminina nasceu para reunir em um só lugar as melhores ofertas de moda feminina da internet. Vestidos, calçados, bolsas e acessórios selecionados com cuidado, para que você encontre tudo o que precisa sem perder tempo.</p>
+      <p>Não vendemos produtos diretamente — cada oferta listada aqui leva você direto para a página do produto na loja parceira, onde a compra é feita com toda a segurança.</p>
+      <div class="detail-disclosure" style="margin-top:20px;">
+        <strong>Aviso de afiliado:</strong> este site pode conter links de afiliados. Isso significa que podemos ganhar uma comissão se você comprar através dos nossos links, sem custo adicional para você.
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTATO -->
+  <div data-view="contato">
+    <div class="legal">
+      <h1>Contato</h1>
+      <p>Tem dúvidas, sugestões ou quer solicitar um produto? Mande um e-mail direto pra gente:</p>
+      <p style="font-size:20px;font-weight:600;color:var(--rose-deep);margin-top:20px;">
+        <a href="mailto:contato@mixdmmoda.com.br">contato@mixdmmoda.com.br</a>
+      </p>
+    </div>
+  </div>
 
   <!-- PRIVACIDADE -->
   <div data-view="privacidade">
@@ -459,42 +256,22 @@
       <h1>Política de Privacidade</h1>
       <p class="updated">Última atualização: julho de 2026</p>
 
-      <p>A MIXDM Moda Feminina respeita a sua privacidade e se compromete a proteger os dados pessoais dos visitantes deste site. Esta política explica quais informações coletamos, como as usamos e quais são os seus direitos.</p>
+      <p>A MIXDM Moda Feminina respeita a sua privacidade e se compromete a proteger os dados pessoais dos visitantes deste site.</p>
 
-      <h2>1. Informações que coletamos</h2>
-      <p>Podemos coletar as seguintes informações quando você visita ou interage com o site:</p>
-      <ul>
-        <li>Endereço de e-mail, quando você se cadastra na nossa newsletter</li>
-        <li>Dados de navegação, como páginas visitadas, tempo de permanência e origem do acesso</li>
-        <li>Informações de dispositivo e navegador, coletadas de forma automática</li>
-        <li>Cookies utilizados para melhorar a experiência de navegação</li>
-      </ul>
+      <h2>1. Links de Afiliado</h2>
+      <p>Este site pode conter links de afiliados para lojas e plataformas parceiras. Ao clicar em um desses links e realizar uma compra, a MIXDM Moda Feminina pode receber uma comissão, sem qualquer custo adicional para você.</p>
 
-      <h2>2. Como usamos as informações</h2>
-      <p>As informações coletadas são utilizadas para:</p>
-      <ul>
-        <li>Enviar novidades e ofertas, quando você optar por se cadastrar</li>
-        <li>Melhorar o conteúdo, o funcionamento e a experiência do site</li>
-        <li>Entender o comportamento de navegação de forma agregada e anônima</li>
-      </ul>
+      <h2>2. Informações que coletamos</h2>
+      <p>Não coletamos nome, e-mail, IP ou qualquer informação pessoal através do site. Os únicos dados processados são aqueles gerenciados diretamente pelas lojas parceiras quando você clica em um link de afiliado.</p>
 
-      <h2>3. Links de afiliados</h2>
-      <p>Este site pode conter links de afiliados para lojas e plataformas parceiras. Ao clicar em um desses links e realizar uma compra, a MIXDM Moda Feminina pode receber uma comissão, sem qualquer custo adicional para você. Preços, condições e disponibilidade dos produtos são de responsabilidade exclusiva das lojas parceiras.</p>
+      <h2>3. Cookies</h2>
+      <p>As lojas parceiras (como Amazon) podem utilizar cookies próprios para rastrear as compras realizadas através dos nossos links. Nós não armazenamos, coletamos ou compartilhamos nenhum dado pessoal dos visitantes.</p>
 
-      <h2>4. Cookies</h2>
-      <p>Utilizamos cookies para lembrar preferências, entender como o site é utilizado e melhorar a navegação. Você pode desativar os cookies diretamente nas configurações do seu navegador, embora isso possa afetar algumas funcionalidades do site.</p>
+      <h2>4. Seus direitos</h2>
+      <p>Você pode, a qualquer momento, solicitar informações sobre os dados que temos armazenados ou pedir a exclusão. Para isso, entre em contato através dos nossos canais oficiais.</p>
 
-      <h2>5. Compartilhamento de dados</h2>
-      <p>Não vendemos os seus dados pessoais. As informações podem ser compartilhadas apenas com serviços utilizados para operação do site (como ferramentas de e-mail marketing e análise de tráfego), sempre com o objetivo de manter e melhorar a experiência oferecida.</p>
-
-      <h2>6. Seus direitos</h2>
-      <p>Você pode, a qualquer momento, solicitar a exclusão do seu e-mail da nossa lista de contatos, bem como pedir informações sobre os dados que temos armazenados. Para isso, entre em contato através dos nossos canais oficiais.</p>
-
-      <h2>7. Alterações nesta política</h2>
-      <p>Esta política de privacidade pode ser atualizada periodicamente para refletir mudanças nas nossas práticas ou por exigências legais. Recomendamos a revisão desta página com regularidade.</p>
-
-      <h2>8. Contato</h2>
-      <p>Em caso de dúvidas sobre esta política, entre em contato conosco pelos canais indicados na página inicial do site.</p>
+      <h2>5. Alterações nesta política</h2>
+      <p>Esta política de privacidade pode ser atualizada periodicamente. Recomendamos a revisão desta página com regularidade.</p>
     </div>
   </div>
 
@@ -505,23 +282,27 @@
     <div>
       <div class="footer-brand">MIX<span>DM</span> Moda Feminina</div>
       <p>Curadoria de moda feminina, com ofertas reunidas com cuidado e elegância.</p>
+      <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">última atualização: <span id="last-update">—</span></p>
     </div>
     <div class="footer-col">
       <h5>Categorias</h5>
       <ul>
-        <li><a data-link="#/categorias">Vestidos</a></li>
-        <li><a data-link="#/categorias">Calçados</a></li>
-        <li><a data-link="#/categorias">Bolsas</a></li>
-        <li><a data-link="#/categorias">Conjuntos</a></li>
-        <li><a data-link="#/categorias">Calças</a></li>
-        <li><a data-link="#/categorias">Fitness</a></li>
+        <li><a onclick="setCategory('Vestidos')">Vestidos</a></li>
+        <li><a onclick="setCategory('Calçados')">Calçados</a></li>
+        <li><a onclick="setCategory('Bolsas')">Bolsas</a></li>
+        <li><a onclick="setCategory('Conjuntos')">Conjuntos</a></li>
+        <li><a onclick="setCategory('Calças')">Calças</a></li>
+        <li><a onclick="setCategory('Fitness')">Fitness</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h5>Institucional</h5>
+      <h5>Site</h5>
       <ul>
-        <li><a data-link="#/sobre">Sobre nós</a></li>
-        <li><a data-link="#/privacidade">Política de privacidade</a></li>
+        <li><a data-link="#/">Início</a></li>
+        <li><a data-link="#/pedidos">Pedidos</a></li>
+        <li><a data-link="#/sobre">Sobre</a></li>
+        <li><a data-link="#/contato">Contato</a></li>
+        <li><a data-link="#/privacidade">Privacidade</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -539,266 +320,8 @@
   </div>
 </footer>
 
-<script>
-  // ---------------------------------------------------------------
-  // Dados dos produtos e cupons do site MIXDM Moda Feminina.
-  // Podem futuramente ser atualizados de forma automática (ex: via
-  // automação de scraping/n8n), bastando manter esta mesma estrutura.
-  // ---------------------------------------------------------------
-  const MIXDM_PRODUCTS = [
-    {
-      id: "1",
-      name: "Vestido Midi Floral Manga Longa",
-      category: "Vestidos",
-      tag: "-30%",
-      priceNow: "R$ 89,90",
-      priceOld: "R$ 129,90",
-      image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=900&auto=format&fit=crop",
-      description: "Vestido midi em tecido leve, estampa floral e manga longa. Um curinga para o dia a dia que também funciona em ocasiões mais especiais.",
-      link: "#",
-      commission: 30
-    },
-    {
-      id: "2",
-      name: "Sandália Salto Fino Nude",
-      category: "Calçados",
-      tag: "Novo",
-      priceNow: "R$ 119,90",
-      priceOld: "",
-      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=900&auto=format&fit=crop",
-      description: "Sandália de salto fino na cor nude, fácil de combinar com looks casuais e de festa. Solado confortável para uso prolongado.",
-      link: "#",
-      commission: 25
-    },
-    {
-      id: "3",
-      name: "Bolsa Transversal Couro Ecológico",
-      category: "Bolsas",
-      tag: "-20%",
-      priceNow: "R$ 79,90",
-      priceOld: "R$ 99,90",
-      image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=900&auto=format&fit=crop",
-      description: "Bolsa transversal em couro ecológico, compacta e com compartimentos internos para organizar o essencial.",
-      link: "#",
-      commission: 20
-    },
-    {
-      id: "4",
-      name: "Blazer Alfaiataria Feminino",
-      category: "Roupas",
-      tag: "-15%",
-      priceNow: "R$ 149,90",
-      priceOld: "R$ 179,90",
-      image: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?q=80&w=900&auto=format&fit=crop",
-      description: "Blazer de alfaiataria com caimento reto, ideal para compor looks de trabalho ou eventos mais formais.",
-      link: "#",
-      commission: 35
-    },
-    {
-      id: "5",
-      name: "Conjunto Tricot Cropped + Saia",
-      category: "Conjuntos",
-      tag: "Novo",
-      priceNow: "R$ 139,90",
-      priceOld: "",
-      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=900&auto=format&fit=crop",
-      description: "Conjunto em tricot com cropped e saia midi, perfeito para um look moderno e confortável.",
-      link: "#",
-      commission: 28
-    },
-    {
-      id: "6",
-      name: "Calça Jeans Skinny Cintura Alta",
-      category: "Calças",
-      tag: "-25%",
-      priceNow: "R$ 69,90",
-      priceOld: "R$ 89,90",
-      image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=900&auto=format&fit=crop",
-      description: "Calça jeans skinny com cintura alta, modelagem que valoriza a silhueta e conforto no dia a dia.",
-      link: "#",
-      commission: 32
-    },
-    {
-      id: "7",
-      name: "Top Fitness com Bojo",
-      category: "Fitness",
-      tag: "Novo",
-      priceNow: "R$ 49,90",
-      priceOld: "",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=900&auto=format&fit=crop",
-      description: "Top fitness com bojo removível, alças ajustáveis e tecido que proporciona conforto durante os treinos.",
-      link: "#",
-      commission: 22
-    },
-    {
-      id: "8",
-      name: "Calça Legging Cós Alto",
-      category: "Fitness",
-      tag: "-10%",
-      priceNow: "R$ 59,90",
-      priceOld: "R$ 79,90",
-      image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=900&auto=format&fit=crop",
-      description: "Legging de cós alto com compressão suave, ideal para academia e uso casual.",
-      link: "#",
-      commission: 40
-    }
-  ];
-
-  // ---------------------------------------------------------------
-  // Carrossel do hero (imagem principal com fade suave)
-  // ---------------------------------------------------------------
-  function initCarousel(){
-    const img = document.getElementById('hero-carousel');
-    let idx = 0;
-    function next(){
-      idx = (idx + 1) % MIXDM_PRODUCTS.length;
-      img.style.opacity = '0';
-      setTimeout(() => {
-        img.src = MIXDM_PRODUCTS[idx].image;
-        img.alt = MIXDM_PRODUCTS[idx].name;
-        img.style.opacity = '1';
-      }, 400);
-    }
-    setInterval(next, 4000);
-  }
-
-  // ---------------------------------------------------------------
-  // Render: grid de produtos destaques (maiores comissões)
-  // ---------------------------------------------------------------
-  function renderHomeGrid(){
-    const grid = document.getElementById('home-product-grid');
-    const sorted = [...MIXDM_PRODUCTS].sort((a,b) => b.commission - a.commission);
-    grid.innerHTML = sorted.map(p => `
-      <a data-link="#/produto/${p.id}" class="product-card">
-        <div class="product-media">
-          ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ""}
-          <img src="${p.image}" alt="${p.name}">
-        </div>
-        <div class="product-body">
-          <h4>${p.name}</h4>
-          <div class="price-row">
-            <span class="price-now">${p.priceNow}</span>
-            ${p.priceOld ? `<span class="price-old">${p.priceOld}</span>` : ""}
-          </div>
-          <span class="product-cta">Ver produto</span>
-        </div>
-      </a>
-    `).join('');
-  }
-
-  // ---------------------------------------------------------------
-  // Render: página de produto individual
-  // ---------------------------------------------------------------
-  function renderProduto(id){
-    const product = MIXDM_PRODUCTS.find(p => p.id === id);
-    const content = document.getElementById('produto-content');
-    const crumb = document.getElementById('crumb-name');
-
-    if (product) {
-      document.title = product.name + " — MIXDM Moda Feminina";
-      crumb.textContent = product.name;
-      content.innerHTML = `
-        <section class="product-detail">
-          <div class="wrap detail-grid">
-            <div class="detail-media">
-              ${product.tag ? `<span class="detail-tag">${product.tag}</span>` : ""}
-              <img src="${product.image}" alt="${product.name}">
-            </div>
-            <div class="detail-info">
-              <span class="eyebrow">${product.category}</span>
-              <h1>${product.name}</h1>
-              <div class="sku">Referência #${product.id}</div>
-              <div class="detail-price">
-                <span class="now">${product.priceNow}</span>
-                ${product.priceOld ? `<span class="old">${product.priceOld}</span>` : ""}
-              </div>
-              <p class="detail-desc">${product.description}</p>
-              <div class="detail-actions">
-                <a href="${product.link}" class="btn-primary" target="_blank" rel="noopener sponsored">Comprar agora</a>
-                <a data-link="#/destaques" class="btn-ghost">Voltar aos destaques</a>
-              </div>
-              <p class="detail-note">Preço e disponibilidade sujeitos a alteração pela loja parceira.</p>
-            </div>
-          </div>
-        </section>
-      `;
-    } else {
-      document.title = "Produto não encontrado — MIXDM Moda Feminina";
-      crumb.textContent = "Produto não encontrado";
-      content.innerHTML = `
-        <div class="not-found">
-          <h1>Produto não encontrado</h1>
-          <p>O produto que você procura não existe ou não está mais disponível.</p>
-          <a data-link="#/destaques" class="btn-primary">Ver destaques</a>
-        </div>
-      `;
-    }
-    bindLinks();
-  }
-
-  // ---------------------------------------------------------------
-  // Router: mostra a view certa com base no hash da URL
-  // Rotas: #/  #/categorias  #/destaques  #/sobre
-  //        #/privacidade  #/produto/:id
-  // ---------------------------------------------------------------
-  const HOME_ANCHORS = ['categorias','destaques','sobre'];
-
-  function router(){
-    const hash = window.location.hash || '#/';
-    const parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-    const route = parts[0] || '';
-
-    let view = 'home';
-    if (route === 'privacidade') view = 'privacidade';
-    else if (route === 'produto') view = 'produto';
-    else view = 'home';
-
-    document.querySelectorAll('[data-view]').forEach(el => {
-      el.classList.toggle('is-active', el.dataset.view === view);
-    });
-
-    document.querySelectorAll('nav ul a[data-link]').forEach(a => {
-      const target = a.dataset.link.replace(/^#\/?/, '').split('/')[0];
-      a.classList.toggle('is-current', target === route || (route === '' && target === ''));
-    });
-
-    if (view === 'produto') {
-      renderProduto(parts[1] || '');
-    } else if (view === 'privacidade') {
-      document.title = "Política de Privacidade — MIXDM Moda Feminina";
-    } else {
-      document.title = "MIXDM Moda Feminina";
-      if (HOME_ANCHORS.includes(route)) {
-        setTimeout(() => {
-          const el = document.getElementById(route);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 30);
-      } else {
-        window.scrollTo(0,0);
-      }
-    }
-  }
-
-  function bindLinks(){
-    document.querySelectorAll('[data-link]').forEach(el => {
-      el.onclick = (e) => {
-        e.preventDefault();
-        const dest = el.dataset.link;
-        if (window.location.hash === dest) {
-          router();
-        } else {
-          window.location.hash = dest;
-        }
-      };
-    });
-  }
-
-  renderHomeGrid();
-  initCarousel();
-  bindLinks();
-  window.addEventListener('hashchange', router);
-  router();
-</script>
-
+<script src="produto-shopee.js"></script>
+<script src="produto-mercadolivre.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
