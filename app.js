@@ -751,18 +751,28 @@ function copyPedidoLink(id) {
 window.copyPedidoLink = copyPedidoLink
 
 function router() {
-  const hash = window.location.hash || '#/'
-  const parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean)
-  const route = parts[0] || ''
+  const params = new URLSearchParams(window.location.search)
+  const produtoId = params.get('produto')
+  const pedidoId = params.get('pedido')
 
-  let view = 'home'
-  if (route === 'privacidade') view = 'privacidade'
-  else if (route === 'produto') view = 'produto'
-  else if (route === 'pedidos') view = 'pedidos'
-  else if (route === 'pedido') view = 'pedido'
-  else if (route === 'sobre') view = 'sobre'
-  else if (route === 'contato') view = 'contato'
-  else view = 'home'
+  let view = 'home', route = '', parts = []
+
+  if (produtoId) {
+    view = 'produto'
+  } else if (pedidoId) {
+    view = 'pedido'
+  } else {
+    const hash = window.location.hash || '#/'
+    parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean)
+    route = parts[0] || ''
+
+    if (route === 'privacidade') view = 'privacidade'
+    else if (route === 'produto') view = 'produto'
+    else if (route === 'pedidos') view = 'pedidos'
+    else if (route === 'pedido') view = 'pedido'
+    else if (route === 'sobre') view = 'sobre'
+    else if (route === 'contato') view = 'contato'
+  }
 
   if (state.currentView === 'home' && view !== 'home') {
     stopCarousel()
@@ -782,13 +792,13 @@ function router() {
   closeMobileMenu()
 
   if (view === 'produto') {
-    renderProduto(parts[1] || '')
+    renderProduto(produtoId || parts[1] || '')
   } else if (view === 'pedidos') {
     document.title = 'Pedidos — MIXDM Moda Feminina'
     renderPedidos()
   } else if (view === 'pedido') {
     document.title = 'Pedido — MIXDM Moda Feminina'
-    renderPedido(parts[1] || '')
+    renderPedido(pedidoId || parts[1] || '')
   } else if (view === 'privacidade') {
     document.title = 'Política de Privacidade — MIXDM Moda Feminina'
     removeProductJSONLD()
@@ -823,11 +833,8 @@ function bindLinks() {
     const handler = (e) => {
       e.preventDefault()
       const dest = el.dataset.link
-      if (window.location.hash === dest) {
-        router()
-      } else {
-        window.location.hash = dest
-      }
+      const parts = dest.replace(/^#\/?/, '').split('/').filter(Boolean)
+      navigate(parts[0] || 'home', parts[1] || null)
     }
     el.removeEventListener('click', handler)
     el.addEventListener('click', handler)
@@ -838,8 +845,15 @@ window.navigate = function (view, id) {
   if (view !== 'produto' && view !== 'pedido') {
     state.previousView = view
   }
-  const hash = id ? `#/${view}/${id}` : `#/${view}`
-  window.location.hash = hash
+  if (view === 'produto') {
+    history.pushState({ view: 'produto', id }, '', `?produto=${id}`)
+  } else if (view === 'pedido') {
+    history.pushState({ view: 'pedido', id }, '', `?pedido=${id}`)
+  } else {
+    const hash = view === 'home' ? '#/' : id ? `#/${view}/${id}` : `#/${view}`
+    history.pushState({ view }, '', window.location.pathname + hash)
+  }
+  router()
 }
 
 window.goBack = function () {
@@ -874,7 +888,7 @@ function initMobileMenu() {
   }
 }
 
-function updateCanonical(hash) {
+function updateCanonical() {
   let link = document.querySelector('link[rel="canonical"]')
   if (!link) {
     link = document.createElement('link')
@@ -882,7 +896,15 @@ function updateCanonical(hash) {
     document.head.appendChild(link)
   }
   const base = window.location.origin + window.location.pathname
-  link.href = hash && hash !== '#/' ? `${base}${hash}` : base
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('produto')) {
+    link.href = `${base}?produto=${params.get('produto')}`
+  } else if (params.get('pedido')) {
+    link.href = `${base}?pedido=${params.get('pedido')}`
+  } else {
+    const hash = window.location.hash
+    link.href = hash && hash !== '#/' ? `${base}${hash}` : base
+  }
 }
 
 function injectWebsiteJSONLD() {
