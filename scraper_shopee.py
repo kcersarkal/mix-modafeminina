@@ -96,6 +96,31 @@ def buscar_produtos(keyword, sort_type, page):
     return resp.json()
 
 
+EXCLUIR_PALAVRAS = [
+    "masculino", "infantil", "criança", "crianca", "pet", "cachorro",
+    "bebê", "bebe", "menino", "menina", "baby", "kids", "unisex",
+    "brinquedo", "acessório pet", "ração", "berçário",
+]
+
+
+def filtrar_produto(item):
+    rating = float(item.get("ratingStar", 0))
+    sales = int(item.get("sales", 0))
+    nome = (item.get("productName", "") or "").lower()
+
+    if rating < 4.7:
+        return False
+
+    if rating >= 5.0 and sales <= 40:
+        return False
+
+    for palavra in EXCLUIR_PALAVRAS:
+        if palavra in nome:
+            return False
+
+    return True
+
+
 def mapear_produto(item, categoria):
     item_id = str(item.get("itemId", ""))
     preco_str = item.get("priceMin", "0")
@@ -142,6 +167,41 @@ def salvar_supabase(produtos):
     return inseridos
 
 
+def limpar_produtos_antigos():
+    supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+    total_removidos = 0
+
+    resp = supabase.table("produtos").select("id,name,rating,reviews_count").execute()
+    produtos = resp.data or []
+
+    for p in produtos:
+        rating = float(p.get("rating", 0))
+        sales = int(p.get("reviews_count", 0))
+        nome = (p.get("name", "") or "").lower()
+        motivo = None
+
+        if rating < 4.7:
+            motivo = f"rating {rating} < 4.7"
+        elif rating >= 5.0 and sales <= 40:
+            motivo = f"rating 5.0 com apenas {sales} vendas"
+        else:
+            for palavra in EXCLUIR_PALAVRAS:
+                if palavra in nome:
+                    motivo = f"contem '{palavra}'"
+                    break
+
+        if motivo:
+            supabase.table("produtos").delete().eq("id", p["id"]).execute()
+            total_removidos += 1
+
+    if total_removidos:
+        print(f"Produtos removidos (nao atendem filtros): {total_removidos}")
+    else:
+        print("Nenhum produto antigo precisa ser removido.")
+
+    return total_removidos
+
+
 def gerar_combinacoes():
     combinacoes = []
     for categoria, keywords in KEYWORDS_POR_CATEGORIA.items():
@@ -165,6 +225,10 @@ def rodar():
     print(f"Shopee Moda Feminina — Scraper via API")
     print(f"Max queries: {MAX_QUERIES}\n")
 
+    print("Limpando produtos antigos que nao atendem os filtros...")
+    limpar_produtos_antigos()
+    print()
+
     combinacoes = gerar_combinacoes()
     todos_produtos = []
     ids_vistos = set()
@@ -183,17 +247,21 @@ def rodar():
                 continue
 
             nodes = data.get("data", {}).get("productOfferV2", {}).get("nodes", [])
-            print(f"  -> {len(nodes)} produtos")
-
+            filtrados = 0
             for item in nodes:
                 item_id = str(item.get("itemId", ""))
                 if item_id in ids_vistos:
+                    continue
+                if not filtrar_produto(item):
+                    filtrados += 1
                     continue
 
                 produto = mapear_produto(item, categoria)
                 if produto:
                     ids_vistos.add(item_id)
                     todos_produtos.append(produto)
+
+            print(f"  -> {len(nodes)} produtos ({filtrados} filtrados, {len(nodes) - filtrados} aprovados)")
 
         except Exception as e:
             print(f"  ERRO: {e}")
