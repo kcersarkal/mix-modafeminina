@@ -97,9 +97,53 @@ def buscar_produtos(keyword, sort_type, page):
 
 
 EXCLUIR_PALAVRAS = [
-    "masculino", "infantil", "criança", "crianca", "pet", "cachorro",
-    "bebê", "bebe", "menino", "menina", "baby", "kids", "unisex",
-    "brinquedo", "acessório pet", "ração", "berçário",
+    # Blacklist internacional
+    "import", "importado", "importação", "importacao",
+    "china", "overseas", "cross-border", "internacional",
+    "from china", "direct from", "global shipping",
+    "worldwide", "cross border", "desentupidor", "sanitario",
+
+    # Blacklist ultra rigorosa
+    "masculino", "masculina", "masculinos", "masculinas",
+    "homem", "homens", "for men", "men's", "male", "boy", "boys",
+    "para homem", "para homens", "dos homens", "do homem",
+    "macho", "cavalheiro", "senhor",
+    "infantil", "crianca", "criança",
+    "kids", "children", "child", "menino", "garoto", "garota",
+    "bebe", "bebê", "baby", "recem nascido", "recém-nascido",
+    "criancas", "crianças", "unissex", "unisex", "uni sex", "uni-sex",
+    "cueca", "cuecas", "samba canção", "samba-canção", "gravata",
+    "suspensorio", "suspensório", "terno", "blazer masculino",
+    "calca social masculina", "camisa polo masculina",
+    "regata masculina", "sapato social masculino", "tenis masculino",
+    "chinelo masculino", "bota masculina", "sandalia masculina",
+    "carteira masculina", "cinto masculino", "relogio masculino",
+    "oculos masculino", "óculos masculino", "bone masculino", "boné masculino",
+    "mochila masculina", "bolsa masculina",
+    "revenda", "atacado", "kit com", "pacote com", "lote com",
+    "ouro macico", "ouro 18k", "ouro puro", "ouro 24k",
+    "adulto", "jovem", "teen", "teenager",
+    "cachorro", "pet", "gato", "bazar", "brecho",
+    "defeitos", "pequenos defeitos", "molde",
+]
+
+TERMOS_FEMININOS = [
+    "feminino", "feminina", "menina", "mulher", "mulheres",
+    "lady", "ladies", "woman", "women", "women's",
+    "para mulher", "para mulheres", "das mulheres", "da mulher",
+    "vestido", "saia", "blusa", "cropped",
+    "body", "top", "camisa feminina", "camiseta feminina",
+    "regata feminina", "legging", "calcinha", "sutia", "sutiã", "lingerie",
+    "pijama", "sandalia", "sandália", "salto", "scarpin", "sapatilha",
+    "rasteira", "bota feminina", "bolsa feminina",
+    "clutch", "necessaire", "carteira feminina",
+    "tiara", "faixa cabelo", "presilha",
+]
+
+TERMOS_AMBIGUOS = [
+    "unissex", "unisex", "adulto", "esportivo", "casual",
+    "tenis", "tênis", "bone", "boné", "oculos", "óculos",
+    "relogio", "relógio",
 ]
 
 
@@ -108,17 +152,31 @@ def filtrar_produto(item):
     sales = int(item.get("sales", 0))
     nome = (item.get("productName", "") or "").lower()
 
+    # Rating mínimo 4.7
     if rating < 4.7:
         return False
 
+    # Rating 5.0 precisa de vendas
     if rating >= 5.0 and sales <= 40:
         return False
 
+    # Blacklist: se conter qualquer termo proibido, rejeita
     for palavra in EXCLUIR_PALAVRAS:
         if palavra in nome:
             return False
 
-    return True
+    # Whitelist: se conter termo feminino, aprova
+    for palavra in TERMOS_FEMININOS:
+        if palavra in nome:
+            return True
+
+    # Termos ambíguos: sozinho não garante nada, deixa passar
+    for palavra in TERMOS_AMBIGUOS:
+        if palavra in nome:
+            return True
+
+    # Se não tem termo feminino nem ambíguo, rejeita
+    return False
 
 
 def mapear_produto(item, categoria):
@@ -175,22 +233,12 @@ def limpar_produtos_antigos():
     produtos = resp.data or []
 
     for p in produtos:
-        rating = float(p.get("rating", 0))
-        sales = int(p.get("reviews_count", 0))
-        nome = (p.get("name", "") or "").lower()
-        motivo = None
-
-        if rating < 4.7:
-            motivo = f"rating {rating} < 4.7"
-        elif rating >= 5.0 and sales <= 40:
-            motivo = f"rating 5.0 com apenas {sales} vendas"
-        else:
-            for palavra in EXCLUIR_PALAVRAS:
-                if palavra in nome:
-                    motivo = f"contem '{palavra}'"
-                    break
-
-        if motivo:
+        item_fake = {
+            "ratingStar": float(p.get("rating", 0)),
+            "sales": int(p.get("reviews_count", 0)),
+            "productName": p.get("name", ""),
+        }
+        if not filtrar_produto(item_fake):
             supabase.table("produtos").delete().eq("id", p["id"]).execute()
             total_removidos += 1
 
