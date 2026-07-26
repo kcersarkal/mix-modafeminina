@@ -127,6 +127,10 @@ EXCLUIR_PALAVRAS = [
     "defeitos", "pequenos defeitos", "molde",
     "broche", "acessorios", "acessórios", "adesivos",
     "pingente", "bricolage", "botão", "botões", "encanto",
+    "jóias", "joias", "colar", "anel", "brincos", "pulseira",
+    "elástico de cabelo",
+    "fita invisível", "fita dupla face",
+    "descartável",
 ]
 
 TERMOS_FEMININOS = [
