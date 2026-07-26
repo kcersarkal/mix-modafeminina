@@ -1445,6 +1445,9 @@ footer::before {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   min-height: 150px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 28px;
   transition: transform 0.45s ease, opacity 0.45s ease;
   overflow: hidden;
 }
