@@ -279,14 +279,14 @@ function spotlightMarkup(p) {
       <div class="spotlight-body">
         <h2 class="spotlight-title">${p.name}</h2>
         <div class="spotlight-desc">${generateSummary(p)}</div>
-        <div class="price-row" style="margin-bottom:12px;">
+        <div class="price-row" style="margin-bottom:6px;gap:6px;">
           ${hasDiscount && discountPercent(p) ? discountBadge(discountPercent(p), 'lg') : ''}
           <div>
-            <div class="price-row" style="margin-bottom:2px;"><span class="price-current" style="font-size:36px;color:var(--rose-deep);">R$ ${fmtPrice(p.price_current)}</span></div>
-            ${hasDiscount ? `<span class="price-original">R$ ${fmtPrice(p.price_original)}</span>` : ''}
+            <div class="price-row" style="margin-bottom:0;gap:4px;"><span class="price-current" style="font-size:20px;color:var(--rose-deep);">R$ ${fmtPrice(p.price_current)}</span></div>
+            ${hasDiscount ? `<span class="price-original" style="font-size:12px;">R$ ${fmtPrice(p.price_original)}</span>` : ''}
           </div>
         </div>
-        <span class="btn-primary" style="display:inline-block;padding:12px 28px;font-size:12px;">Ver oferta</span>
+        <span class="btn-primary" style="display:inline-block;padding:8px 18px;font-size:11px;">Ver oferta</span>
       </div>
     </div>`
 }

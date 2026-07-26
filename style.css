@@ -1422,16 +1422,16 @@ footer::before {
 
 /* SPOTLIGHT / CAROUSEL */
 .spotlight {
-  margin: 20px 0 30px;
+  margin: 16px 0 24px;
   position: relative;
   overflow: hidden;
 }
 .spotlight-label {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
+  font-size: 14px;
   color: var(--rose-deep);
   letter-spacing: .5px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -1439,12 +1439,12 @@ footer::before {
 }
 .spotlight-card {
   background: var(--cream);
-  border-radius: 18px;
+  border-radius: 14px;
   border: 1px solid var(--blush-deep);
   box-shadow: var(--shadow-card);
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  min-height: 260px;
+  grid-template-columns: 1fr 1.2fr;
+  min-height: 150px;
   transition: transform 0.45s ease, opacity 0.45s ease;
   overflow: hidden;
 }
@@ -1457,11 +1457,11 @@ footer::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 14px;
   position: relative;
   height: 100%;
   overflow: hidden;
-  border-radius: 18px 0 0 18px;
+  border-radius: 14px 0 0 14px;
 }
 .spotlight-img img {
   max-width: 100%;
@@ -1471,24 +1471,32 @@ footer::before {
   object-fit: contain;
 }
 .spotlight-body {
-  padding: 28px 32px 28px 20px;
+  padding: 16px 20px 16px 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .spotlight-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.2;
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .spotlight-desc {
   color: var(--ink-soft);
-  font-size: 13px;
-  line-height: 1.6;
-  margin-bottom: 14px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .carousel-arrow {
   position: absolute;
@@ -1882,14 +1890,14 @@ footer::before {
 @media (max-width: 980px) {
   .spotlight-card {
     grid-template-columns: 1fr;
-    min-height: 240px;
+    min-height: auto;
   }
   .spotlight-img {
-    padding: 24px;
-    min-height: 160px;
-    border-radius: 18px 18px 0 0;
+    padding: 14px;
+    min-height: 120px;
+    border-radius: 14px 14px 0 0;
   }
-  .spotlight-title { font-size: 20px; }
+  .spotlight-title { font-size: 14px; }
   .detail-card { grid-template-columns: 1fr; padding: 28px; }
 }
 @media (max-width: 640px) {
@@ -1901,11 +1909,11 @@ footer::before {
   .brand-logo { width: 40px; height: 40px; }
   .brand-name { font-size: 22px; }
   .brand-sub { font-size: 9px; }
-  .spotlight { margin: 20px 0 30px; }
-  .spotlight-body { padding: 20px 18px; }
-  .spotlight-card { min-height: 240px; }
-  .spotlight-img { padding: 16px; min-height: 140px; }
-  .spotlight-title { font-size: 18px; }
+  .spotlight { margin: 12px 0 20px; }
+  .spotlight-body { padding: 14px 16px; }
+  .spotlight-card { min-height: auto; }
+  .spotlight-img { padding: 12px; min-height: 100px; }
+  .spotlight-title { font-size: 14px; }
   .card-img { height: 150px; }
   .card .price-current { font-size: 17px; }
   .detail-card { padding: 20px; gap: 28px; }
