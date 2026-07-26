@@ -124,8 +124,9 @@ EXCLUIR_PALAVRAS = [
     "ouro macico", "ouro 18k", "ouro puro", "ouro 24k",
     "adulto", "jovem", "teen", "teenager",
     "cachorro", "pet", "gato", "bazar", "brecho",
-    "defeitos", "pequenos defeitos",     "molde",
-    "broche", "acessorios", "adesivos",
+    "defeitos", "pequenos defeitos", "molde",
+    "broche", "acessorios", "acessórios", "adesivos",
+    "pingente", "bricolage", "botão", "botões", "encanto",
 ]
 
 TERMOS_FEMININOS = [
