@@ -156,8 +156,8 @@ def filtrar_produto(item):
     if rating < 4.7:
         return False
 
-    # Rating 5.0 precisa de vendas
-    if rating >= 5.0 and sales <= 40:
+    # Mínimo de vendas
+    if sales <= 40:
         return False
 
     # Blacklist: se conter qualquer termo proibido, rejeita
