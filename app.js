@@ -234,7 +234,6 @@ function productCard(p) {
       <div class="card-link">
         <div class="card-img">
           ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
-          ${discountPercent(p) ? discountBadge(discountPercent(p), 'sm') : ''}
           <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.alt='Imagem indisponível';this.style.display='none'">
         </div>
         <div class="card-body">
