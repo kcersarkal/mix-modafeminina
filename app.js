@@ -7,7 +7,6 @@ import {
   inserirPedido
 } from './supabase.js'
 
-const AFFILIATE_TAG = 'mixdmmoda-20'
 const MAX_HOURS_STALE = 12
 const USE_SUPABASE = true
 
@@ -227,19 +226,9 @@ function generateSummary(p) {
   return txt
 }
 
-function ensureAffiliateTag(url) {
-  if (!url || url === '#') return '#'
-  try {
-    const u = new URL(url)
-    if (!u.searchParams.get('tag')) u.searchParams.set('tag', AFFILIATE_TAG)
-    return u.toString()
-  } catch (e) {
-    return url
-  }
-}
+
 
 function productCard(p) {
-  const safeUrl = ensureAffiliateTag(p.affiliate_url)
   return `
     <article class="card" onclick="navigate('produto','${p.id}')" role="link" tabindex="0" aria-label="Ver oferta: ${p.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('produto','${p.id}');}">
       <div class="card-link">
@@ -538,7 +527,7 @@ function renderProduto(id) {
     return
   }
 
-  const safeUrl = ensureAffiliateTag(p.affiliate_url)
+  const safeUrl = p.affiliate_url || '#'
 
   document.title = `${p.name} — MIXDM Moda Feminina`
   if (crumb) crumb.textContent = p.name
@@ -583,7 +572,7 @@ function renderProduto(id) {
             </div>
           </div>
           <p class="detail-note">Preço e disponibilidade sujeitos a alteração pela loja parceira.</p>
-          <div class="detail-disclosure">Links de afiliado: como Associado Amazon, ganhamos com compras qualificadas. Isso não altera o preço que você paga.</div>
+          <div class="detail-disclosure">Links de afiliado Shopee — comissão sem alteração no preço.</div>
         </div>
       </div>
     </div>`
