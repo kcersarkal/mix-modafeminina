@@ -9,6 +9,7 @@ import {
 
 const MAX_HOURS_STALE = 12
 const USE_SUPABASE = true
+const SUB_ID = 'mixdmmoda-20'
 
 const $ = (sel, ctx = document) => ctx.querySelector(sel)
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)]
@@ -527,7 +528,8 @@ function renderProduto(id) {
     return
   }
 
-  const safeUrl = p.affiliate_url || '#'
+  const rawUrl = p.affiliate_url || '#'
+  const safeUrl = rawUrl !== '#' ? `${rawUrl}${rawUrl.includes('?') ? '&' : '?'}tag=${SUB_ID}` : '#'
 
   document.title = `${p.name} — MIXDM Moda Feminina`
   if (crumb) crumb.textContent = p.name
