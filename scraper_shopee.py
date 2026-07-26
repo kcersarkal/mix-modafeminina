@@ -97,11 +97,8 @@ def buscar_produtos(keyword, sort_type, page):
 
 
 EXCLUIR_PALAVRAS = [
-    # Blacklist internacional
-    "import", "importado", "importação", "importacao",
-    "china", "overseas", "cross-border", "internacional",
-    "from china", "direct from", "global shipping",
-    "worldwide", "cross border", "desentupidor", "sanitario",
+    # Itens não relacionados a moda
+    "desentupidor", "sanitario",
 
     # Blacklist ultra rigorosa
     "masculino", "masculina", "masculinos", "masculinas",
@@ -131,6 +128,13 @@ EXCLUIR_PALAVRAS = [
     "elástico de cabelo",
     "fita invisível", "fita dupla face",
     "descartável",
+]
+
+TERMOS_INTERNACIONAIS = [
+    "import", "importado", "importação", "importacao",
+    "china", "overseas", "cross-border", "internacional",
+    "from china", "direct from", "global shipping",
+    "worldwide", "cross border",
 ]
 
 TERMOS_FEMININOS = [
@@ -197,16 +201,25 @@ def mapear_produto(item, categoria):
     desconto_rate = float(item.get("priceDiscountRate", 0))
     preco_max = item.get("priceMax")
 
+    nome = (item.get("productName", "") or "").lower()
+    shop_name = (item.get("shopName", "") or "").lower()
+    is_international = any(p in nome or p in shop_name for p in TERMOS_INTERNACIONAIS)
+    flag = "🌎 " if is_international else ""
+
     if desconto_rate > 0:
         preco_original = float(preco_max) if preco_max else None
-        tag = f"-{int(desconto_rate)}%"
+        tag = f"{flag}-{int(desconto_rate)}%"
     else:
         preco_original = None
-        tag = "Novo"
+        tag = f"{flag}Novo"
 
     url = item.get("offerLink") or item.get("productLink", "")
     if not url and item_id and shop_id:
         url = f"https://shopee.com.br/product/{shop_id}/{item_id}"
+
+    nome = (item.get("productName", "") or "").lower()
+    shop_name = (item.get("shopName", "") or "").lower()
+    is_international = any(p in nome or p in shop_name for p in TERMOS_INTERNACIONAIS)
 
     return {
         "source": "shopee",
@@ -240,11 +253,23 @@ def salvar_supabase(produtos):
 def limpar_produtos_antigos():
     supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
     total_removidos = 0
+    atualizados = 0
 
-    resp = supabase.table("produtos").select("id,name,rating,reviews_count").execute()
+    resp = supabase.table("produtos").select("id,name,tag,rating,reviews_count").execute()
     produtos = resp.data or []
 
     for p in produtos:
+        nome = (p.get("name", "") or "").lower()
+        tag_atual = p.get("tag", "") or ""
+
+        # Atualizar tag com flag internacional se necessário
+        if any(term in nome for term in TERMOS_INTERNACIONAIS):
+            if not tag_atual.startswith("🌎 "):
+                nova_tag = f"🌎 {tag_atual}"
+                supabase.table("produtos").update({"tag": nova_tag}).eq("id", p["id"]).execute()
+                atualizados += 1
+
+        # Remover produtos que não passam nos filtros
         item_fake = {
             "ratingStar": float(p.get("rating", 0)),
             "sales": int(p.get("reviews_count", 0)),
@@ -258,6 +283,8 @@ def limpar_produtos_antigos():
         print(f"Produtos removidos (nao atendem filtros): {total_removidos}")
     else:
         print("Nenhum produto antigo precisa ser removido.")
+    if atualizados:
+        print(f"Produtos marcados como internacional: {atualizados}")
 
     return total_removidos
 

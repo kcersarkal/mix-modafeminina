@@ -18,11 +18,15 @@ CREATE TABLE IF NOT EXISTS produtos (
   reviews_count INTEGER DEFAULT 0,
   affiliate_url TEXT DEFAULT '#',
   tag TEXT,
+  is_international BOOLEAN DEFAULT false,
   spotlight BOOLEAN DEFAULT false,
   last_checked_at TIMESTAMPTZ DEFAULT NOW(),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(source, external_id)
 );
+
+-- Migração: adicionar coluna is_international em banco existente
+ALTER TABLE produtos ADD COLUMN IF NOT EXISTS is_international BOOLEAN DEFAULT false;
 
 -- 2. TABELA: pedidos (solicitados por visitantes)
 CREATE TABLE IF NOT EXISTS pedidos (

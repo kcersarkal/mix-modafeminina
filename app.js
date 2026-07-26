@@ -70,11 +70,17 @@ function fmtPrice(value) {
 }
 
 function discountPercent(p) {
-  if (p.tag && p.tag.startsWith('-')) {
-    const m = p.tag.match(/-?(\d+)/)
+  const t = p.tag || ''
+  const cleaned = t.replace(/^🌎 /, '')
+  if (cleaned.startsWith('-')) {
+    const m = cleaned.match(/-?(\d+)/)
     return m ? parseInt(m[1], 10) : null
   }
   return null
+}
+
+function isInternational(p) {
+  return (p.tag || '').includes('🌎')
 }
 
 function hoursSince(iso) {
@@ -234,6 +240,7 @@ function productCard(p) {
       <div class="card-link">
         <div class="card-img">
           ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
+          ${isInternational(p) ? '<span class="int-badge">🌎 Internacional</span>' : ''}
           <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.alt='Imagem indisponível';this.style.display='none'">
         </div>
         <div class="card-body">
@@ -266,6 +273,7 @@ function spotlightMarkup(p) {
         <div class="spotlight-desc">${generateSummary(p)}</div>
         <div class="price-row" style="margin-bottom:6px;gap:6px;">
           ${discountPercent(p) ? discountBadge(discountPercent(p), 'lg') : ''}
+          ${isInternational(p) ? '<span class="int-badge" style="position:static;display:inline-block;margin-top:4px;">🌎 Internacional</span>' : ''}
           <div>
             <div class="price-row" style="margin-bottom:0;gap:4px;"><span class="price-current" style="font-size:24px;color:var(--rose-deep);">R$ ${fmtPrice(p.price_current)}</span></div>
           </div>
@@ -541,6 +549,7 @@ function renderProduto(id) {
       <div class="detail-card">
         <div class="detail-media">
           ${p.tag ? `<span class="detail-tag">${p.tag}</span>` : ''}
+          ${isInternational(p) ? '<span class="int-badge" style="position:absolute;top:50px;left:10px;">🌎 Internacional</span>' : ''}
           <img src="${p.image}" alt="${p.name}" onerror="this.alt='${p.name} — imagem indisponível'; this.style.background='var(--blush-deep)'">
         </div>
         <div class="detail-info">

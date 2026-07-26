@@ -722,6 +722,19 @@ nav ul a.is-current::after {
   border-radius: 20px;
   z-index: 2;
 }
+.int-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 9px;
+  letter-spacing: .05em;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 2;
+}
 
 .product-body {
   padding: 20px 20px 22px;
