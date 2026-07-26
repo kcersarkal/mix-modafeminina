@@ -182,6 +182,7 @@ def filtrar_produto(item):
 
 def mapear_produto(item, categoria):
     item_id = str(item.get("itemId", ""))
+    shop_id = str(item.get("shopId", ""))
     preco_str = item.get("priceMin", "0")
     preco_atual = float(preco_str) if preco_str and float(preco_str) > 0 else 0
 
@@ -198,6 +199,10 @@ def mapear_produto(item, categoria):
         preco_original = None
         tag = "Novo"
 
+    url = item.get("offerLink") or item.get("productLink", "")
+    if not url and item_id and shop_id:
+        url = f"https://shopee.com.br/product/{shop_id}/{item_id}"
+
     return {
         "source": "shopee",
         "external_id": item_id,
@@ -209,7 +214,7 @@ def mapear_produto(item, categoria):
         "description": f"{item.get('productName', '')} - Encontre na Shopee",
         "rating": float(item.get("ratingStar", 0)),
         "reviews_count": int(item.get("sales", 0)),
-        "affiliate_url": item.get("offerLink") or item.get("productLink", ""),
+        "affiliate_url": url,
         "tag": tag,
         "spotlight": False,
         "last_checked_at": datetime.now(timezone.utc).isoformat(),
