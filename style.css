@@ -1926,4 +1926,33 @@ footer::before {
   .filter-bar { padding: 0 16px; }
   .section-heading { padding: 0 16px; }
 }
+@media (min-width: 1024px) {
+  body { font-size: 16px; }
+  .nav a { font-size: 15px; }
+  .search-input { font-size: 16px; }
+  .search-btn { font-size: 14px; padding: 10px 20px; }
+  .brand-name { font-size: 28px; }
+  .brand-sub { font-size: 12px; }
+  .card-category { font-size: 12px; }
+  .card-title { font-size: 16px; }
+  .card .price-current { font-size: 22px; }
+  .card-rating .stars-wrap,
+  .card-rating .stars-wrap * { font-size: 14px; }
+  .card-cta { font-size: 14px; }
+  .product-tag { font-size: 11px; }
+  .spotlight-title { font-size: 26px; }
+  .spotlight-desc { font-size: 15px; }
+  .spotlight-label { font-size: 16px; }
+  .filter-chip { font-size: 14px; }
+  .detail-title { font-size: 28px; }
+  .detail-category { font-size: 14px; }
+  .detail-price-now { font-size: 36px; }
+  .detail-save { font-size: 14px; }
+  .detail-note { font-size: 13px; }
+  .footer-text { font-size: 14px; }
+  .footer-col h4 { font-size: 15px; }
+  .footer-bottom { font-size: 13px; }
+  .legal p { font-size: 16px; }
+  .section-title { font-size: 18px; }
+}
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
