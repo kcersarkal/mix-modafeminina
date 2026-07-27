@@ -862,8 +862,10 @@ window.navigate = function (view, id) {
     history.pushState({ view: 'produto', id }, '', `?produto=${id}`)
   } else if (view === 'pedido') {
     history.pushState({ view: 'pedido', id }, '', `?pedido=${id}`)
+  } else if (view === 'home') {
+    history.pushState({ view }, '', window.location.pathname)
   } else {
-    const hash = view === 'home' ? '#/' : id ? `#/${view}/${id}` : `#/${view}`
+    const hash = id ? `#/${view}/${id}` : `#/${view}`
     history.pushState({ view }, '', window.location.pathname + hash)
   }
   router()
