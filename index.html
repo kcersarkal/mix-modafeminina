@@ -73,10 +73,6 @@
         <span class="brand-sub">Moda Feminina</span>
       </div>
     </a>
-    <div class="search-wrap">
-      <input class="search-input" id="search-input" type="text" placeholder="Buscar produtos..." oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();onSearchInput(this.value)}" autocomplete="off">
-      <button class="search-btn" onclick="onSearchInput(document.getElementById('search-input').value)">Buscar</button>
-    </div>
     <nav>
       <ul>
         <li><a data-link="#/">Início</a></li>
@@ -126,8 +122,14 @@
     <div class="spotlight" id="spotlight-slot"></div>
 
     <div class="section-heading">
-      <h2>Todas as ofertas</h2>
-      <span class="count" id="product-count"></span>
+      <div class="section-heading-top">
+        <h2>Todas as ofertas</h2>
+        <span class="count" id="product-count"></span>
+      </div>
+      <div class="search-wrap">
+        <input class="search-input" id="search-input" type="text" placeholder="Buscar produtos..." oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();onSearchInput(this.value)}" autocomplete="off">
+        <button class="search-btn" onclick="onSearchInput(document.getElementById('search-input').value)">Buscar</button>
+      </div>
     </div>
 
     <div class="filter-bar" id="filter-bar"></div>
