@@ -127,6 +127,10 @@ function discountBadge(pct, size) {
   return `<div class="discount-badge ${size || ''}"><span class="pct">-${pct}%</span><span class="off">OFF</span></div>`
 }
 
+function productId(p) {
+  return p.external_id || p.id
+}
+
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
@@ -237,7 +241,7 @@ function generateSummary(p) {
 
 function productCard(p) {
   return `
-    <article class="card" onclick="navigate('produto','${p.id}')" role="link" tabindex="0" aria-label="Ver oferta: ${p.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('produto','${p.id}');}">
+    <article class="card" onclick="navigate('produto','${productId(p)}')" role="link" tabindex="0" aria-label="Ver oferta: ${p.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('produto','${productId(p)}');}">
       <div class="card-link">
         <div class="card-img">
           ${p.tag && (!discountPercent(p) || discountPercent(p) <= 60) ? `<span class="product-tag">${p.tag}</span>` : ''}
@@ -267,7 +271,7 @@ function productCard(p) {
 
 function spotlightMarkup(p) {
   return `
-    <div class="spotlight-card" onclick="navigate('produto','${p.id}')" style="cursor:pointer;">
+    <div class="spotlight-card" onclick="navigate('produto','${productId(p)}')" style="cursor:pointer;">
       <div class="spotlight-img"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--ink-muted)\'>Imagem indisponível</div>'"></div>
       <div class="spotlight-body">
         <h2 class="spotlight-title">${p.name}</h2>
@@ -520,7 +524,7 @@ function renderProduto(id) {
   const container = DOM.produtoContent
   const crumb = DOM.crumbName
   const products = getActiveProducts()
-  const p = products.find(item => item.id === id || item.id === parseInt(id))
+  const p = products.find(item => item.external_id === id || String(item.id) === id || item.id === parseInt(id))
 
   if (!p) {
     document.title = 'Oferta não encontrada — MIXDM Moda Feminina'
@@ -594,7 +598,7 @@ function shareWhatsApp(id) {
   const products = getActiveProducts()
   const p = products.find(item => item.id === id || item.id === parseInt(id))
   if (!p) return
-  const productUrl = `${window.location.origin}${window.location.pathname}?produto=${p.id}`
+  const productUrl = `${window.location.origin}${window.location.pathname}?produto=${productId(p)}`
   const pct = discountPercent(p)
   const discountTxt = pct && pct <= 60 ? ` (-${pct}%)` : ''
   const text = `*${p.name}*\n\n*R$ ${fmtPrice(p.price_current)}*${discountTxt}\n\n${productUrl}`
@@ -607,7 +611,7 @@ function copyProductLink(id) {
   const products = getActiveProducts()
   const p = products.find(item => item.id === id || item.id === parseInt(id))
   if (!p) return
-  const productUrl = `${window.location.origin}${window.location.pathname}?produto=${p.id}`
+  const productUrl = `${window.location.origin}${window.location.pathname}?produto=${productId(p)}`
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(productUrl).then(() => {
       const btn = event.currentTarget
