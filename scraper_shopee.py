@@ -30,16 +30,20 @@ KEYWORDS_POR_CATEGORIA = {
         "mochila feminina", "bolsa feminina",
     ],
     "Conjuntos": [
-        "conjunto feminino", "cropped feminino", "body feminino",
+        "conjunto feminino",
     ],
     "Calcas": [
         "calca jeans feminina", "calca pantalona feminina",
-        "calca cargo feminina", "short jeans feminino",
-        "short alfaiataria feminino",
+        "calca cargo feminina",
     ],
     "Fitness": [
         "calca legging feminina", "macaquinho fitness",
         "top fitness feminino", "short legging feminino",
+    ],
+    "Roupas": [
+        "blazer feminino", "cropped feminino", "body feminino",
+        "short jeans feminino", "short alfaiataria feminino",
+        "pijama feminino", "macacao feminino", "bermuda feminina",
     ],
 }
 
@@ -49,13 +53,7 @@ RECATEGORIZAR_POR_NOME = {
     "vestido": "Vestidos",
     "calça": "Calcas",
     "calca": "Calcas",
-    "short": "Calcas",
-    "bermuda": "Calcas",
     "saia": "Vestidos",
-    "blazer": "Conjuntos",
-    "cropped": "Conjuntos",
-    "body": "Conjuntos",
-    "macacao": "Conjuntos",
     "macaquinho": "Fitness",
     "legging": "Fitness",
     "top": "Fitness",
@@ -66,7 +64,13 @@ RECATEGORIZAR_POR_NOME = {
     "salto": "Calcados",
     "bolsa": "Bolsas",
     "mochila": "Bolsas",
-    "pijama": "Conjuntos",
+    "short": "Roupas",
+    "bermuda": "Roupas",
+    "blazer": "Roupas",
+    "cropped": "Roupas",
+    "body": "Roupas",
+    "macacao": "Roupas",
+    "pijama": "Roupas",
 }
 
 MAX_QUERIES = 8
