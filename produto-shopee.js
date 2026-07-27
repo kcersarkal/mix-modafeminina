@@ -68,6 +68,51 @@ const SHOPEE_PRODUCTS = [
     reviews_count: 198,
     spotlight: false,
     last_checked_at: new Date().toISOString()
+  },
+  {
+    id: "shp-005",
+    source: "shopee",
+    name: "Short Jeans Feminino Cintura Alta",
+    category: "Shorts",
+    tag: "-15%",
+    price_current: 59.90,
+    price_original: 69.90,
+    image: "https://images.unsplash.com/photo-1593032454539-3c103e6e3a8c?q=80&w=800&auto=format&fit=crop",
+    description: "Short jeans cintura alta, modelagem confortável e moderna. Ideal para looks casuais.",
+    affiliate_url: "https://shopee.com.br/product/567890",
+    rating: 4.4,
+    reviews_count: 267,
+    spotlight: false,
+    last_checked_at: new Date().toISOString()
+  },
+  {
+    id: "shp-006",
+    source: "shopee",
+    name: "Saia Midi Jeans Feminina",
+    category: "Saias",
+    tag: "Novo",
+    price_current: 69.90,
+    price_original: null,
+    image: "https://images.unsplash.com/photo-1583499871880-9ac2cd7fc6d9?q=80&w=800&auto=format&fit=crop",
+    description: "Saia midi jeans feminina, modelagem reta e confortável. Perfeita para looks casuais e elegantes.",
+    affiliate_url: "https://shopee.com.br/product/678901",
+    rating: 4.3,
+    reviews_count: 189,
+    spotlight: false,
+    last_checked_at: new Date().toISOString()
+  }
+];
+    category: "Shorts",
+    tag: "-15%",
+    price_current: 59.90,
+    price_original: 69.90,
+    image: "https://images.unsplash.com/photo-1593032454539-3c103e6e3a8c?q=80&w=800&auto=format&fit=crop",
+    description: "Short jeans cintura alta, modelagem confortável e moderna. Ideal para looks casuais.",
+    affiliate_url: "https://shopee.com.br/product/567890",
+    rating: 4.4,
+    reviews_count: 267,
+    spotlight: false,
+    last_checked_at: new Date().toISOString()
   }
 ];
 

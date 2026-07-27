@@ -21,6 +21,10 @@ KEYWORDS_POR_CATEGORIA = {
         "vestido floral verao", "vestido tubinho preto", "vestido feminino",
         "vestido festa feminino", "vestido casual dia a dia", "vestido jeans feminino",
     ],
+    "Roupas": [
+        "blazer feminino", "cropped feminino", "body feminino",
+        "pijama feminino", "macacao feminino",
+    ],
     "Calcados": [
         "sandalia feminina", "rasteirinha feminina", "sapatilha feminina",
         "tamanco feminino", "sandalia salto feminino",
@@ -40,10 +44,13 @@ KEYWORDS_POR_CATEGORIA = {
         "calca legging feminina", "macaquinho fitness",
         "top fitness feminino", "short legging feminino",
     ],
-    "Roupas": [
-        "blazer feminino", "cropped feminino", "body feminino",
+    "Saias": [
+        "saia feminina", "saia midi feminina", "saia longa feminina",
+        "saia jeans feminina", "saia plissada feminina",
+    ],
+    "Shorts": [
         "short jeans feminino", "short alfaiataria feminino",
-        "pijama feminino", "macacao feminino", "bermuda feminina",
+        "bermuda feminina", "short feminino",
     ],
 }
 
@@ -53,7 +60,7 @@ RECATEGORIZAR_POR_NOME = {
     "vestido": "Vestidos",
     "calça": "Calcas",
     "calca": "Calcas",
-    "saia": "Vestidos",
+    "saia": "Saias",
     "macaquinho": "Fitness",
     "legging": "Fitness",
     "top": "Fitness",
@@ -64,8 +71,8 @@ RECATEGORIZAR_POR_NOME = {
     "salto": "Calcados",
     "bolsa": "Bolsas",
     "mochila": "Bolsas",
-    "short": "Roupas",
-    "bermuda": "Roupas",
+    "short": "Shorts",
+    "bermuda": "Shorts",
     "blazer": "Roupas",
     "cropped": "Roupas",
     "body": "Roupas",

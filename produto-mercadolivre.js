@@ -68,6 +68,51 @@ const MERCADOLIVRE_PRODUCTS = [
     reviews_count: 445,
     spotlight: false,
     last_checked_at: new Date().toISOString()
+  },
+  {
+    id: "ml-005",
+    source: "mercadolivre",
+    name: "Bermuda Alfaiataria Feminina",
+    category: "Shorts",
+    tag: "Novo",
+    price_current: 89.90,
+    price_original: null,
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800&auto=format&fit=crop",
+    description: "Bermuda de alfaiataria feminina, modelagem reta e elegante. Perfeita para looks profissionais e casuais.",
+    affiliate_url: "https://mercadolivre.com.br/product/567890",
+    rating: 4.5,
+    reviews_count: 134,
+    spotlight: false,
+    last_checked_at: new Date().toISOString()
+  },
+  {
+    id: "ml-006",
+    source: "mercadolivre",
+    name: "Saia Plissada Feminina Midi",
+    category: "Saias",
+    tag: "-10%",
+    price_current: 79.90,
+    price_original: 89.90,
+    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop",
+    description: "Saia plissada midi feminina, elegante e versátil. Ideal para looks de trabalho e eventos.",
+    affiliate_url: "https://mercadolivre.com.br/product/678901",
+    rating: 4.6,
+    reviews_count: 312,
+    spotlight: false,
+    last_checked_at: new Date().toISOString()
+  }
+];
+    category: "Shorts",
+    tag: "Novo",
+    price_current: 89.90,
+    price_original: null,
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800&auto=format&fit=crop",
+    description: "Bermuda de alfaiataria feminina, modelagem reta e elegante. Perfeita para looks profissionais e casuais.",
+    affiliate_url: "https://mercadolivre.com.br/product/567890",
+    rating: 4.5,
+    reviews_count: 134,
+    spotlight: false,
+    last_checked_at: new Date().toISOString()
   }
 ];
 

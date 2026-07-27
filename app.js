@@ -166,7 +166,10 @@ function detectProductType(title) {
   if (t.includes('bolsa') || t.includes('transversal') || t.includes('tiracolo')) return 'bolsas'
   if (t.includes('blazer') || t.includes('alfaiataria')) return 'roupas'
   if (t.includes('conjunto') || t.includes('cropped') || t.includes('tricot')) return 'conjuntos'
-  if (t.includes('jeans') || t.includes('calça') || t.includes('legging')) return 'calcados'
+  if (t.includes('saia')) return 'saias'
+  if (t.includes('short') || t.includes('bermuda')) return 'shorts'
+  if (t.includes('jeans') || t.includes('calça')) return 'roupas'
+  if (t.includes('legging')) return 'fitness'
   if (t.includes('fitness') || t.includes('top') || t.includes('bojo')) return 'fitness'
   return 'generico'
 }
@@ -192,6 +195,14 @@ function analysisForType(type, p, desconto, nota, reviews) {
     conjuntos: [
       'A praticidade de um look pronto com a elegância de peças coordenadas. Ideal para quem quer estar bem vestida sem perder tempo montando produções',
       'Conforto e estilo andam juntos nesse conjunto. O tricot é macio e a modelagem é moderna sem ser exagerada'
+    ],
+    shorts: [
+      'O short ideal para compor looks frescos e estilosos no dia a dia. O caimento é perfeito e valoriza a silhueta',
+      'Peça versátil que transita do casual ao sofisticado com facilidade. Confortável e moderna, é curinga no guarda-roupa'
+    ],
+    saias: [
+      'A saia que equilibra feminilidade e conforto, perfeita para compor looks elegantes sem esforço',
+      'Modelagem que valoriza a silhueta e tecido que garante conforto o dia inteiro. Ideal do trabalho ao lazer'
     ],
     fitness: [
       'Perfeito para acompanhar seus treinos com conforto e estilo. O tecido respirável e a modelagem anatômica garantem liberdade de movimento',
