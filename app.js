@@ -315,7 +315,7 @@ function drawCarousel() {
   if (!slot || !state.carouselProducts.length) return
   const p = state.carouselProducts[state.carouselIndex]
   slot.innerHTML = `
-    <div class="spotlight-label">Destaques da semana</div>
+    <div class="spotlight-label">Produtos em destaque</div>
     ${spotlightMarkup(p)}
     ${state.carouselProducts.length > 1 ? `
     <div class="carousel-arrow prev" onclick="prevSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></div>
