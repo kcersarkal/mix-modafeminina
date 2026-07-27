@@ -378,6 +378,7 @@ def rodar():
 
             nodes = data.get("data", {}).get("productOfferV2", {}).get("nodes", [])
             filtrados = 0
+            amostra_exibida = False
             for item in nodes:
                 item_id = str(item.get("itemId", ""))
                 if item_id in ids_vistos:
@@ -388,6 +389,9 @@ def rodar():
 
                 produto = mapear_produto(item, categoria)
                 if produto:
+                    if not amostra_exibida:
+                        print(f"  AMOSTRA: itemId={item_id} | external_id={produto.get('external_id')} | affiliate_url={produto.get('affiliate_url')}")
+                        amostra_exibida = True
                     ids_vistos.add(item_id)
                     todos_produtos.append(produto)
 
