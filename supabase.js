@@ -5,7 +5,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-const MAX_HOURS_STALE = 12
+const MAX_HOURS_STALE = 6
 
 export async function fetchProdutos(options = {}) {
   const { onlyFresh = true, category = null, search = null, limit = null } = options

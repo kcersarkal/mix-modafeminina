@@ -7,7 +7,7 @@ import {
   inserirPedido
 } from './supabase.js'
 
-const MAX_HOURS_STALE = 12
+const MAX_HOURS_STALE = 6
 const USE_SUPABASE = true
 
 const $ = (sel, ctx = document) => ctx.querySelector(sel)
