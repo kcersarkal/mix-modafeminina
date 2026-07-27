@@ -770,12 +770,13 @@ function router() {
 
   let view = 'home', route = '', parts = []
 
+  const hash = window.location.hash || '#/'
+
   if (produtoId) {
     view = 'produto'
   } else if (pedidoId) {
     view = 'pedido'
   } else {
-    const hash = window.location.hash || '#/'
     parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean)
     route = parts[0] || ''
 
