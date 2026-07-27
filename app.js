@@ -515,7 +515,7 @@ window.setPriceRange = function (range) {
 
 window.onSearchInput = function (value) {
   state.searchQuery = value
-  if (document.querySelector('[data-view="home"].active')) {
+  if (document.querySelector('[data-view="home"].is-active')) {
     renderHome()
   }
 }
