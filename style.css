@@ -431,6 +431,34 @@ nav ul a.is-current::after {
   line-height: 1.7;
   color: var(--ink-soft);
 }
+.telegram-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--cream);
+  background: #0088cc;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  font-family: inherit;
+}
+.telegram-hero-btn:hover {
+  background: #006699;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px rgba(0,136,204,.4);
+}
+.telegram-hero-btn svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
 
 .btn-primary {
   background: var(--rose-deep);
@@ -1842,7 +1870,8 @@ footer::before {
   gap: 10px;
 }
 .detail-actions-row .btn-share,
-.detail-actions-row .btn-copy {
+.detail-actions-row .btn-copy,
+.detail-actions-row .btn-telegram {
   flex: 1;
 }
 .btn-block {
@@ -1874,7 +1903,25 @@ footer::before {
   color: var(--cream);
 }
 .btn-copy:hover { background: #1557B0; transform: translateY(-1px); }
-.btn-share svg, .btn-copy svg { flex-shrink: 0; }
+.btn-share svg, .btn-copy svg, .btn-telegram svg { flex-shrink: 0; }
+.btn-telegram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: transform .12s ease, background .15s ease;
+  white-space: nowrap;
+  background: #0088cc;
+  color: var(--cream);
+}
+.btn-telegram:hover { background: #006699; transform: translateY(-1px); }
 .detail-disclosure {
   margin-top: 16px;
   padding: 14px 16px;
