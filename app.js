@@ -123,6 +123,7 @@ function getActiveProducts() {
 }
 
 function discountBadge(pct, size) {
+  if (pct > 60) return ''
   return `<div class="discount-badge ${size || ''}"><span class="pct">-${pct}%</span><span class="off">OFF</span></div>`
 }
 
@@ -239,7 +240,7 @@ function productCard(p) {
     <article class="card" onclick="navigate('produto','${p.id}')" role="link" tabindex="0" aria-label="Ver oferta: ${p.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('produto','${p.id}');}">
       <div class="card-link">
         <div class="card-img">
-          ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
+          ${p.tag && (!discountPercent(p) || discountPercent(p) <= 60) ? `<span class="product-tag">${p.tag}</span>` : ''}
           ${isInternational(p) ? '<span class="int-badge">🌎 Internacional</span>' : ''}
           <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.alt='Imagem indisponível';this.style.display='none'">
         </div>
@@ -548,7 +549,7 @@ function renderProduto(id) {
       <div class="breadcrumb"><span class="link" role="link" tabindex="0" onclick="navigate('home')" onkeydown="if(event.key==='Enter'){navigate('home')}">Início</span> / ${p.category} / ${p.name}</div>
       <div class="detail-card">
         <div class="detail-media">
-          ${p.tag ? `<span class="detail-tag">${p.tag}</span>` : ''}
+          ${p.tag && (!discountPercent(p) || discountPercent(p) <= 60) ? `<span class="detail-tag">${p.tag}</span>` : ''}
           ${isInternational(p) ? '<span class="int-badge" style="position:absolute;top:50px;left:10px;">🌎 Internacional</span>' : ''}
           <img src="${p.image}" alt="${p.name}" onerror="this.alt='${p.name} — imagem indisponível'; this.style.background='var(--blush-deep)'">
         </div>
@@ -595,7 +596,7 @@ function shareWhatsApp(id) {
   if (!p) return
   const productUrl = `${window.location.origin}${window.location.pathname}?produto=${p.id}`
   const pct = discountPercent(p)
-  const discountTxt = pct ? ` (-${pct}%)` : ''
+  const discountTxt = pct && pct <= 60 ? ` (-${pct}%)` : ''
   const text = `*${p.name}*\n\n*R$ ${fmtPrice(p.price_current)}*${discountTxt}\n\n${productUrl}`
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
 }
@@ -775,6 +776,7 @@ function router() {
     route = parts[0] || ''
 
     if (route === 'privacidade') view = 'privacidade'
+    else if (route === 'termos') view = 'termos'
     else if (route === 'produto') view = 'produto'
     else if (route === 'pedidos') view = 'pedidos'
     else if (route === 'pedido') view = 'pedido'
@@ -810,6 +812,9 @@ function router() {
   } else if (view === 'privacidade') {
     document.title = 'Política de Privacidade — MIXDM Moda Feminina'
     removeProductJSONLD()
+  } else if (view === 'termos') {
+    document.title = 'Termos de Uso — MIXDM Moda Feminina'
+    removeProductJSONLD()
   } else if (view === 'sobre') {
     document.title = 'Sobre — MIXDM Moda Feminina'
     removeProductJSONLD()
@@ -829,7 +834,7 @@ function router() {
     }
     if (view === 'home') {
       renderHome()
-      startHeroTimer()
+      initHeroCarousel()
     }
   }
 
@@ -933,8 +938,11 @@ function injectWebsiteJSONLD() {
 
 async function init() {
   await loadData()
-  renderHome()
-  initHeroCarousel()
+  const params = new URLSearchParams(window.location.search)
+  if (!params.get('produto') && !params.get('pedido')) {
+    renderHome()
+    initHeroCarousel()
+  }
   initMobileMenu()
   bindLinks()
   injectWebsiteJSONLD()
