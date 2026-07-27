@@ -876,7 +876,11 @@ window.navigate = function (view, id) {
 }
 
 window.goBack = function () {
-  navigate(state.previousView)
+  if (window.history.length > 1) {
+    history.back()
+  } else {
+    navigate('home')
+  }
 }
 
 function openMobileMenu() {
