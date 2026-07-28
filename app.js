@@ -917,10 +917,11 @@ function initMobileMenu() {
   if (DOM.mobileToggle) DOM.mobileToggle.addEventListener('click', openMobileMenu)
   if (DOM.mobileClose) DOM.mobileClose.addEventListener('click', closeMobileMenu)
   if (DOM.mobileMenu) {
-    $$('a[data-link]', DOM.mobileMenu).forEach(a => a.addEventListener('click', closeMobileMenu))
+    const drawer = DOM.mobileMenu.querySelector('.mobile-menu-drawer')
     DOM.mobileMenu.addEventListener('click', e => {
-      if (e.target === DOM.mobileMenu) closeMobileMenu()
+      if (drawer && !drawer.contains(e.target)) closeMobileMenu()
     })
+    $$('a[data-link]', DOM.mobileMenu).forEach(a => a.addEventListener('click', closeMobileMenu))
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeMobileMenu()
     })
