@@ -1283,6 +1283,8 @@ footer::before {
   .hero h1 {
     font-size: 32px;
   }
+  .mobile-menu a { font-size: 18px; }
+  .mobile-menu { gap: 16px; }
 }
 
 /* ============================================================
@@ -1987,6 +1989,8 @@ footer::before {
   .product-detail-page { padding: 16px 16px 60px; }
   .filter-bar { padding: 0 16px; }
   .section-heading { padding: 0 16px; }
+  .mobile-menu a { font-size: 22px; }
+  .mobile-menu { gap: 24px; }
 }
 @media (min-width: 1024px) {
   body { font-size: 16px; }
