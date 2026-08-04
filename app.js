@@ -55,6 +55,7 @@ const state = {
 }
 
 const HOME_ANCHORS = ['categorias', 'destaques', 'sobre']
+const STATIC_PAGES = ['sobre', 'contato', 'privacidade', 'termos', 'pedidos']
 
 function priceNumber(value) {
   if (typeof value === 'number') return Number.isFinite(value) ? value : null
@@ -508,6 +509,13 @@ function renderHome() {
 window.setCategory = function (cat) {
   state.activeCategory = cat
   renderHome()
+  if (document.querySelector('[data-view="home"].is-active')) {
+    const url = new URL(window.location.href)
+    if (cat && cat !== 'Todas') url.searchParams.set('categoria', cat)
+    else url.searchParams.delete('categoria')
+    history.replaceState(null, '', url.toString())
+    updateCanonical()
+  }
   setTimeout(() => {
     const grid = DOM.homeGrid
     if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -529,6 +537,10 @@ window.onSearchInput = function (value) {
   if (document.querySelector('[data-view="home"].is-active')) {
     renderHome()
   }
+  const url = new URL(window.location.href)
+  if (value) url.searchParams.set('q', value)
+  else url.searchParams.delete('q')
+  history.replaceState(null, '', url.toString())
 }
 
 function renderProduto(id) {
@@ -606,6 +618,7 @@ function renderProduto(id) {
     </div>`
 
   injectProductJSONLD(p)
+  injectBreadcrumbJSONLD(p)
   bindLinks()
 }
 
@@ -648,20 +661,55 @@ function injectProductJSONLD(product) {
   const script = document.createElement('script')
   script.type = 'application/ld+json'
   script.id = 'product-jsonld'
-  script.textContent = JSON.stringify({
+
+  const canonicalUrl = `${window.location.origin}${window.location.pathname}?produto=${encodeURIComponent(productId(product))}`
+  const data = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
     name: product.name,
-    description: product.description,
-    image: product.image,
+    description: product.description || product.name,
+    image: [product.image].filter(Boolean),
     category: product.category,
     offers: {
       '@type': 'Offer',
-      price: typeof product.price_current === 'number' ? product.price_current : parseFloat(product.price_current),
+      url: canonicalUrl,
+      price: priceNumber(product.price_current),
       priceCurrency: 'BRL',
+      priceValidUntil: new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10),
       availability: 'https://schema.org/InStock',
-      url: product.affiliate_url || window.location.href,
+      itemCondition: 'https://schema.org/NewCondition',
     },
+  }
+
+  // Nota: reviews_count vem de "sales" da API da Shopee, nao de avaliacoes reais.
+  // Por isso NAO emitimos aggregateRating (evita risco de rich result/acao manual
+  // do Google por reviewCount inexato).
+
+  script.textContent = JSON.stringify(data)
+  document.head.appendChild(script)
+}
+
+function injectBreadcrumbJSONLD(product) {
+  const existing = document.getElementById('breadcrumb-jsonld')
+  if (existing) existing.remove()
+  const script = document.createElement('script')
+  script.type = 'application/ld+json'
+  script.id = 'breadcrumb-jsonld'
+  const base = window.location.origin + window.location.pathname
+  const category = product.category || 'Ofertas'
+  script.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: base },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: category,
+        item: `${base}?categoria=${encodeURIComponent(category)}`,
+      },
+      { '@type': 'ListItem', position: 3, name: product.name },
+    ],
   })
   document.head.appendChild(script)
 }
@@ -669,6 +717,8 @@ function injectProductJSONLD(product) {
 function removeProductJSONLD() {
   const existing = document.getElementById('product-jsonld')
   if (existing) existing.remove()
+  const bc = document.getElementById('breadcrumb-jsonld')
+  if (bc) bc.remove()
 }
 
 function renderPedidos() {
@@ -778,10 +828,24 @@ function copyPedidoLink(id) {
 
 window.copyPedidoLink = copyPedidoLink
 
+function syncStateFromURL() {
+  const params = new URLSearchParams(window.location.search)
+  const q = params.get('q')
+  const cat = params.get('categoria')
+  if (q !== null) {
+    state.searchQuery = q
+    if (DOM.searchInput && DOM.searchInput.value !== q) DOM.searchInput.value = q
+  }
+  if (cat !== null) {
+    state.activeCategory = cat
+  }
+}
+
 function router() {
   const params = new URLSearchParams(window.location.search)
   const produtoId = params.get('produto')
   const pedidoId = params.get('pedido')
+  const pagina = params.get('pagina')
 
   let view = 'home', route = '', parts = []
 
@@ -791,6 +855,9 @@ function router() {
     view = 'produto'
   } else if (pedidoId) {
     view = 'pedido'
+  } else if (pagina && STATIC_PAGES.includes(pagina)) {
+    view = pagina
+    route = pagina
   } else {
     parts = hash.replace(/^#\/?/, '').split('/').filter(Boolean)
     route = parts[0] || ''
@@ -803,6 +870,8 @@ function router() {
     else if (route === 'sobre') view = 'sobre'
     else if (route === 'contato') view = 'contato'
   }
+
+  syncStateFromURL()
 
   if (state.currentView === 'home' && view !== 'home') {
     stopCarousel()
@@ -884,6 +953,8 @@ window.navigate = function (view, id) {
     history.pushState({ view: 'pedido', id }, '', `?pedido=${id}`)
   } else if (view === 'home') {
     history.pushState({ view }, '', window.location.pathname)
+  } else if (STATIC_PAGES.includes(view)) {
+    history.pushState({ view }, '', `?pagina=${view}`)
   } else {
     const hash = id ? `#/${view}/${id}` : `#/${view}`
     history.pushState({ view }, '', window.location.pathname + hash)
@@ -937,34 +1008,37 @@ function updateCanonical() {
   }
   const base = window.location.origin + window.location.pathname
   const params = new URLSearchParams(window.location.search)
-  if (params.get('produto')) {
-    link.href = `${base}?produto=${params.get('produto')}`
-  } else if (params.get('pedido')) {
-    link.href = `${base}?pedido=${params.get('pedido')}`
-  } else {
-    const hash = window.location.hash
-    link.href = hash && hash !== '#/' ? `${base}${hash}` : base
-  }
-}
+  const hash = window.location.hash || ''
 
-function injectWebsiteJSONLD() {
-  const existing = document.getElementById('website-jsonld')
-  if (existing) existing.remove()
-  const script = document.createElement('script')
-  script.type = 'application/ld+json'
-  script.id = 'website-jsonld'
-  script.textContent = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'MIXDM Moda Feminina',
-    url: window.location.origin + window.location.pathname,
-    description: 'Curadoria de moda feminina com vestidos, calçados, bolsas e acessórios. Ofertas selecionadas em um só lugar.',
-  })
-  document.head.appendChild(script)
+  // Aceita produto/pedido vindos da URL (query) ou de links antigos com hash
+  let produtoId = params.get('produto')
+  let pedidoId = params.get('pedido')
+  if (!produtoId && !pedidoId) {
+    const m = hash.match(/^#\/?(produto|pedido)\/(.+)/)
+    if (m) {
+      if (m[1] === 'produto') produtoId = m[2]
+      else pedidoId = m[2]
+    }
+  }
+
+  if (produtoId) {
+    link.href = `${base}?produto=${encodeURIComponent(produtoId)}`
+  } else if (pedidoId) {
+    link.href = `${base}?pedido=${encodeURIComponent(pedidoId)}`
+  } else if (params.get('pagina')) {
+    link.href = `${base}?pagina=${params.get('pagina')}`
+  } else if (params.get('categoria')) {
+    link.href = `${base}?categoria=${encodeURIComponent(params.get('categoria'))}`
+  } else if (hash && hash !== '#/') {
+    link.href = `${base}${hash}`
+  } else {
+    link.href = base
+  }
 }
 
 async function init() {
   await loadData()
+  syncStateFromURL()
   const params = new URLSearchParams(window.location.search)
   if (!params.get('produto') && !params.get('pedido')) {
     renderHome()
@@ -972,7 +1046,6 @@ async function init() {
   }
   initMobileMenu()
   bindLinks()
-  injectWebsiteJSONLD()
   router()
   window.addEventListener('hashchange', router)
   window.addEventListener('popstate', router)
