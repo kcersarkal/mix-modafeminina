@@ -1,2 +1,12 @@
 __pycache__/
 *.pyc
+
+# Next.js
+.next/
+out/
+node_modules/
+*.tsbuildinfo
+
+# Ambiente
+.env
+.env*.local

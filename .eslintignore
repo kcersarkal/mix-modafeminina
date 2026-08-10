@@ -1,0 +1,9 @@
+.next/
+node_modules/
+backup/
+app.js
+supabase.js
+produto-shopee.js
+produto-mercadolivre.js
+produtos_moda_feminina.js
+sitemap.xml
