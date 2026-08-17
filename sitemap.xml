@@ -312,7 +312,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20699553140</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22693513091</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -342,7 +342,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22693513091</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20699553140</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -352,12 +352,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58201942490</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=26539055038</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=26539055038</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21099546181</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58201942490</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -368,11 +373,6 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=48008976873</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21099546181</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -657,17 +657,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58205893747</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23893335036</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094228144</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58205893747</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23893219807</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -677,7 +677,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23893219807</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094228144</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -702,17 +702,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094514639</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22999049072</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22494213555</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -722,12 +712,22 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58204356951</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094514639</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22994338013</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58204356951</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22494213555</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -738,11 +738,6 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22792934421</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23398852310</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -758,6 +753,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=14396601739</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23398852310</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -807,12 +807,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22098401024</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094702926</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094702926</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22098401024</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -823,6 +823,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58258296035</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094702892</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -842,12 +847,62 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22094702892</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21599850489</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21599850489</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=41631210271</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20299367170</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58253253743</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=40113853885</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=41212249416</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=44467503760</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23094233858</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22699161846</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22194654167</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22497648129</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=44553066762</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -857,7 +912,87 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23694205612</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=19399049932</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58250236585</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21397787160</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58209222962</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58253473534</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58207848949</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=19699675951</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=3964043957</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23598701883</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23394255672</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58251930782</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21499331954</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58211015565</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23318609922</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22293186990</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23893722459</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -877,7 +1012,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20899597911</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23699380722</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22393121958</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23498510194</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23397903751</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -888,6 +1043,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=51507219117</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23493151819</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1177,17 +1337,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23493142189</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23992752579</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23094637692</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23992752579</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1218,6 +1373,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=50207777321</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23493142189</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1702,6 +1862,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=47762711109</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22298929410</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23898370627</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -1732,7 +1902,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22798143744</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23893578758</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22698988622</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1767,7 +1947,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=29071004996</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58256466121</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=19294618702</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1782,11 +1972,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23194066372</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=42418419125</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -1797,27 +1982,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21898037256</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58204159189</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58261610562</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21898037256</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=29739670313</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20399869941</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23194066372</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1827,12 +2002,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22994306557</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21598141513</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20399869941</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1842,7 +2012,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=29739670313</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21598141513</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=49753427856</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=22994306557</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58261610562</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1878,6 +2068,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23499465774</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58254628235</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1938,6 +2133,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=21999594736</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58213188067</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2022,7 +2222,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58213258162</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=28493067358</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=7895885450</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2042,11 +2247,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=28493067358</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=19999757530</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -2062,7 +2262,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=7895885450</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58213258162</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58254359578</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2073,11 +2278,6 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58212951115</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58254359578</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2107,7 +2307,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20897786797</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=18999841858</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2117,7 +2317,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=18999841858</loc>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=19699865788</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=20897786797</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2142,6 +2347,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23199018078</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=56712072144</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -2158,6 +2368,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=53655585721</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58255389035</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2217,17 +2432,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=41468871729</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=44611055097</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=58263234994</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=41468871729</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2247,6 +2462,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23497651810</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23899122798</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -2258,11 +2478,6 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23094163979</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23497651810</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2323,6 +2538,11 @@
   </url>
   <url>
     <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=23293881177</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kcersarkal.github.io/mix-modafeminina/?produto=43131945351</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
