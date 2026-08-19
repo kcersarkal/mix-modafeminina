@@ -34,7 +34,10 @@ export async function generateMetadata({
     return { title: "Categoria não encontrada" };
   }
 
-  const description = `Confira as melhores ofertas de ${label.toLowerCase()} selecionadas pela MIXDM Moda Feminina. Vestidos, calçados, bolsas e muito mais.`;
+  const description =
+  slug === "vestidos"
+    ? "Encontre vestidos femininos em oferta, com opções midi, longas, curtas, casuais e para festa. Compare modelos e preços selecionados pela MIXDM."
+    : `Confira as melhores ofertas de ${label.toLowerCase()} selecionadas pela MIXDM Moda Feminina. Vestidos, calçados, bolsas e muito mais.`;
 
   return {
     title: `Ofertas de ${label}`,
