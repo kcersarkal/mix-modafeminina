@@ -15,6 +15,7 @@ import {
   normalizePriceRange,
 } from "@/lib/product-filters";
 import { categoryLabelForSlug } from "@/lib/categories";
+import { getCategorySeo } from "@/lib/category-seo";
 import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 300;
@@ -34,13 +35,14 @@ export async function generateMetadata({
     return { title: "Categoria não encontrada" };
   }
 
-  const description =
-  slug === "vestidos"
-    ? "Encontre vestidos femininos em oferta, com opções midi, longas, curtas, casuais e para festa. Compare modelos e preços selecionados pela MIXDM."
-    : `Confira as melhores ofertas de ${label.toLowerCase()} selecionadas pela MIXDM Moda Feminina. Vestidos, calçados, bolsas e muito mais.`;
+const seo = getCategorySeo(slug);
+
+const description =
+  seo?.description ??
+  `Confira as melhores ofertas de ${label.toLowerCase()} selecionadas pela MIXDM Moda Feminina.`;
 
   return {
-    title: slug === "vestidos" ? "Vestidos Femininos em Oferta" : `Ofertas de ${label}`,
+    title: seo?.title ?? `Ofertas de ${label}`,
     description,
     alternates: { canonical: `/categoria/${slug}` },
     openGraph: {
@@ -174,7 +176,7 @@ export default async function CategoriaPage({
     />
   )}
 
-  {slug === "vestidos" && (
+    {seo && (
     <section
       style={{
         marginTop: 56,
@@ -182,22 +184,23 @@ export default async function CategoriaPage({
         borderTop: "1px solid var(--line)",
       }}
     >
-      <h2>Vestidos femininos para diferentes estilos e ocasiões</h2>
+      <h2>{seo.heading}</h2>
 
-      <p style={{ marginTop: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>
-        Encontre vestidos femininos selecionados entre as ofertas disponíveis,
-        com opções para diferentes estilos, ocasiões e faixas de preço. A
-        seleção é atualizada regularmente para reunir modelos que estão
-        disponíveis no momento.
-      </p>
-
-      <p style={{ marginTop: 12, color: "var(--ink-soft)", lineHeight: 1.7 }}>
-        Entre as opções podem aparecer vestidos midi, longos, curtos, casuais,
-        para festa e outros modelos. Compare preços e escolha a opção que mais
-        combina com o seu estilo antes de acessar a oferta.
-      </p>
-    </section>
-  )}
-    </div>
-  );
+      {seo.paragraphs.map((paragraph, index) => (
+        <p
+          key={index}
+          style={{
+            marginTop: index === 0 ? 16 : 12,
+            color: "var(--ink-soft)",
+            lineHeight: 1.7,
+          }}
+        >
+          {paragraph}
+              </p>
+    ))}
+  </section>
+)}
+</div>
+);
 }
+    
