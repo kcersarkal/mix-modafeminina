@@ -72,6 +72,7 @@ export default async function CategoriaPage({
   if (!names) notFound();
 
   const label = categoryLabelForSlug(slug) ?? names[0];
+  const seo = getCategorySeo(slug);
   const preco = normalizePriceRange(searchParams.preco);
   const ordem = normalizeOrder(searchParams.ordem);
 
