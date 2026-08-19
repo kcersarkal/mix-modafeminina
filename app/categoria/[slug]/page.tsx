@@ -40,7 +40,7 @@ export async function generateMetadata({
     : `Confira as melhores ofertas de ${label.toLowerCase()} selecionadas pela MIXDM Moda Feminina. Vestidos, calçados, bolsas e muito mais.`;
 
   return {
-    title: `Ofertas de ${label}`,
+    title: slug === "vestidos" ? "Vestidos Femininos em Oferta" : `Ofertas de ${label}`,
     description,
     alternates: { canonical: `/categoria/${slug}` },
     openGraph: {
