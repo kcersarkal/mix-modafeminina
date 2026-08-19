@@ -8,11 +8,11 @@ import type { Category, ProductDisplay, ProductRow } from "@/types/product";
  * Camada de dados do MIXDM Moda Feminina — tabela REAL `produtos`.
  *
  * Regra de produto ativo (mesma do site atual): `last_checked_at` dentro das
- * últimas 12 horas (MAX_HOURS_STALE). Aplica-se a catálogo, categorias,
+ * últimas 72 horas (MAX_HOURS_STALE). Aplica-se a catálogo, categorias,
  * página de produto e sitemap.
  */
 
-export const MAX_HOURS_STALE = 12;
+export const MAX_HOURS_STALE = 72;
 
 function freshCutoff(): string {
   return new Date(Date.now() - MAX_HOURS_STALE * 3600000).toISOString();
