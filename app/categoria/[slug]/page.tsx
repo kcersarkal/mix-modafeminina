@@ -161,15 +161,40 @@ export default async function CategoriaPage({
         </div>
       )}
 
-      {totalPages > 1 && (
-        <Pagination
-          basePath={`/categoria/${slug}`}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          preco={preco}
-          ordem={ordem}
-        />
-      )}
+        {totalPages > 1 && (
+    <Pagination
+      basePath={`/categoria/${slug}`}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      preco={preco}
+      ordem={ordem}
+    />
+  )}
+
+  {slug === "vestidos" && (
+    <section
+      style={{
+        marginTop: 56,
+        paddingTop: 32,
+        borderTop: "1px solid var(--line)",
+      }}
+    >
+      <h2>Vestidos femininos para diferentes estilos e ocasiões</h2>
+
+      <p style={{ marginTop: 16, color: "var(--ink-soft)", lineHeight: 1.7 }}>
+        Encontre vestidos femininos selecionados entre as ofertas disponíveis,
+        com opções para diferentes estilos, ocasiões e faixas de preço. A
+        seleção é atualizada regularmente para reunir modelos que estão
+        disponíveis no momento.
+      </p>
+
+      <p style={{ marginTop: 12, color: "var(--ink-soft)", lineHeight: 1.7 }}>
+        Entre as opções podem aparecer vestidos midi, longos, curtos, casuais,
+        para festa e outros modelos. Compare preços e escolha a opção que mais
+        combina com o seu estilo antes de acessar a oferta.
+      </p>
+    </section>
+  )}
     </div>
   );
 }
