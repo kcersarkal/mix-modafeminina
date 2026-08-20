@@ -16,6 +16,7 @@ import {
 } from "@/lib/product-filters";
 import { categoryLabelForSlug } from "@/lib/categories";
 import { getCategorySeo } from "@/lib/category-seo";
+import { getSubcategoriesForCategory } from "@/lib/subcategories";
 import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 300;
@@ -35,25 +36,31 @@ export async function generateMetadata({
     return { title: "Categoria não encontrada" };
   }
 
-const seo = getCategorySeo(slug);
+  const seo = getCategorySeo(slug);
 
-const description =
-  seo?.description ??
-  `Confira as melhores ofertas de ${label.toLowerCase()} selecionadas pela MIXDM Moda Feminina.`;
+  const description =
+    seo?.description ??
+    `Confira as melhores ofertas de ${label.toLowerCase()} selecionadas pela MIXDM Moda Feminina.`;
 
   return {
     title: seo?.title ?? `Ofertas de ${label}`,
     description,
-    alternates: { canonical: `/categoria/${slug}` },
+    alternates: {
+      canonical: `/categoria/${slug}`,
+    },
     openGraph: {
-      title: `Ofertas de ${label} — MIXDM Moda Feminina`,
+      title: seo?.title
+        ? `${seo.title} — MIXDM Moda Feminina`
+        : `Ofertas de ${label} — MIXDM Moda Feminina`,
       description,
       type: "website",
       url: `/categoria/${slug}`,
     },
     twitter: {
       card: "summary_large_image",
-      title: `Ofertas de ${label} — MIXDM Moda Feminina`,
+      title: seo?.title
+        ? `${seo.title} — MIXDM Moda Feminina`
+        : `Ofertas de ${label} — MIXDM Moda Feminina`,
       description,
     },
   };
@@ -64,22 +71,34 @@ export default async function CategoriaPage({
   searchParams,
 }: {
   params: { slug: string };
-  searchParams: { pagina?: string; preco?: string; ordem?: string };
+  searchParams: {
+    pagina?: string;
+    preco?: string;
+    ordem?: string;
+  };
 }) {
   const slug = params.slug;
   const names = await resolveCategoryNames(slug);
 
-  if (!names) notFound();
+  if (!names) {
+    notFound();
+  }
 
   const label = categoryLabelForSlug(slug) ?? names[0];
   const seo = getCategorySeo(slug);
+  const subcategories = getSubcategoriesForCategory(slug);
   const preco = normalizePriceRange(searchParams.preco);
   const ordem = normalizeOrder(searchParams.ordem);
 
   const rawPage = Number(searchParams.pagina);
-  const requestedPage = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
+  const requestedPage =
+    Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
 
-  const totalCount = await getProductsCount({ category: slug, priceRange: preco });
+  const totalCount = await getProductsCount({
+    category: slug,
+    priceRange: preco,
+  });
+
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
   const currentPage = Math.min(requestedPage, totalPages);
 
@@ -111,17 +130,37 @@ export default async function CategoriaPage({
   };
 
   return (
-    <div className="wrap" style={{ paddingTop: 32, paddingBottom: 80 }}>
+    <div
+      className="wrap"
+      style={{
+        paddingTop: 32,
+        paddingBottom: 80,
+      }}
+    >
       <JsonLd data={breadcrumbJsonLd} />
 
-      <nav className="breadcrumb" style={{ padding: 0 }} aria-label="Trilha">
+      <nav
+        className="breadcrumb"
+        style={{ padding: 0 }}
+        aria-label="Trilha"
+      >
         <Link href="/">Início</Link> / <span>{label}</span>
       </nav>
 
-      <header style={{ marginTop: 28, marginBottom: 24 }}>
-        <h1 style={{ fontSize: "clamp(28px, 4vw, 38px)" }}>
+      <header
+        style={{
+          marginTop: 28,
+          marginBottom: 24,
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "clamp(28px, 4vw, 38px)",
+          }}
+        >
           Ofertas de {label}
         </h1>
+
         <p
           style={{
             color: "var(--ink-soft)",
@@ -130,12 +169,42 @@ export default async function CategoriaPage({
           }}
         >
           {totalCount > 0
-            ? `${totalCount} produto${totalCount !== 1 ? "s" : ""} ativo${
+            ? `${totalCount} produto${
                 totalCount !== 1 ? "s" : ""
-              } nesta categoria.`
+              } ativo${totalCount !== 1 ? "s" : ""} nesta categoria.`
             : "Nenhum produto ativo nesta categoria no momento."}
         </p>
       </header>
+
+      {subcategories.length > 0 && (
+        <nav
+          aria-label={`Tipos de ${label}`}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 10,
+            marginBottom: 24,
+          }}
+        >
+          {subcategories.map((subcategory) => (
+            <Link
+              key={subcategory.slug}
+              href={`/categoria/${slug}/${subcategory.slug}`}
+              style={{
+                display: "inline-block",
+                padding: "9px 14px",
+                border: "1px solid var(--line)",
+                borderRadius: 999,
+                color: "var(--ink)",
+                textDecoration: "none",
+                fontSize: 14,
+              }}
+            >
+              {subcategory.label}
+            </Link>
+          ))}
+        </nav>
+      )}
 
       <FilterControls
         basePath={`/categoria/${slug}`}
@@ -144,9 +213,17 @@ export default async function CategoriaPage({
       />
 
       {products.length > 0 ? (
-        <div className="product-grid" style={{ paddingTop: 8 }}>
+        <div
+          className="product-grid"
+          style={{
+            paddingTop: 8,
+          }}
+        >
           {products.map((product) => (
-            <ProductCard key={product.productId} product={product} />
+            <ProductCard
+              key={product.productId}
+              product={product}
+            />
           ))}
         </div>
       ) : preco || ordem ? (
@@ -167,41 +244,40 @@ export default async function CategoriaPage({
         </div>
       )}
 
-        {totalPages > 1 && (
-    <Pagination
-      basePath={`/categoria/${slug}`}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      preco={preco}
-      ordem={ordem}
-    />
-  )}
+      {totalPages > 1 && (
+        <Pagination
+          basePath={`/categoria/${slug}`}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          preco={preco}
+          ordem={ordem}
+        />
+      )}
 
-    {seo && (
-    <section
-      style={{
-        marginTop: 56,
-        paddingTop: 32,
-        borderTop: "1px solid var(--line)",
-      }}
-    >
-      <h2>{seo.heading}</h2>
-
-      {seo.paragraphs.map((paragraph, index) => (
-        <p
-          key={index}
+      {seo && (
+        <section
           style={{
-            marginTop: index === 0 ? 16 : 12,
-            color: "var(--ink-soft)",
-            lineHeight: 1.7,
+            marginTop: 56,
+            paddingTop: 32,
+            borderTop: "1px solid var(--line)",
           }}
         >
-          {paragraph}
-              </p>
-    ))}
-  </section>
-)}
-</div>
-);
+          <h2>{seo.heading}</h2>
+
+          {seo.paragraphs.map((paragraph, index) => (
+            <p
+              key={index}
+              style={{
+                marginTop: index === 0 ? 16 : 12,
+                color: "var(--ink-soft)",
+                lineHeight: 1.7,
+              }}
+            >
+              {paragraph}
+            </p>
+          ))}
+        </section>
+      )}
+    </div>
+  );
 }
-    
