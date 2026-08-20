@@ -7,11 +7,9 @@ import type { Category, ProductDisplay, ProductRow } from "@/types/product";
 /**
  * Camada de dados do MIXDM Moda Feminina — tabela REAL `produtos`.
  *
- * Regra de produto ativo (mesma do site atual): `last_checked_at` dentro das
- * últimas 72 horas (MAX_HOURS_STALE). Aplica-se a catálogo, categorias,
- * página de produto e sitemap.
+ * Regra de produto ativo: `last_checked_at` dentro das últimas
+ * 72 horas (MAX_HOURS_STALE).
  */
-
 export const MAX_HOURS_STALE = 72;
 
 function freshCutoff(): string {
@@ -22,8 +20,10 @@ export interface ProductQueryOptions {
   /** Slug da categoria (ex.: "calcados"). */
   category?: string;
   search?: string;
-  /** Faixa de preço (valores do app.js antigo): ate_50 | 50_100 | 100_200 | 200_mais. */
+
+  /** Faixa de preço: ate_50 | 50_100 | 100_200 | 200_mais. */
   priceRange?: string;
+
   limit?: number;
   offset?: number;
   order?: OrderOption;
@@ -53,7 +53,10 @@ function toDisplay(row: ProductRow): ProductDisplay {
   };
 }
 
-/** Categorias ativas (com produto ativo), deduplicadas por slug. */
+/**
+ * Categorias ativas, deduplicadas pelo slug.
+ * Para exibição usa o nome bonito definido em categories.ts.
+ */
 export async function getCategories(): Promise<Category[]> {
   if (!supabase) return [];
 
@@ -68,11 +71,17 @@ export async function getCategories(): Promise<Category[]> {
   }
 
   const seen = new Map<string, string>();
+
   for (const row of data as { category: string | null }[]) {
     const name = row.category?.trim();
+
     if (!name) continue;
+
     const slug = slugifyCategory(name);
-    if (!seen.has(slug)) seen.set(slug, name);
+
+    if (!seen.has(slug)) {
+      seen.set(slug, name);
+    }
   }
 
   return [...seen.entries()]
@@ -83,26 +92,59 @@ export async function getCategories(): Promise<Category[]> {
     .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
 }
 
-/** Nomes reais (com acento ou não) que resolvem para um slug. */
+/**
+ * Retorna os nomes REAIS gravados no banco que correspondem ao slug.
+ *
+ * Exemplo:
+ * slug "calcas" pode encontrar "Calcas" e "Calças".
+ *
+ * Isso evita usar o rótulo bonito "Calças" para consultar registros
+ * que no banco estão salvos como "Calcas".
+ */
 export async function resolveCategoryNames(
   slug: string,
 ): Promise<string[] | null> {
-  const categories = await getCategories();
-  const matches = categories.filter((c) => c.slug === slug).map((c) => c.name);
-  return matches.length > 0 ? matches : null;
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("produtos")
+    .select("category")
+    .gte("last_checked_at", freshCutoff());
+
+  if (error) {
+    console.error("Erro ao resolver nomes da categoria:", error);
+    return null;
+  }
+
+  const names = [
+    ...new Set(
+      (data as { category: string | null }[])
+        .map((row) => row.category?.trim())
+        .filter((name): name is string => Boolean(name))
+        .filter((name) => slugifyCategory(name) === slug),
+    ),
+  ];
+
+  return names.length > 0 ? names : null;
 }
 
-/** Aplica a faixa de preço em price_current (mesmas faixas do app.js). */
+/**
+ * Aplica faixa de preço em price_current.
+ */
 function applyPriceRange(query: any, priceRange?: string): any {
   switch (priceRange) {
     case "ate_50":
       return query.lte("price_current", 50);
+
     case "50_100":
       return query.gt("price_current", 50).lte("price_current", 100);
+
     case "100_200":
       return query.gt("price_current", 100).lte("price_current", 200);
+
     case "200_mais":
       return query.gt("price_current", 200);
+
     default:
       return query;
   }
@@ -120,20 +162,22 @@ export async function getProducts(
 
   if (options.category) {
     const names = await resolveCategoryNames(options.category);
+
     if (!names) return [];
+
     query = query.in("category", names);
   }
 
   const searchTerm = options.search?.trim();
+
   if (searchTerm) {
     query = query.ilike("name", `%${searchTerm}%`);
   }
 
   query = applyPriceRange(query, options.priceRange);
 
-  // "Maior desconto" usa o percentual extraído da tag (não é coluna do banco).
-  // Para preservar o comportamento do site antigo, buscamos os produtos
-  // correspondentes, ordenamos no servidor e só então aplicamos a página.
+  // Maior desconto usa o percentual extraído da tag,
+  // portanto precisa ordenar depois de carregar os produtos.
   const needsClientSideSort = options.order === "maior_desconto";
 
   if (!needsClientSideSort) {
@@ -148,7 +192,9 @@ export async function getProducts(
     }
 
     if (options.limit && options.limit > 0) {
-      const start = options.offset && options.offset > 0 ? options.offset : 0;
+      const start =
+        options.offset && options.offset > 0 ? options.offset : 0;
+
       query = query.range(start, start + options.limit - 1);
     }
   }
@@ -164,8 +210,11 @@ export async function getProducts(
 
   if (needsClientSideSort) {
     products.sort((a, b) => (b.discount || 0) - (a.discount || 0));
+
     if (options.offset || options.limit) {
-      const start = options.offset && options.offset > 0 ? options.offset : 0;
+      const start =
+        options.offset && options.offset > 0 ? options.offset : 0;
+
       products = products.slice(
         start,
         options.limit ? start + options.limit : undefined,
@@ -188,11 +237,14 @@ export async function getProductsCount(
 
   if (options.category) {
     const names = await resolveCategoryNames(options.category);
+
     if (!names) return 0;
+
     query = query.in("category", names);
   }
 
   const searchTerm = options.search?.trim();
+
   if (searchTerm) {
     query = query.ilike("name", `%${searchTerm}%`);
   }
@@ -214,7 +266,7 @@ export async function getProductById(
 ): Promise<ProductDisplay | null> {
   if (!supabase) return null;
 
-  // 1) Tenta pelo external_id real (padrão das URLs atuais)
+  // 1) Tenta pelo external_id real.
   const { data, error } = await supabase
     .from("produtos")
     .select("*")
@@ -227,9 +279,11 @@ export async function getProductById(
     return null;
   }
 
-  if (data) return toDisplay(data as ProductRow);
+  if (data) {
+    return toDisplay(data as ProductRow);
+  }
 
-  // 2) Fallback: id numérico real do Supabase
+  // 2) Fallback pelo id numérico do Supabase.
   if (/^\d+$/.test(id)) {
     const { data: byId, error: errorById } = await supabase
       .from("produtos")
@@ -249,7 +303,9 @@ export async function getProductById(
   return null;
 }
 
-/** Produtos de uma categoria (por slug), com a regra de atividade. */
+/**
+ * Produtos de uma categoria.
+ */
 export async function getProductsByCategory(
   slug: string,
   options: {
@@ -259,10 +315,15 @@ export async function getProductsByCategory(
     order?: OrderOption;
   } = {},
 ): Promise<ProductDisplay[]> {
-  return getProducts({ category: slug, ...options });
+  return getProducts({
+    category: slug,
+    ...options,
+  });
 }
 
-/** Produtos em destaque: mais barato de cada categoria (mesma regra do app.js). */
+/**
+ * Produto mais barato de cada categoria.
+ */
 export function pickSpotlightProducts(
   products: ProductDisplay[],
 ): ProductDisplay[] {
@@ -270,8 +331,13 @@ export function pickSpotlightProducts(
 
   for (const p of products) {
     if (p.priceCurrent == null) continue;
+
     const current = byCategory.get(p.category);
-    if (!current || (p.priceCurrent ?? Infinity) < (current.priceCurrent ?? Infinity)) {
+
+    if (
+      !current ||
+      (p.priceCurrent ?? Infinity) < (current.priceCurrent ?? Infinity)
+    ) {
       byCategory.set(p.category, p);
     }
   }
@@ -279,14 +345,23 @@ export function pickSpotlightProducts(
   return [...byCategory.values()];
 }
 
-/** Slides do hero: maior desconto de cada categoria (mesma regra do app.js). */
-export function pickHeroSlides(products: ProductDisplay[]): ProductDisplay[] {
+/**
+ * Maior desconto de cada categoria para os slides do hero.
+ */
+export function pickHeroSlides(
+  products: ProductDisplay[],
+): ProductDisplay[] {
   const byCategory = new Map<string, ProductDisplay>();
 
   for (const p of products) {
     if (p.priceCurrent == null || !p.image) continue;
+
     const current = byCategory.get(p.category);
-    if (!current || (p.discount || 0) > (current.discount || 0)) {
+
+    if (
+      !current ||
+      (p.discount || 0) > (current.discount || 0)
+    ) {
       byCategory.set(p.category, p);
     }
   }
@@ -294,7 +369,9 @@ export function pickHeroSlides(products: ProductDisplay[]): ProductDisplay[] {
   return [...byCategory.values()];
 }
 
-/** Última atualização do catálogo (max last_checked_at entre produtos ativos). */
+/**
+ * Última atualização do catálogo.
+ */
 export async function getLatestUpdate(): Promise<string | null> {
   if (!supabase) return null;
 
@@ -306,7 +383,9 @@ export async function getLatestUpdate(): Promise<string | null> {
     .limit(1)
     .maybeSingle();
 
-  if (error || !data) return null;
+  if (error || !data) {
+    return null;
+  }
 
   return (data as { last_checked_at: string }).last_checked_at;
 }
