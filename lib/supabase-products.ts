@@ -97,9 +97,6 @@ export async function getCategories(): Promise<Category[]> {
  *
  * Exemplo:
  * slug "calcas" pode encontrar "Calcas" e "Calças".
- *
- * Isso evita usar o rótulo bonito "Calças" para consultar registros
- * que no banco estão salvos como "Calcas".
  */
 export async function resolveCategoryNames(
   slug: string,
@@ -176,8 +173,6 @@ export async function getProducts(
 
   query = applyPriceRange(query, options.priceRange);
 
-  // Maior desconto usa o percentual extraído da tag,
-  // portanto precisa ordenar depois de carregar os produtos.
   const needsClientSideSort = options.order === "maior_desconto";
 
   if (!needsClientSideSort) {
@@ -261,6 +256,13 @@ export async function getProductsCount(
   return count ?? 0;
 }
 
+/**
+ * Busca a página individual mesmo que o produto esteja há mais de 72 horas
+ * sem atualização.
+ *
+ * Isso evita que URLs antigas virem 404 apenas porque o scraper ainda não
+ * encontrou o produto novamente.
+ */
 export async function getProductById(
   id: string,
 ): Promise<ProductDisplay | null> {
@@ -270,7 +272,6 @@ export async function getProductById(
   const { data, error } = await supabase
     .from("produtos")
     .select("*")
-    .gte("last_checked_at", freshCutoff())
     .eq("external_id", id)
     .maybeSingle();
 
@@ -288,7 +289,6 @@ export async function getProductById(
     const { data: byId, error: errorById } = await supabase
       .from("produtos")
       .select("*")
-      .gte("last_checked_at", freshCutoff())
       .eq("id", Number(id))
       .maybeSingle();
 
@@ -358,10 +358,7 @@ export function pickHeroSlides(
 
     const current = byCategory.get(p.category);
 
-    if (
-      !current ||
-      (p.discount || 0) > (current.discount || 0)
-    ) {
+    if (!current || (p.discount || 0) > (current.discount || 0)) {
       byCategory.set(p.category, p);
     }
   }
