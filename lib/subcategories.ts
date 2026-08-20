@@ -9,6 +9,7 @@ export type SubcategoryConfig = {
 };
 
 export const SUBCATEGORIES: SubcategoryConfig[] = [
+  // VESTIDOS
   {
     slug: "vestido-longo",
     categorySlug: "vestidos",
@@ -18,16 +19,6 @@ export const SUBCATEGORIES: SubcategoryConfig[] = [
       "Encontre vestidos longos femininos em oferta para diferentes estilos e ocasiões. Compare modelos e preços selecionados pela MIXDM.",
     heading: "Vestidos longos femininos para diferentes ocasiões",
     keywords: ["vestido longo", "longo vestido"],
-  },
-  {
-    slug: "calca-pantalona",
-    categorySlug: "calcas",
-    label: "Calça Pantalona",
-    title: "Calças Pantalona Femininas em Oferta",
-    description:
-      "Encontre calças pantalona femininas em oferta, com modelos para diferentes estilos e ocasiões. Compare opções e preços na MIXDM.",
-    heading: "Calças pantalona femininas para diferentes estilos",
-    keywords: ["pantalona"],
   },
   {
     slug: "vestido-curto",
@@ -50,6 +41,60 @@ export const SUBCATEGORIES: SubcategoryConfig[] = [
     keywords: ["vestido midi", "midi vestido"],
   },
   {
+    slug: "vestido-casual",
+    categorySlug: "vestidos",
+    label: "Vestido Casual",
+    title: "Vestidos Casuais Femininos em Oferta",
+    description:
+      "Encontre vestidos casuais femininos em oferta para o dia a dia e diferentes ocasiões. Compare modelos, estilos e preços na MIXDM.",
+    heading: "Vestidos casuais femininos para o dia a dia",
+    keywords: ["vestido casual", "casual vestido"],
+  },
+  {
+    slug: "vestido-festa",
+    categorySlug: "vestidos",
+    label: "Vestido Festa",
+    title: "Vestidos de Festa Femininos em Oferta",
+    description:
+      "Encontre vestidos de festa femininos em oferta para diferentes ocasiões e estilos. Compare modelos e preços selecionados pela MIXDM.",
+    heading: "Vestidos femininos para festas e ocasiões especiais",
+    keywords: ["vestido festa", "vestido de festa"],
+  },
+
+  // CALÇAS
+  {
+    slug: "calca-pantalona",
+    categorySlug: "calcas",
+    label: "Calça Pantalona",
+    title: "Calças Pantalona Femininas em Oferta",
+    description:
+      "Encontre calças pantalona femininas em oferta, com modelos para diferentes estilos e ocasiões. Compare opções e preços na MIXDM.",
+    heading: "Calças pantalona femininas para diferentes estilos",
+    keywords: ["pantalona"],
+  },
+  {
+    slug: "calca-jeans",
+    categorySlug: "calcas",
+    label: "Calça Jeans",
+    title: "Calças Jeans Femininas em Oferta",
+    description:
+      "Encontre calças jeans femininas em oferta para diferentes estilos e ocasiões. Compare modelos e preços selecionados pela MIXDM.",
+    heading: "Calças jeans femininas para diferentes estilos",
+    keywords: ["calça jeans", "calca jeans"],
+  },
+  {
+    slug: "calca-cargo",
+    categorySlug: "calcas",
+    label: "Calça Cargo",
+    title: "Calças Cargo Femininas em Oferta",
+    description:
+      "Encontre calças cargo femininas em oferta para looks casuais e modernos. Compare modelos, opções e preços selecionados pela MIXDM.",
+    heading: "Calças cargo femininas para looks casuais",
+    keywords: ["calça cargo", "calca cargo"],
+  },
+
+  // SAIAS
+  {
     slug: "saia-longa",
     categorySlug: "saias",
     label: "Saia Longa",
@@ -70,15 +115,17 @@ export const SUBCATEGORIES: SubcategoryConfig[] = [
     keywords: ["saia midi", "midi saia"],
   },
   {
-    slug: "calca-jeans",
-    categorySlug: "calcas",
-    label: "Calça Jeans",
-    title: "Calças Jeans Femininas em Oferta",
+    slug: "saia-jeans",
+    categorySlug: "saias",
+    label: "Saia Jeans",
+    title: "Saias Jeans Femininas em Oferta",
     description:
-      "Encontre calças jeans femininas em oferta para diferentes estilos e ocasiões. Compare modelos e preços selecionados pela MIXDM.",
-    heading: "Calças jeans femininas para diferentes estilos",
-    keywords: ["calça jeans", "calca jeans"],
+      "Encontre saias jeans femininas em oferta para diferentes estilos e ocasiões. Compare modelos, comprimentos e preços na MIXDM.",
+    heading: "Saias jeans femininas para diferentes estilos",
+    keywords: ["saia jeans", "jeans saia"],
   },
+
+  // BOLSAS
   {
     slug: "bolsa-transversal",
     categorySlug: "bolsas",
@@ -89,6 +136,38 @@ export const SUBCATEGORIES: SubcategoryConfig[] = [
     heading: "Bolsas transversais femininas para diferentes ocasiões",
     keywords: ["bolsa transversal", "transversal bolsa"],
   },
+  {
+    slug: "bolsa-tiracolo",
+    categorySlug: "bolsas",
+    label: "Bolsa Tiracolo",
+    title: "Bolsas Tiracolo Femininas em Oferta",
+    description:
+      "Encontre bolsas tiracolo femininas em oferta para o dia a dia e diferentes ocasiões. Compare modelos, estilos e preços na MIXDM.",
+    heading: "Bolsas tiracolo femininas para diferentes estilos",
+    keywords: ["bolsa tiracolo", "tiracolo bolsa"],
+  },
+
+  // CALÇADOS
+  {
+    slug: "sapatilha",
+    categorySlug: "calcados",
+    label: "Sapatilha",
+    title: "Sapatilhas Femininas em Oferta",
+    description:
+      "Encontre sapatilhas femininas em oferta, com modelos casuais, confortáveis e para diferentes ocasiões. Compare opções e preços na MIXDM.",
+    heading: "Sapatilhas femininas para diferentes estilos",
+    keywords: ["sapatilha", "sapatilhas"],
+  },
+  {
+    slug: "rasteirinha",
+    categorySlug: "calcados",
+    label: "Rasteirinha",
+    title: "Rasteirinhas Femininas em Oferta",
+    description:
+      "Encontre rasteirinhas femininas em oferta para looks casuais e dias mais quentes. Compare modelos, estilos e preços na MIXDM.",
+    heading: "Rasteirinhas femininas para looks leves e casuais",
+    keywords: ["rasteirinha", "rasteirinhas", "rasteira feminina"],
+  },
 ];
 
 export function getSubcategory(
@@ -97,12 +176,15 @@ export function getSubcategory(
 ): SubcategoryConfig | undefined {
   return SUBCATEGORIES.find(
     (item) =>
-      item.categorySlug === categorySlug && item.slug === subcategorySlug
+      item.categorySlug === categorySlug &&
+      item.slug === subcategorySlug
   );
 }
 
 export function getSubcategoriesForCategory(
   categorySlug: string
 ): SubcategoryConfig[] {
-  return SUBCATEGORIES.filter((item) => item.categorySlug === categorySlug);
+  return SUBCATEGORIES.filter(
+    (item) => item.categorySlug === categorySlug
+  );
 }
