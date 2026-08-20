@@ -3,7 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import ProductShareButtons from "@/components/ProductShareButtons";
-import { getProductById } from "@/lib/supabase-products";
+import {
+  getProductById,
+  MAX_HOURS_STALE,
+} from "@/lib/supabase-products";
 import {
   fmtPrice,
   generateSummary,
@@ -15,6 +18,18 @@ import type { ProductDisplay } from "@/types/product";
 
 export const revalidate = 300;
 
+function isProductFresh(product: ProductDisplay): boolean {
+  if (!product.lastCheckedAt) return false;
+
+  const lastChecked = new Date(product.lastCheckedAt).getTime();
+
+  if (Number.isNaN(lastChecked)) return false;
+
+  const maxAge = MAX_HOURS_STALE * 60 * 60 * 1000;
+
+  return Date.now() - lastChecked <= maxAge;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -23,12 +38,17 @@ export async function generateMetadata({
   const product = await getProductById(params.id);
 
   if (!product) {
-    return { title: "Oferta não encontrada" };
+    return {
+      title: "Oferta não encontrada",
+    };
   }
 
-  const description =
-    product.description ||
-    `${product.name} — oferta selecionada pela MIXDM Moda Feminina.`;
+  const fresh = isProductFresh(product);
+
+  const description = fresh
+    ? product.description ||
+      `${product.name} — oferta selecionada pela MIXDM Moda Feminina.`
+    : `${product.name} — esta oferta não foi confirmada recentemente. Veja opções atualizadas na MIXDM Moda Feminina.`;
 
   return {
     title: product.name,
@@ -41,18 +61,21 @@ export async function generateMetadata({
       description,
       type: "website",
       url: `/produto/${product.productId}`,
-      images: [product.image],
+      images: product.image ? [product.image] : [],
     },
     twitter: {
       card: "summary_large_image",
       title: product.name,
       description,
-      images: [product.image],
+      images: product.image ? [product.image] : [],
     },
   };
 }
 
-function buildProductJsonLd(product: ProductDisplay) {
+function buildProductJsonLd(
+  product: ProductDisplay,
+  fresh: boolean,
+) {
   const productUrl = absoluteUrl(`/produto/${product.productId}`);
 
   return {
@@ -63,10 +86,11 @@ function buildProductJsonLd(product: ProductDisplay) {
     image: [product.image].filter(Boolean),
     category: product.category,
     url: productUrl,
-    // Somente dados confirmados. Sem avaliações, reviews, estoque, marca,
-    // seller, frete, cupom ou disponibilidade inventados.
+
+    // Só informa uma oferta ao Google quando o produto
+    // foi atualizado dentro do período considerado ativo.
     offers:
-      product.priceCurrent != null
+      fresh && product.priceCurrent != null
         ? {
             "@type": "Offer",
             url: productUrl,
@@ -116,18 +140,27 @@ export default async function ProdutoPage({
   params: { id: string };
 }) {
   const product = await getProductById(params.id);
-  if (!product) notFound();
+
+  if (!product) {
+    notFound();
+  }
+
+  const fresh = isProductFresh(product);
 
   const categoryLabel =
     categoryLabelForSlug(product.categorySlug) ?? product.category;
+
   const showTag = Boolean(
-    product.tag && (!product.discount || product.discount <= 60),
+    fresh &&
+      product.tag &&
+      (!product.discount || product.discount <= 60),
   );
+
   const safeUrl = product.affiliateUrl || "#";
 
   return (
     <div className="product-detail-page">
-      <JsonLd data={buildProductJsonLd(product)} />
+      <JsonLd data={buildProductJsonLd(product, fresh)} />
       <JsonLd data={buildBreadcrumbJsonLd(product)} />
 
       <Link href="/" className="back-button" aria-label="Voltar">
@@ -144,80 +177,178 @@ export default async function ProdutoPage({
         Voltar
       </Link>
 
-      <nav className="breadcrumb" style={{ padding: 0, marginBottom: 16 }} aria-label="Trilha">
-        <Link href="/">Início</Link> /{" "}
+      <nav
+        className="breadcrumb"
+        style={{ padding: 0, marginBottom: 16 }}
+        aria-label="Trilha"
+      >
+        <Link href="/">Início</Link>
+        {" / "}
         <Link href={`/categoria/${product.categorySlug}`}>
           {categoryLabel}
-        </Link>{" "}
-        / <span>{product.name}</span>
+        </Link>
+        {" / "}
+        <span>{product.name}</span>
       </nav>
 
       <div className="detail-card">
         <div className="detail-media">
-          {showTag && <span className="detail-tag">{product.tag}</span>}
-          {product.isInternational && (
+          {showTag && (
+            <span className="detail-tag">
+              {product.tag}
+            </span>
+          )}
+
+          {product.isInternational && fresh && (
             <span
               className="int-badge"
-              style={{ position: "absolute", top: 50, left: 10 }}
+              style={{
+                position: "absolute",
+                top: 50,
+                left: 10,
+              }}
             >
               🌎 Internacional
             </span>
           )}
+
           <img
             src={product.image}
             alt={`${product.name} — imagem`}
           />
         </div>
+
         <div className="detail-info">
-          <span className="eyebrow">{categoryLabel}</span>
-          <h1 className="detail-title">{product.name}</h1>
-          <div className="detail-rating">
-            <span className="stars-wrap" style={{ fontSize: 16 }}>
-              ★★★★★
+          <span className="eyebrow">
+            {categoryLabel}
+          </span>
+
+          <h1 className="detail-title">
+            {product.name}
+          </h1>
+
+          {fresh && (
+            <div className="detail-rating">
               <span
-                className="stars-fill"
-                style={{
-                  width: starFillWidth(product.rating || 4.5),
-                  fontSize: 16,
-                }}
+                className="stars-wrap"
+                style={{ fontSize: 16 }}
               >
                 ★★★★★
+                <span
+                  className="stars-fill"
+                  style={{
+                    width: starFillWidth(product.rating || 4.5),
+                    fontSize: 16,
+                  }}
+                >
+                  ★★★★★
+                </span>
               </span>
-            </span>
-            <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)" }}>
-              {(product.rating || 0).toFixed(1)}
-            </span>
-            <span style={{ color: "var(--ink-muted)", fontSize: 13 }}>
-              ({product.reviewsCount || 0} avaliações)
-            </span>
-          </div>
-          <div className="detail-price-block">
-            <div className="price-row" style={{ gap: 14 }}>
-              <span className="detail-price-now">
-                R$ {fmtPrice(product.priceCurrent)}
+
+              <span
+                style={{
+                  fontWeight: 600,
+                  fontSize: 15,
+                  color: "var(--ink)",
+                }}
+              >
+                {(product.rating || 0).toFixed(1)}
+              </span>
+
+              <span
+                style={{
+                  color: "var(--ink-muted)",
+                  fontSize: 13,
+                }}
+              >
+                ({product.reviewsCount || 0} avaliações)
               </span>
             </div>
-          </div>
-          <div className="detail-summary">{generateSummary(product)}</div>
-          <div className="detail-actions">
-            <a
-              className="btn-primary btn-block"
-              href={safeUrl}
-              target="_blank"
-              rel="nofollow sponsored noopener"
-            >
-              Comprar agora
-            </a>
-            <ProductShareButtons
-              productId={product.productId}
-              name={product.name}
-              priceText={`R$ ${fmtPrice(product.priceCurrent)}`}
-              discount={product.discount}
-            />
-          </div>
-          <p className="detail-note">
-            Preço e disponibilidade sujeitos a alteração pela loja parceira.
-          </p>
+          )}
+
+          {fresh ? (
+            <>
+              <div className="detail-price-block">
+                <div
+                  className="price-row"
+                  style={{ gap: 14 }}
+                >
+                  <span className="detail-price-now">
+                    R$ {fmtPrice(product.priceCurrent)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="detail-summary">
+                {generateSummary(product)}
+              </div>
+
+              <div className="detail-actions">
+                <a
+                  className="btn-primary btn-block"
+                  href={safeUrl}
+                  target="_blank"
+                  rel="nofollow sponsored noopener"
+                >
+                  Comprar agora
+                </a>
+
+                <ProductShareButtons
+                  productId={product.productId}
+                  name={product.name}
+                  priceText={`R$ ${fmtPrice(product.priceCurrent)}`}
+                  discount={product.discount}
+                />
+              </div>
+
+              <p className="detail-note">
+                Preço e disponibilidade sujeitos a alteração pela loja
+                parceira.
+              </p>
+            </>
+          ) : (
+            <>
+              <div
+                style={{
+                  marginTop: 20,
+                  padding: 18,
+                  border: "1px solid var(--line)",
+                  borderRadius: 12,
+                }}
+              >
+                <strong>
+                  Esta oferta não está disponível ou não foi atualizada
+                  recentemente.
+                </strong>
+
+                <p
+                  style={{
+                    marginTop: 8,
+                    color: "var(--ink-soft)",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Este produto não foi confirmado nas últimas{" "}
+                  {MAX_HOURS_STALE} horas. Para evitar mostrar preço ou
+                  disponibilidade desatualizados, o link de compra foi
+                  temporariamente removido.
+                </p>
+              </div>
+
+              <div
+                className="detail-actions"
+                style={{ marginTop: 20 }}
+              >
+                <Link
+                  className="btn-primary btn-block"
+                  href={`/categoria/${product.categorySlug}`}
+                >
+                  Ver ofertas atuais de {categoryLabel}
+                </Link>
+              </div>
+            </>
+          )}
+
           <div className="detail-disclosure">
             Links de afiliado Shopee — comissão sem alteração no preço.
           </div>
