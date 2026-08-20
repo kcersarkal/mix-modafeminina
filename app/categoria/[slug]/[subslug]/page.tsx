@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/JsonLd";
 import ProductCard from "@/components/ProductCard";
 import { getProducts } from "@/lib/supabase-products";
 import { categoryLabelForSlug } from "@/lib/categories";
 import { getSubcategory } from "@/lib/subcategories";
+import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 300;
 
@@ -21,11 +23,24 @@ export async function generateMetadata({
     };
   }
 
+  const url = `/categoria/${params.slug}/${params.subslug}`;
+
   return {
     title: subcategory.title,
     description: subcategory.description,
     alternates: {
-      canonical: `/categoria/${params.slug}/${params.subslug}`,
+      canonical: url,
+    },
+    openGraph: {
+      title: `${subcategory.title} — MIXDM Moda Feminina`,
+      description: subcategory.description,
+      type: "website",
+      url,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${subcategory.title} — MIXDM Moda Feminina`,
+      description: subcategory.description,
     },
   };
 }
@@ -54,18 +69,68 @@ export default async function SubcategoryPage({
     offset: 0,
   });
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Início",
+        item: absoluteUrl("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: categoryLabel,
+        item: absoluteUrl(`/categoria/${params.slug}`),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: subcategory.label,
+        item: absoluteUrl(
+          `/categoria/${params.slug}/${params.subslug}`,
+        ),
+      },
+    ],
+  };
+
   return (
-    <div className="wrap" style={{ paddingTop: 32, paddingBottom: 80 }}>
-      <nav className="breadcrumb" style={{ padding: 0 }} aria-label="Trilha">
+    <div
+      className="wrap"
+      style={{
+        paddingTop: 32,
+        paddingBottom: 80,
+      }}
+    >
+      <JsonLd data={breadcrumbJsonLd} />
+
+      <nav
+        className="breadcrumb"
+        style={{ padding: 0 }}
+        aria-label="Trilha"
+      >
         <Link href="/">Início</Link>
         {" / "}
-        <Link href={`/categoria/${params.slug}`}>{categoryLabel}</Link>
+        <Link href={`/categoria/${params.slug}`}>
+          {categoryLabel}
+        </Link>
         {" / "}
         <span>{subcategory.label}</span>
       </nav>
 
-      <header style={{ marginTop: 28, marginBottom: 24 }}>
-        <h1 style={{ fontSize: "clamp(28px, 4vw, 38px)" }}>
+      <header
+        style={{
+          marginTop: 28,
+          marginBottom: 24,
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "clamp(28px, 4vw, 38px)",
+          }}
+        >
           {subcategory.title}
         </h1>
 
@@ -79,21 +144,31 @@ export default async function SubcategoryPage({
           {products.length > 0
             ? `${products.length} produto${
                 products.length !== 1 ? "s" : ""
-              } encontrado${products.length !== 1 ? "s" : ""}.`
+              } encontrado${
+                products.length !== 1 ? "s" : ""
+              }.`
             : "Nenhum produto disponível no momento."}
         </p>
       </header>
 
       {products.length > 0 ? (
-        <div className="product-grid" style={{ paddingTop: 8 }}>
+        <div
+          className="product-grid"
+          style={{ paddingTop: 8 }}
+        >
           {products.map((product) => (
-            <ProductCard key={product.productId} product={product} />
+            <ProductCard
+              key={product.productId}
+              product={product}
+            />
           ))}
         </div>
       ) : (
         <div className="empty-state">
           <h2>Nenhuma oferta disponível</h2>
-          <p>Estamos atualizando nossas ofertas. Volte em breve!</p>
+          <p>
+            Estamos atualizando nossas ofertas. Volte em breve!
+          </p>
         </div>
       )}
 
