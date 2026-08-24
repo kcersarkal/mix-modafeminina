@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Cormorant_Garamond, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -20,18 +20,18 @@ const poppins = Poppins({
   display: "swap",
 });
 
-// Verificação do Google Search Console (o código atual do site é o fallback)
+// VerificaÃ§Ã£o do Google Search Console (o cÃ³digo atual do site Ã© o fallback)
 const GOOGLE_SITE_VERIFICATION =
   process.env.GOOGLE_SITE_VERIFICATION || "66Qnvhu32m6lppzAI7LmNOqASpj01jMTJm0TyNZCs4M";
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: {
-    default: "Moda Feminina: Vestidos, Bolsas, Calçados e Ofertas | MIXDM",
+    default: "Moda Feminina: Vestidos, Bolsas, CalÃ§ados e Ofertas | MIXDM",
     template: "%s | MIXDM Moda Feminina",
   },
   description:
-    "Curadoria de moda feminina com vestidos, calçados, bolsas e acessórios. Ofertas selecionadas em um só lugar.",
+    "Curadoria de moda feminina com vestidos, calÃ§ados, bolsas e acessÃ³rios. Ofertas selecionadas em um sÃ³ lugar.",
   applicationName: "MIXDM Moda Feminina",
   icons: {
     icon: "/favicon.ico",
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "MIXDM Moda Feminina",
-    title: "MIXDM Moda Feminina — Curadoria de Moda",
+    title: "MIXDM Moda Feminina â€” Curadoria de Moda",
     description:
-      "Curadoria de moda feminina com vestidos, calçados, bolsas e acessórios. Ofertas selecionadas em um só lugar.",
+      "Curadoria de moda feminina com vestidos, calÃ§ados, bolsas e acessÃ³rios. Ofertas selecionadas em um sÃ³ lugar.",
     url: "/",
     images: [
       {
@@ -56,13 +56,16 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MIXDM Moda Feminina — Curadoria de Moda",
+    title: "MIXDM Moda Feminina â€” Curadoria de Moda",
     description:
-      "Curadoria de moda feminina com vestidos, calçados, bolsas e acessórios. Ofertas selecionadas em um só lugar.",
+      "Curadoria de moda feminina com vestidos, calÃ§ados, bolsas e acessÃ³rios. Ofertas selecionadas em um sÃ³ lugar.",
     images: ["/logo_moda_feminina.jpg"],
   },
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
+    other: {
+      "p:domain_verify": "47cfb702f4fe87b5d97c37139048372d",
+    },
   },
   robots: {
     index: true,
@@ -81,7 +84,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${cormorant.variable} ${poppins.variable}`}>
       <body>
         <a href="#app" className="skip-link">
-          Pular para o conteúdo
+          Pular para o conteÃºdo
         </a>
         <Header />
         <main id="app">{children}</main>
@@ -90,3 +93,4 @@ export default function RootLayout({
     </html>
   );
 }
+
