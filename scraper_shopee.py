@@ -274,7 +274,8 @@ def mapear_produto(item, categoria):
         "image": item.get("imageUrl", ""),
         "description": f"{item.get('productName', '')} - Encontre na Shopee",
         "rating": float(item.get("ratingStar", 0)),
-        "reviews_count": int(item.get("sales", 0)),
+        "reviews_count": 0,
+        "sales": int(item.get("sales", 0)),
         "affiliate_url": url,
         "tag": tag,
         "spotlight": False,
@@ -298,7 +299,7 @@ def limpar_produtos_antigos():
     total_removidos = 0
     atualizados = 0
 
-    resp = supabase.table("produtos").select("id,name,category,tag,rating,reviews_count").execute()
+    resp = supabase.table("produtos").select("id,name,category,tag,rating,reviews_count,sales").execute()
     produtos = resp.data or []
 
     for p in produtos:
@@ -326,7 +327,7 @@ def limpar_produtos_antigos():
         # Remover produtos que não passam nos filtros
         item_fake = {
             "ratingStar": float(p.get("rating", 0)),
-            "sales": int(p.get("reviews_count", 0)),
+            "sales": int(p.get("sales", 0) or p.get("reviews_count", 0)),
             "productName": p.get("name", ""),
         }
         if not filtrar_produto(item_fake):

@@ -12,10 +12,7 @@ import {
   pickHeroSlides,
   pickSpotlightProducts,
 } from "@/lib/supabase-products";
-import {
-  normalizeOrder,
-  normalizePriceRange,
-} from "@/lib/product-filters";
+import { normalizeOrder } from "@/lib/product-filters";
 import { generateSummary } from "@/lib/product-helpers";
 import { absoluteUrl } from "@/lib/site";
 
@@ -31,28 +28,25 @@ const SITE_DESCRIPTION =
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { q?: string; preco?: string; ordem?: string };
+  searchParams: { q?: string; ordem?: string };
 }) {
   const query = (searchParams.q ?? "").trim();
-  const preco = normalizePriceRange(searchParams.preco);
   const ordem = normalizeOrder(searchParams.ordem);
 
-  // Hero e destaque usam TODOS os produtos ativos (como no site antigo),
-  // independentemente dos filtros de preço/ordenação aplicados ao grid.
-  const [allProducts, products, categories, totalActiveCount] = await Promise.all([
-    getProducts(),
-    getProducts({
-      search: query || undefined,
-      priceRange: preco,
-      order: ordem,
-    }),
-    getCategories(),
-    getProductsCount(),
-  ]);
+  // Hero e destaque usam TODOS os produtos ativos,
+  // independentemente dos filtros de ordenação aplicados ao grid.
+  const [allProducts, products, categories, totalActiveCount] =
+    await Promise.all([
+      getProducts(),
+      getProducts({
+        search: query || undefined,
+        order: ordem,
+      }),
+      getCategories(),
+      getProductsCount(),
+    ]);
 
   const heroSlides = pickHeroSlides(allProducts);
-  // Resumo calculado no servidor e passado como prop (o client component
-  // apenas exibe — evita hydration mismatch por Math.random()).
   const spotlightItems = pickSpotlightProducts(allProducts).map((product) => ({
     product,
     summary: generateSummary(product),
@@ -121,7 +115,9 @@ export default async function Home({
         </div>
       </section>
 
-      {spotlightItems.length > 0 && <SpotlightCarousel items={spotlightItems} />}
+      {spotlightItems.length > 0 && (
+        <SpotlightCarousel items={spotlightItems} />
+      )}
 
       <div className="section-heading" id="ofertas">
         <div className="section-heading-top">
@@ -133,8 +129,6 @@ export default async function Home({
           </span>
         </div>
         <form action="/" method="get" className="search-wrap" role="search">
-          {/* Preserva os filtros ativos ao buscar (como no site antigo) */}
-          {preco && <input type="hidden" name="preco" value={preco} />}
           {ordem && <input type="hidden" name="ordem" value={ordem} />}
           <input
             className="search-input"
@@ -166,7 +160,7 @@ export default async function Home({
         ))}
       </div>
 
-      <FilterControls basePath="/" preco={preco} ordem={ordem} q={query || undefined} />
+      <FilterControls basePath="/" ordem={ordem} q={query || undefined} />
 
       {totalActiveCount === 0 ? (
         <div className="empty-state">

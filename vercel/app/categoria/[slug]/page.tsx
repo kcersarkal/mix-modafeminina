@@ -10,10 +10,7 @@ import {
   getProductsCount,
   resolveCategoryNames,
 } from "@/lib/supabase-products";
-import {
-  normalizeOrder,
-  normalizePriceRange,
-} from "@/lib/product-filters";
+import { normalizeOrder } from "@/lib/product-filters";
 import { categoryLabelForSlug } from "@/lib/categories";
 import { getCategorySeo } from "@/lib/category-seo";
 import { getSubcategoriesForCategory } from "@/lib/subcategories";
@@ -73,7 +70,6 @@ export default async function CategoriaPage({
   params: { slug: string };
   searchParams: {
     pagina?: string;
-    preco?: string;
     ordem?: string;
   };
 }) {
@@ -87,7 +83,6 @@ export default async function CategoriaPage({
   const label = categoryLabelForSlug(slug) ?? names[0];
   const seo = getCategorySeo(slug);
   const subcategories = getSubcategoriesForCategory(slug);
-  const preco = normalizePriceRange(searchParams.preco);
   const ordem = normalizeOrder(searchParams.ordem);
 
   const rawPage = Number(searchParams.pagina);
@@ -96,7 +91,6 @@ export default async function CategoriaPage({
 
   const totalCount = await getProductsCount({
     category: slug,
-    priceRange: preco,
   });
 
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
@@ -104,7 +98,6 @@ export default async function CategoriaPage({
 
   const products = await getProducts({
     category: slug,
-    priceRange: preco,
     order: ordem,
     limit: PAGE_SIZE,
     offset: (currentPage - 1) * PAGE_SIZE,
@@ -208,7 +201,6 @@ export default async function CategoriaPage({
 
       <FilterControls
         basePath={`/categoria/${slug}`}
-        preco={preco}
         ordem={ordem}
       />
 
@@ -226,7 +218,7 @@ export default async function CategoriaPage({
             />
           ))}
         </div>
-      ) : preco || ordem ? (
+      ) : ordem ? (
         <p
           style={{
             color: "var(--ink-muted)",
@@ -249,7 +241,6 @@ export default async function CategoriaPage({
           basePath={`/categoria/${slug}`}
           currentPage={currentPage}
           totalPages={totalPages}
-          preco={preco}
           ordem={ordem}
         />
       )}

@@ -1,6 +1,5 @@
 import { supabase } from "./supabase";
 import { categoryLabelForSlug, slugifyCategory } from "./categories";
-import { discountPercent } from "./product-helpers";
 import type { OrderOption } from "./product-filters";
 import type { Category, ProductDisplay, ProductRow } from "@/types/product";
 
@@ -21,9 +20,6 @@ export interface ProductQueryOptions {
   category?: string;
   search?: string;
 
-  /** Faixa de preço: ate_50 | 50_100 | 100_200 | 200_mais. */
-  priceRange?: string;
-
   limit?: number;
   offset?: number;
   order?: OrderOption;
@@ -36,15 +32,11 @@ function toDisplay(row: ProductRow): ProductDisplay {
     name: row.name,
     category: row.category,
     categorySlug: slugifyCategory(row.category),
-    priceCurrent: row.price_current,
-    priceOriginal: row.price_original,
     image: row.image,
     description: row.description,
     rating: row.rating,
     reviewsCount: row.reviews_count,
     affiliateUrl: row.affiliate_url,
-    tag: row.tag,
-    discount: discountPercent(row.tag),
     isInternational: Boolean(
       row.is_international || (row.tag || "").includes("🌎"),
     ),
@@ -128,24 +120,7 @@ export async function resolveCategoryNames(
 /**
  * Aplica faixa de preço em price_current.
  */
-function applyPriceRange(query: any, priceRange?: string): any {
-  switch (priceRange) {
-    case "ate_50":
-      return query.lte("price_current", 50);
 
-    case "50_100":
-      return query.gt("price_current", 50).lte("price_current", 100);
-
-    case "100_200":
-      return query.gt("price_current", 100).lte("price_current", 200);
-
-    case "200_mais":
-      return query.gt("price_current", 200);
-
-    default:
-      return query;
-  }
-}
 
 export async function getProducts(
   options: ProductQueryOptions = {},
@@ -171,27 +146,19 @@ export async function getProducts(
     query = query.ilike("name", `%${searchTerm}%`);
   }
 
-  query = applyPriceRange(query, options.priceRange);
+  if (options.order === "melhor_avaliacao") {
+    query = query.order("rating", { ascending: false });
+  } else {
+    query = query
+      .order("spotlight", { ascending: false })
+      .order("rating", { ascending: false });
+  }
 
-  const needsClientSideSort = options.order === "maior_desconto";
+  if (options.limit && options.limit > 0) {
+    const start =
+      options.offset && options.offset > 0 ? options.offset : 0;
 
-  if (!needsClientSideSort) {
-    if (options.order === "menor_preco") {
-      query = query.order("price_current", { ascending: true });
-    } else if (options.order === "melhor_avaliacao") {
-      query = query.order("rating", { ascending: false });
-    } else {
-      query = query
-        .order("spotlight", { ascending: false })
-        .order("rating", { ascending: false });
-    }
-
-    if (options.limit && options.limit > 0) {
-      const start =
-        options.offset && options.offset > 0 ? options.offset : 0;
-
-      query = query.range(start, start + options.limit - 1);
-    }
+    query = query.range(start, start + options.limit - 1);
   }
 
   const { data, error } = await query;
@@ -201,23 +168,7 @@ export async function getProducts(
     return [];
   }
 
-  let products = (data as ProductRow[]).map(toDisplay);
-
-  if (needsClientSideSort) {
-    products.sort((a, b) => (b.discount || 0) - (a.discount || 0));
-
-    if (options.offset || options.limit) {
-      const start =
-        options.offset && options.offset > 0 ? options.offset : 0;
-
-      products = products.slice(
-        start,
-        options.limit ? start + options.limit : undefined,
-      );
-    }
-  }
-
-  return products;
+  return (data as ProductRow[]).map(toDisplay);
 }
 
 export async function getProductsCount(
@@ -244,8 +195,6 @@ export async function getProductsCount(
     query = query.ilike("name", `%${searchTerm}%`);
   }
 
-  query = applyPriceRange(query, options.priceRange);
-
   const { count, error } = await query;
 
   if (error) {
@@ -257,53 +206,6 @@ export async function getProductsCount(
 }
 
 /**
- * Busca a página individual mesmo que o produto esteja há mais de 72 horas
- * sem atualização.
- *
- * Isso evita que URLs antigas virem 404 apenas porque o scraper ainda não
- * encontrou o produto novamente.
- */
-export async function getProductById(
-  id: string,
-): Promise<ProductDisplay | null> {
-  if (!supabase) return null;
-
-  // 1) Tenta pelo external_id real.
-  const { data, error } = await supabase
-    .from("produtos")
-    .select("*")
-    .eq("external_id", id)
-    .maybeSingle();
-
-  if (error) {
-    console.error("Erro ao buscar produto:", error);
-    return null;
-  }
-
-  if (data) {
-    return toDisplay(data as ProductRow);
-  }
-
-  // 2) Fallback pelo id numérico do Supabase.
-  if (/^\d+$/.test(id)) {
-    const { data: byId, error: errorById } = await supabase
-      .from("produtos")
-      .select("*")
-      .eq("id", Number(id))
-      .maybeSingle();
-
-    if (errorById) {
-      console.error("Erro ao buscar produto por id:", errorById);
-      return null;
-    }
-
-    return byId ? toDisplay(byId as ProductRow) : null;
-  }
-
-  return null;
-}
-
-/**
  * Produtos de uma categoria.
  */
 export async function getProductsByCategory(
@@ -311,7 +213,6 @@ export async function getProductsByCategory(
   options: {
     limit?: number;
     offset?: number;
-    priceRange?: string;
     order?: OrderOption;
   } = {},
 ): Promise<ProductDisplay[]> {
@@ -322,7 +223,7 @@ export async function getProductsByCategory(
 }
 
 /**
- * Produto mais barato de cada categoria.
+ * Produtos spotlight (por categoria, com maior avaliação).
  */
 export function pickSpotlightProducts(
   products: ProductDisplay[],
@@ -330,14 +231,9 @@ export function pickSpotlightProducts(
   const byCategory = new Map<string, ProductDisplay>();
 
   for (const p of products) {
-    if (p.priceCurrent == null) continue;
-
     const current = byCategory.get(p.category);
 
-    if (
-      !current ||
-      (p.priceCurrent ?? Infinity) < (current.priceCurrent ?? Infinity)
-    ) {
+    if (!current || (p.rating || 0) > (current.rating || 0)) {
       byCategory.set(p.category, p);
     }
   }
@@ -346,24 +242,12 @@ export function pickSpotlightProducts(
 }
 
 /**
- * Maior desconto de cada categoria para os slides do hero.
+ * Slides do hero — produtos spotlight com imagem.
  */
 export function pickHeroSlides(
   products: ProductDisplay[],
 ): ProductDisplay[] {
-  const byCategory = new Map<string, ProductDisplay>();
-
-  for (const p of products) {
-    if (p.priceCurrent == null || !p.image) continue;
-
-    const current = byCategory.get(p.category);
-
-    if (!current || (p.discount || 0) > (current.discount || 0)) {
-      byCategory.set(p.category, p);
-    }
-  }
-
-  return [...byCategory.values()];
+  return pickSpotlightProducts(products).filter((p) => p.image);
 }
 
 /**

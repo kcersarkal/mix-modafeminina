@@ -1,43 +1,11 @@
 import type { ProductDisplay } from "@/types/product";
 
 /**
- * Helpers de formatação portados fielmente do app.js antigo, para manter a
- * aparência dos preços, tags e resumos idêntica à do site atual.
+ * Helpers de formatação e geração de resumo para o MIXDM Moda Feminina.
  */
-
-export function priceNumber(value: number | null | undefined): number | null {
-  if (typeof value === "number") return Number.isFinite(value) ? value : null;
-  return null;
-}
-
-export function fmtPrice(value: number | null | undefined): string {
-  const price = priceNumber(value);
-  return price === null
-    ? "Indisponível"
-    : price.toLocaleString("pt-BR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-}
-
-/** Extrai o percentual de desconto da tag (ex.: "🌎 -30%" -> 30). */
-export function discountPercent(tag: string | null | undefined): number | null {
-  const t = tag || "";
-  const cleaned = t.replace(/^🌎 /, "");
-  if (cleaned.startsWith("-")) {
-    const m = cleaned.match(/-?(\d+)/);
-    return m ? parseInt(m[1], 10) : null;
-  }
-  return null;
-}
 
 export function isInternational(tag: string | null | undefined): boolean {
   return (tag || "").includes("🌎");
-}
-
-export function starFillWidth(rating: number | null | undefined): string {
-  const r = rating || 4.5;
-  return `${(r / 5) * 100}%`;
 }
 
 function pick<T>(arr: T[]): T {
@@ -105,22 +73,15 @@ function analysisForType(type: string): string {
   return pick(analyses[type] || analyses.generico);
 }
 
-/** Resumo gerado para o detalhe do produto (mesma lógica do app.js). */
+/** Resumo gerado para o destaque/carrrossel. */
 export function generateSummary(p: ProductDisplay): string {
-  const desconto = p.discount;
   const nota = p.rating || 0;
   const reviews = p.reviewsCount || 0;
   const type = detectProductType(p.name);
 
   let txt = analysisForType(type);
 
-  if (desconto && desconto >= 20) {
-    txt += ` com ${desconto}% de desconto —`;
-  } else if (desconto) {
-    txt += ` com preço especial —`;
-  } else {
-    txt += ` —`;
-  }
+  txt += " —";
 
   if (nota >= 4.5 && reviews >= 500) {
     txt += ` e olha que não sou só eu que penso assim: ${nota}/5 de mais de ${(

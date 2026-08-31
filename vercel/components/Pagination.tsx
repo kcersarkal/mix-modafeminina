@@ -7,20 +7,18 @@ export default function Pagination({
   basePath,
   currentPage,
   totalPages,
-  preco,
   ordem,
 }: {
   basePath: string;
   currentPage: number;
   totalPages: number;
-  preco?: string;
   ordem?: string;
 }) {
   const pages: number[] = [];
   for (let i = 1; i <= totalPages; i++) pages.push(i);
 
   const hrefFor = (page: number) =>
-    buildFilterUrl(basePath, { preco, ordem, pagina: page });
+    buildFilterUrl(basePath, { ordem, pagina: page });
 
   return (
     <nav className="pagination" aria-label="Paginação">

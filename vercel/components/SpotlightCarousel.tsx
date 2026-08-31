@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { fmtPrice } from "@/lib/product-helpers";
 import type { ProductDisplay } from "@/types/product";
 
 export interface SpotlightItem {
@@ -34,13 +33,15 @@ export default function SpotlightCarousel({
   if (count === 0) return null;
 
   const { product, summary } = items[index];
-  const pct = product.discount;
+  const affiliateUrl = product.affiliateUrl || "#";
 
   return (
     <div className="spotlight">
       <div className="spotlight-label">Produtos em destaque</div>
-      <Link
-        href={`/produto/${product.productId}`}
+      <a
+        href={affiliateUrl}
+        target="_blank"
+        rel="nofollow sponsored noopener noreferrer"
         className="spotlight-card"
         style={{ display: "grid" }}
         aria-label={`Ver oferta em destaque: ${product.name}`}
@@ -51,36 +52,18 @@ export default function SpotlightCarousel({
         <div className="spotlight-body">
           <h2 className="spotlight-title">{product.name}</h2>
           <div className="spotlight-desc">{summary}</div>
-          <div className="price-row" style={{ marginBottom: 6, gap: 6 }}>
-            {pct && pct <= 60 && (
-              <div className="discount-badge lg">
-                <span className="pct">-{pct}%</span>
-                <span className="off">OFF</span>
-              </div>
-            )}
-            {product.isInternational && (
-              <span
-                className="int-badge"
-                style={{
-                  position: "static",
-                  display: "inline-block",
-                  marginTop: 4,
-                }}
-              >
-                🌎 Internacional
-              </span>
-            )}
-            <div>
-              <div className="price-row" style={{ marginBottom: 0, gap: 4 }}>
-                <span
-                  className="price-current"
-                  style={{ fontSize: 24, color: "var(--rose-deep)" }}
-                >
-                  R$ {fmtPrice(product.priceCurrent)}
-                </span>
-              </div>
-            </div>
-          </div>
+          {product.isInternational && (
+            <span
+              className="int-badge"
+              style={{
+                position: "static",
+                display: "inline-block",
+                marginTop: 4,
+              }}
+            >
+              🌎 Internacional
+            </span>
+          )}
           <span
             className="btn-primary"
             style={{ display: "inline-block", padding: "8px 18px", fontSize: 13 }}
@@ -88,7 +71,7 @@ export default function SpotlightCarousel({
             Ver oferta
           </span>
         </div>
-      </Link>
+      </a>
       {count > 1 && (
         <>
           <button
@@ -106,16 +89,24 @@ export default function SpotlightCarousel({
             onClick={() => setIndex((index + 1) % count)}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M9 18l6-6-6-6" />
+              <path d="M9 6l6 6-6 6" />
             </svg>
           </button>
-          <div className="dots">
-            {items.map((item, i) => (
-              <button
-                key={item.product.productId}
-                className={`dot-indicator ${i === index ? "active" : ""}`}
+          <div className="carousel-dots">
+            {items.map((_, i) => (
+              <span
+                key={i}
+                className={i === index ? "is-active" : ""}
+                role="button"
+                tabIndex={0}
                 aria-label={`Destaque ${i + 1} de ${count}`}
                 onClick={() => setIndex(i)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setIndex(i);
+                  }
+                }}
               />
             ))}
           </div>

@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS produtos (
   description TEXT,
   rating NUMERIC(2,1) DEFAULT 0,
   reviews_count INTEGER DEFAULT 0,
+  sales NUMERIC DEFAULT 0,
   affiliate_url TEXT DEFAULT '#',
   tag TEXT,
   is_international BOOLEAN DEFAULT false,

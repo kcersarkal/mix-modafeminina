@@ -36,16 +36,11 @@ export interface ProductDisplay {
   category: string;
   /** Slug da categoria (para links /categoria/[slug]). */
   categorySlug: string;
-  priceCurrent: number | null;
-  priceOriginal: number | null;
   image: string;
   description: string | null;
   rating: number | null;
   reviewsCount: number | null;
   affiliateUrl: string | null;
-  tag: string | null;
-  /** Percentual de desconto extraído da tag (ex.: "-30%" -> 30). */
-  discount: number | null;
   isInternational: boolean;
   spotlight: boolean;
   lastCheckedAt: string;

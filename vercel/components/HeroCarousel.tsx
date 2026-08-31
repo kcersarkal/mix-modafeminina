@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { fmtPrice } from "@/lib/product-helpers";
 import type { ProductDisplay } from "@/types/product";
 
 export default function HeroCarousel({
@@ -61,7 +60,7 @@ export default function HeroCarousel({
                 <div className="hero-carousel-slide" key={slide.productId}>
                   <img src={slide.image} alt={slide.name} loading="lazy" />
                   <div className="slide-label">
-                    {slide.category} • R$ {fmtPrice(slide.priceCurrent)}
+                    {slide.category}
                   </div>
                 </div>
               ))}
