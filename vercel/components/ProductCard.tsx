@@ -1,19 +1,5 @@
+import { formatSales } from "@/lib/product-helpers";
 import type { ProductDisplay } from "@/types/product";
-
-/**
- * Formata quantidade de vendas.
- * Nota: o banco atual NÃO possui campo de vendas. Esta função ficará pronta
- * para uso quando o campo for adicionado futuramente.
- */
-function formatSales(sales: number | null | undefined): string | null {
-  if (sales == null || sales <= 0) return null;
-
-  if (sales < 1000) return `+${sales} vendas`;
-
-  const thousands = sales / 1000;
-  const formatted = thousands % 1 === 0 ? `${thousands}` : `${thousands.toFixed(1).replace(/\.0$/, "")}`;
-  return `+${formatted} mil vendas`;
-}
 
 /**
  * Formata avaliação no padrão pt-BR: 4.9 → "4,9"
@@ -30,8 +16,7 @@ export default function ProductCard({
 }) {
   const affiliateUrl = product.affiliateUrl || "#";
   const ratingText = formatRating(product.rating);
-  // Campo de vendas não existe no banco atual — será nulo até ser adicionado
-  const salesText = formatSales(null);
+  const salesText = formatSales(product.sales);
 
   const hasSocialProof = Boolean(ratingText || salesText);
 
@@ -54,6 +39,8 @@ export default function ProductCard({
       </a>
 
       <div className="card-body">
+        <span className="card-ad-label">Publicidade</span>
+
         {/* Nome clicável → link afiliado */}
         <a
           href={affiliateUrl}
@@ -79,8 +66,6 @@ export default function ProductCard({
             )}
           </div>
         )}
-
-        <span className="card-ad-label">Publicidade</span>
 
         <div className="card-footer">
           {/* Botão "Ver oferta" → link afiliado */}

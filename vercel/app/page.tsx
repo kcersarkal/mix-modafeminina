@@ -5,6 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import HeroCarousel from "@/components/HeroCarousel";
 import SpotlightCarousel from "@/components/SpotlightCarousel";
 import FilterControls from "@/components/FilterControls";
+import PromoActions from "@/components/PromoActions";
 import {
   getCategories,
   getProducts,
@@ -118,6 +119,8 @@ export default async function Home({
       {spotlightItems.length > 0 && (
         <SpotlightCarousel items={spotlightItems} />
       )}
+
+      <PromoActions />
 
       <div className="section-heading" id="ofertas">
         <div className="section-heading-top">

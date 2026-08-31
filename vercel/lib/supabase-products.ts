@@ -36,6 +36,7 @@ function toDisplay(row: ProductRow): ProductDisplay {
     description: row.description,
     rating: row.rating,
     reviewsCount: row.reviews_count,
+    sales: row.sales != null ? Number(row.sales) : null,
     affiliateUrl: row.affiliate_url,
     isInternational: Boolean(
       row.is_international || (row.tag || "").includes("🌎"),

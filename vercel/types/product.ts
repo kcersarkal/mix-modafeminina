@@ -18,6 +18,7 @@ export interface ProductRow {
   description: string | null;
   rating: number | null;
   reviews_count: number | null;
+  sales: number | null;
   affiliate_url: string | null;
   tag: string | null;
   is_international: boolean | null;
@@ -40,6 +41,7 @@ export interface ProductDisplay {
   description: string | null;
   rating: number | null;
   reviewsCount: number | null;
+  sales: number | null;
   affiliateUrl: string | null;
   isInternational: boolean;
   spotlight: boolean;

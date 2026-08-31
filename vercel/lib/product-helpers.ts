@@ -99,3 +99,41 @@ export function generateSummary(p: ProductDisplay): string {
 
   return txt;
 }
+
+/**
+ * Formata quantidade de vendas para exibição no card.
+ *
+ * Regras:
+ * - null / 0 → não exibir
+ * - 1 → "+1 venda"
+ * - 25 → "+25 vendas"
+ * - 999 → "+999 vendas"
+ * - 1000 → "+1 mil vendas"
+ * - 1200 → "+1,2 mil vendas"
+ * - 10000 → "+10 mil vendas"
+ * - 1000000 → "+1 mi vendas"
+ */
+export function formatSales(sales: number | null | undefined): string | null {
+  if (sales == null || sales <= 0) return null;
+
+  if (sales < 1000) {
+    const v = Math.floor(sales);
+    return v === 1 ? "+1 venda" : `+${v} vendas`;
+  }
+
+  if (sales < 1_000_000) {
+    const thousands = sales / 1000;
+    const formatted =
+      thousands % 1 === 0
+        ? String(Math.floor(thousands))
+        : thousands.toFixed(1).replace(/\.0$/, "").replace(".", ",");
+    return `+${formatted} mil vendas`;
+  }
+
+  const millions = sales / 1_000_000;
+  const formatted =
+    millions % 1 === 0
+      ? String(Math.floor(millions))
+      : millions.toFixed(1).replace(/\.0$/, "").replace(".", ",");
+  return `+${formatted} mi vendas`;
+}
