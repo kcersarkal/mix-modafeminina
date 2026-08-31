@@ -5,8 +5,18 @@ __pycache__/
 .next/
 out/
 node_modules/
+vercel/node_modules/
 *.tsbuildinfo
 
 # Ambiente
 .env
 .env*.local
+
+# GitHub Pages (mantido local, não enviado ao repo)
+github-pages/
+
+# Arquivos antigos/backup (mantidos localmente)
+arquivos-antigos/
+
+# Vercel
+.vercel/
