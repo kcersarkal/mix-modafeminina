@@ -2,8 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import ProductCard from "@/components/ProductCard";
-import HeroCarousel from "@/components/HeroCarousel";
-import SpotlightCarousel from "@/components/SpotlightCarousel";
+import HeroShowcase from "@/components/HeroShowcase";
 import FilterControls from "@/components/FilterControls";
 import PromoActions from "@/components/PromoActions";
 import {
@@ -11,10 +10,8 @@ import {
   getProducts,
   getProductsCount,
   pickHeroSlides,
-  pickSpotlightProducts,
 } from "@/lib/supabase-products";
 import { normalizeOrder } from "@/lib/product-filters";
-import { generateSummary } from "@/lib/product-helpers";
 import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 300;
@@ -34,8 +31,6 @@ export default async function Home({
   const query = (searchParams.q ?? "").trim();
   const ordem = normalizeOrder(searchParams.ordem);
 
-  // Hero e destaque usam TODOS os produtos ativos,
-  // independentemente dos filtros de ordenação aplicados ao grid.
   const [allProducts, products, categories, totalActiveCount] =
     await Promise.all([
       getProducts(),
@@ -48,10 +43,6 @@ export default async function Home({
     ]);
 
   const heroSlides = pickHeroSlides(allProducts);
-  const spotlightItems = pickSpotlightProducts(allProducts).map((product) => ({
-    product,
-    summary: generateSummary(product),
-  }));
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
@@ -78,7 +69,6 @@ export default async function Home({
       "@type": "ImageObject",
       url: absoluteUrl("/logo_moda_feminina.jpg"),
     },
-    sameAs: ["https://t.me/MixModaFeminina"],
   };
 
   return (
@@ -99,26 +89,10 @@ export default async function Home({
               Vestidos, calçados e bolsas escolhidos a dedo, com ofertas
               reunidas em um só lugar para facilitar a sua escolha.
             </p>
-            <a
-              href="https://t.me/MixModaFeminina"
-              target="_blank"
-              rel="noopener"
-              className="telegram-hero-btn"
-              aria-label="Grupo do Telegram"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.9-6.12c.73-.33 1.43.18 1.15 1.3l-2.7 12.76c-.2.86-.7 1.07-1.42.67l-3.92-2.89-1.89 1.82c-.2.2-.37.37-.73.37z" />
-              </svg>
-              Grupo no Telegram
-            </a>
           </div>
-          <HeroCarousel slides={heroSlides} />
+          <HeroShowcase products={heroSlides} />
         </div>
       </section>
-
-      {spotlightItems.length > 0 && (
-        <SpotlightCarousel items={spotlightItems} />
-      )}
 
       <PromoActions />
 
